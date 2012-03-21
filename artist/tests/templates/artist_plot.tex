@@ -1,1 +1,23 @@
-Hello, world!
+\documentclass{article}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\begin{document}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \begin{axis}
+        {% for series in series_list %}
+            \addplot coordinates {
+            {%- for x, y in series %}
+                ({{ x }}, {{ y }})
+            {%- endfor %}
+            };
+        {% endfor %}
+    \end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\end{document}

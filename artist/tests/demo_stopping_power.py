@@ -10,13 +10,13 @@ class Artist:
         environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
                                                         'templates'))
         self.template = environment.get_template('artist_plot.tex')
-        self.plot_series = []
+        self.plot_series_list = []
 
     def plot(self, x, y):
-        self.plot_series.append((x, y))
+        self.plot_series_list.append(zip(x, y))
 
     def render(self):
-        response = self.template.render(series=self.plot_series)
+        response = self.template.render(series_list=self.plot_series_list)
         return response
 
 
@@ -42,7 +42,8 @@ def main():
     plot = Artist()
     plot.plot(e_beta_gamma, e_loss)
     plot.plot(mu_beta_gamma, mu_loss)
-    print plot.render()
+    with open('demo_plot.tex', 'w') as f:
+        f.write(plot.render())
 
 
 if __name__ == '__main__':
