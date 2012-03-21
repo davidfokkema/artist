@@ -8,7 +8,7 @@
 \begin{figure}
 \centering
 \begin{tikzpicture}
-    \begin{axis}
+    \begin{{ '{' }}{{ axis }}}
         {% for series in series_list %}
             \addplot coordinates {
             {%- for x, y in series %}
@@ -16,7 +16,7 @@
             {%- endfor %}
             };
         {% endfor %}
-    \end{axis}
+    \end{{ '{' }}{{ axis }}}
 \end{tikzpicture}
 \end{figure}
 
