@@ -2,6 +2,23 @@ import numpy as np
 from numpy import sqrt
 import pylab as plt
 
+import jinja2
+
+
+class Artist:
+    def __init__(self):
+        environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
+                                                        'templates'))
+        self.template = environment.get_template('artist_plot.tex')
+        self.plot_series = []
+
+    def plot(self, x, y):
+        self.plot_series.append((x, y))
+
+    def render(self):
+        response = self.template.render(series=self.plot_series)
+        return response
+
 
 def main():
     e_data = np.genfromtxt('estar-plastic-scint.txt', skip_header=8,
@@ -17,10 +34,15 @@ def main():
     mu_beta_gamma = mu_p / mu_mass
     mu_loss = mu_data[:,1]
 
-    plt.figure()
-    plt.loglog(e_beta_gamma, e_loss, label="e")
-    plt.loglog(mu_beta_gamma, mu_loss, label="mu")
-    plt.legend()
+    #plt.figure()
+    #plt.loglog(e_beta_gamma, e_loss, label="e")
+    #plt.loglog(mu_beta_gamma, mu_loss, label="mu")
+    #plt.legend()
+
+    plot = Artist()
+    plot.plot(e_beta_gamma, e_loss)
+    plot.plot(mu_beta_gamma, mu_loss)
+    print plot.render()
 
 
 if __name__ == '__main__':
