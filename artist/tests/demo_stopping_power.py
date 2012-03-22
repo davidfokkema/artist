@@ -14,13 +14,24 @@ class Artist:
         self.plot_series_list = []
         self.axis = axis + 'axis'
 
-    def plot(self, x, y):
-        self.plot_series_list.append(zip(x, y))
+    def plot(self, x, y, mark='o'):
+        options = self._parse_plot_options(mark)
+        self.plot_series_list.append({'options': options,
+                                      'data': zip(x, y)})
 
     def render(self):
         response = self.template.render(axis=self.axis,
                                         series_list=self.plot_series_list)
         return response
+
+    def _parse_plot_options(self, mark):
+        options = []
+        if mark is None:
+            options.append('no markers')
+        else:
+            options.append('mark=%s' % mark)
+        options_string = ','.join(options)
+        return options_string
 
 
 def main():
@@ -37,13 +48,14 @@ def main():
     mu_beta_gamma = mu_p / mu_mass
     mu_loss = mu_data[:,1]
 
-    #plt.figure()
-    #plt.loglog(e_beta_gamma, e_loss, label="e")
-    #plt.loglog(mu_beta_gamma, mu_loss, label="mu")
-    #plt.legend()
+    plt.figure()
+    plt.loglog(e_beta_gamma, e_loss, label="e")
+    plt.loglog(mu_beta_gamma, mu_loss, label="mu")
+    plt.legend()
+    plt.savefig('demo_plot-mpl.pdf')
 
     plot = Artist(axis='loglog')
-    plot.plot(e_beta_gamma, e_loss)
+    plot.plot(e_beta_gamma, e_loss, mark=None)
     plot.plot(mu_beta_gamma, mu_loss)
     with open('demo_plot.tex', 'w') as f:
         f.write(plot.render())

@@ -7,17 +7,19 @@
 
 \begin{figure}
 \centering
+
 \begin{tikzpicture}
     \begin{{ '{' }}{{ axis }}}
         {% for series in series_list %}
-            \addplot coordinates {
-            {%- for x, y in series %}
+            \addplot[{{ series.options }}] coordinates {
+            {%- for x, y in series.data %}
                 ({{ x }}, {{ y }})
             {%- endfor %}
             };
         {% endfor %}
     \end{{ '{' }}{{ axis }}}
 \end{tikzpicture}
+
 \end{figure}
 
 \end{document}
