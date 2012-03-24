@@ -6,13 +6,14 @@ import jinja2
 
 
 class Artist:
-    def __init__(self, axis=''):
+    def __init__(self, axis='', width=r'.67\linewidth'):
         environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
                                                         'templates'))
         self.template = environment.get_template('artist_plot.tex')
 
         self.plot_series_list = []
         self.axis = axis + 'axis'
+        self.width = width
         self.xlabel = ''
         self.ylabel = ''
 
@@ -23,6 +24,7 @@ class Artist:
 
     def render(self):
         response = self.template.render(axis=self.axis,
+                                        width=self.width,
                                         xlabel=self.xlabel,
                                         ylabel=self.ylabel,
                                         series_list=self.plot_series_list)
@@ -64,7 +66,7 @@ def main():
     #plt.legend()
     #plt.savefig('demo_plot-mpl.pdf')
 
-    plot = Artist(axis='loglog')
+    plot = Artist(axis='loglog', width=r'.45\linewidth')
     plot.plot(e_beta_gamma, e_loss, mark=None)
     plot.plot(mu_beta_gamma, mu_loss)
     plot.set_xlabel(r'$\beta\gamma$')
