@@ -8,14 +8,15 @@ import jinja2
 class Artist:
     def __init__(self, axis='', width=r'.67\linewidth'):
         environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
-                                                        'templates'))
+                                                        'templates'),
+                                         finalize=self._convert_none)
         self.template = environment.get_template('artist_plot.tex')
 
         self.plot_series_list = []
         self.axis = axis + 'axis'
         self.width = width
-        self.xlabel = ''
-        self.ylabel = ''
+        self.xlabel = None
+        self.ylabel = None
 
     def plot(self, x, y, mark='o'):
         options = self._parse_plot_options(mark)
@@ -44,6 +45,12 @@ class Artist:
             options.append('mark=%s' % mark)
         options_string = ','.join(options)
         return options_string
+
+    def _convert_none(self, variable):
+        if variable is not None:
+            return variable
+        else:
+            return ''
 
 
 def main():
