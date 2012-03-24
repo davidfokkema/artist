@@ -13,6 +13,8 @@ class Artist:
 
         self.plot_series_list = []
         self.axis = axis + 'axis'
+        self.xlabel = ''
+        self.ylabel = ''
 
     def plot(self, x, y, mark='o'):
         options = self._parse_plot_options(mark)
@@ -21,8 +23,16 @@ class Artist:
 
     def render(self):
         response = self.template.render(axis=self.axis,
+                                        xlabel=self.xlabel,
+                                        ylabel=self.ylabel,
                                         series_list=self.plot_series_list)
         return response
+
+    def set_xlabel(self, text):
+        self.xlabel = text
+
+    def set_ylabel(self, text):
+        self.ylabel = text
 
     def _parse_plot_options(self, mark):
         options = []
@@ -48,15 +58,17 @@ def main():
     mu_beta_gamma = mu_p / mu_mass
     mu_loss = mu_data[:,1]
 
-    plt.figure()
-    plt.loglog(e_beta_gamma, e_loss, label="e")
-    plt.loglog(mu_beta_gamma, mu_loss, label="mu")
-    plt.legend()
-    plt.savefig('demo_plot-mpl.pdf')
+    #plt.figure()
+    #plt.loglog(e_beta_gamma, e_loss, label="e")
+    #plt.loglog(mu_beta_gamma, mu_loss, label="mu")
+    #plt.legend()
+    #plt.savefig('demo_plot-mpl.pdf')
 
     plot = Artist(axis='loglog')
     plot.plot(e_beta_gamma, e_loss, mark=None)
     plot.plot(mu_beta_gamma, mu_loss)
+    plot.set_xlabel(r'$\beta\gamma$')
+    plot.set_ylabel(r'Stopping Power $\left[\si{\mega\electronvolt\centi\meter\squared\per\gram}\right]$')
     with open('demo_plot.tex', 'w') as f:
         f.write(plot.render())
 

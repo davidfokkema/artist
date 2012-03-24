@@ -3,6 +3,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.3}
+\usepackage{siunitx}
 
 \begin{document}
 
@@ -12,6 +13,8 @@
 \begin{tikzpicture}
     \begin{{ '{' }}{{ axis }}}[
             tick align=outside,
+            xlabel={ {{ xlabel }} },
+            ylabel={ {{ ylabel }} },
         ]
 
         {% for series in series_list %}
