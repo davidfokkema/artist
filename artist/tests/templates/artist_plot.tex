@@ -16,6 +16,8 @@
             tick align=outside,
             xlabel={ {{ xlabel }} },
             ylabel={ {{ ylabel }} },
+            max space between ticks=40,
+            every tick/.style={},
         ]
 
         {% for series in series_list %}
