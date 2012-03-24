@@ -17,6 +17,8 @@ class Artist:
         self.width = width
         self.xlabel = None
         self.ylabel = None
+        self.limits = {'xmin': None, 'xmax': None,
+                       'ymin': None, 'ymax': None}
 
     def plot(self, x, y, mark='o'):
         options = self._parse_plot_options(mark)
@@ -28,6 +30,7 @@ class Artist:
                                         width=self.width,
                                         xlabel=self.xlabel,
                                         ylabel=self.ylabel,
+                                        limits=self.limits,
                                         series_list=self.plot_series_list)
         return response
 
@@ -36,6 +39,14 @@ class Artist:
 
     def set_ylabel(self, text):
         self.ylabel = text
+
+    def set_xlimits(self, min=None, max=None):
+        self.limits['xmin'] = min
+        self.limits['xmax'] = max
+
+    def set_ylimits(self, min=None, max=None):
+        self.limits['ymin'] = min
+        self.limits['ymax'] = max
 
     def _parse_plot_options(self, mark):
         options = []
@@ -73,11 +84,14 @@ def main():
     #plt.legend()
     #plt.savefig('demo_plot-mpl.pdf')
 
-    plot = Artist(axis='loglog', width=r'.45\linewidth')
+    plot = Artist(axis='loglog', width=r'.5\linewidth')
     plot.plot(e_beta_gamma, e_loss, mark=None)
     plot.plot(mu_beta_gamma, mu_loss)
     plot.set_xlabel(r'$\beta\gamma$')
     plot.set_ylabel(r'Stopping Power $\left[\si{\mega\electronvolt\centi\meter\squared\per\gram}\right]$')
+    plot.set_xlimits(max=1e9)
+    plot.set_ylimits(1e0, 1e3)
+
     with open('demo_plot.tex', 'w') as f:
         f.write(plot.render())
 
