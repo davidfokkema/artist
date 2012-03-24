@@ -9,7 +9,10 @@
 \centering
 
 \begin{tikzpicture}
-    \begin{{ '{' }}{{ axis }}}
+    \begin{{ '{' }}{{ axis }}}[
+            tick align=outside,
+        ]
+
         {% for series in series_list %}
             \addplot[{{ series.options }}] coordinates {
             {%- for x, y in series.data %}
