@@ -13,13 +13,16 @@
 \begin{tikzpicture}
     \begin{{ '{' }}{{ axis }}}[
             width={{ width }},
-            tick align=outside,
+            %
             xlabel={ {{ xlabel }} },
             ylabel={ {{ ylabel }} },
+            %
             xmin={ {{ limits.xmin }} },
             xmax={ {{ limits.xmax }} },
             ymin={ {{ limits.ymin }} },
             ymax={ {{ limits.ymax }} },
+            %
+            tick align=outside,
             max space between ticks=40,
             every tick/.style={},
         ]
