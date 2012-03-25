@@ -19,6 +19,7 @@ class Artist:
         self.ylabel = None
         self.limits = {'xmin': None, 'xmax': None,
                        'ymin': None, 'ymax': None}
+        self.ticks = {'x': [], 'y': []}
 
     def plot(self, x, y, mark='o'):
         options = self._parse_plot_options(mark)
@@ -31,6 +32,7 @@ class Artist:
                                         xlabel=self.xlabel,
                                         ylabel=self.ylabel,
                                         limits=self.limits,
+                                        ticks=self.ticks,
                                         series_list=self.plot_series_list)
         return response
 
@@ -47,6 +49,18 @@ class Artist:
     def set_ylimits(self, min=None, max=None):
         self.limits['ymin'] = min
         self.limits['ymax'] = max
+
+    def set_xticks(self, ticks):
+        self.ticks['x'] = ticks
+
+    def set_logxticks(self, logticks):
+        self.ticks['x'] = ['1e%d' % u for u in logticks]
+
+    def set_yticks(self, ticks):
+        self.ticks['y'] = ticks
+
+    def set_logyticks(self, logticks):
+        self.ticks['y'] = ['1e%d' % u for u in logticks]
 
     def _parse_plot_options(self, mark):
         options = []
@@ -86,11 +100,12 @@ def main():
 
     plot = Artist(axis='loglog', width=r'.5\linewidth')
     plot.plot(e_beta_gamma, e_loss, mark=None)
-    plot.plot(mu_beta_gamma, mu_loss)
+    plot.plot(mu_beta_gamma, mu_loss, mark=None)
     plot.set_xlabel(r'$\beta\gamma$')
     plot.set_ylabel(r'Stopping Power $\left[\si{\mega\electronvolt\centi\meter\squared\per\gram}\right]$')
-    plot.set_xlimits(max=1e9)
-    plot.set_ylimits(1e0, 1e3)
+    plot.set_xlimits(1e-2, 1e8)
+    plot.set_ylimits(min=1)
+    plot.set_logxticks(range(-2, 9, 2))
 
     with open('demo_plot.tex', 'w') as f:
         f.write(plot.render())

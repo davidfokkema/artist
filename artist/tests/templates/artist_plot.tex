@@ -22,6 +22,9 @@
             ymin={ {{ limits.ymin }} },
             ymax={ {{ limits.ymax }} },
             %
+            xtick={ {{ ticks.x | join(', ') }} },
+            ytick={ {{ ticks.y | join(', ') }} },
+            %
             tick align=outside,
             max space between ticks=40,
             every tick/.style={},
