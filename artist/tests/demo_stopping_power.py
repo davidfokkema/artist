@@ -21,8 +21,8 @@ class Artist:
                        'ymin': None, 'ymax': None}
         self.ticks = {'x': [], 'y': []}
 
-    def plot(self, x, y, mark='o'):
-        options = self._parse_plot_options(mark)
+    def plot(self, x, y, mark='o', linestyle='solid'):
+        options = self._parse_plot_options(mark, linestyle)
         self.plot_series_list.append({'options': options,
                                       'data': zip(x, y)})
 
@@ -62,12 +62,18 @@ class Artist:
     def set_logyticks(self, logticks):
         self.ticks['y'] = ['1e%d' % u for u in logticks]
 
-    def _parse_plot_options(self, mark):
+    def _parse_plot_options(self, mark, linestyle):
         options = []
-        if mark is None:
-            options.append('no markers')
-        else:
+        if mark is not None:
             options.append('mark=%s' % mark)
+        else:
+            options.append('no markers')
+
+        if linestyle is not None:
+            options.append(linestyle)
+        else:
+            options.append('only marks')
+
         options_string = ','.join(options)
         return options_string
 
@@ -99,8 +105,8 @@ def main():
     #plt.savefig('demo_plot-mpl.pdf')
 
     plot = Artist(axis='loglog', width=r'.5\linewidth')
-    plot.plot(e_beta_gamma, e_loss, mark=None)
-    plot.plot(mu_beta_gamma, mu_loss, mark=None)
+    plot.plot(e_beta_gamma, e_loss, mark=None, linestyle='dashed')
+    plot.plot(mu_beta_gamma, mu_loss, mark='o', linestyle=None)
     plot.set_xlabel(r'$\beta\gamma$')
     plot.set_ylabel(r'Stopping Power $\left[\si{\mega\electronvolt\centi\meter\squared\per\gram}\right]$')
     plot.set_xlimits(1e-2, 1e8)
