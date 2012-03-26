@@ -39,8 +39,7 @@ def main():
     plot.set_ylimits(min=1)
     plot.set_logxticks(range(-2, 9, 2))
 
-    with open('demo_plot.tex', 'w') as f:
-        f.write(plot.render())
+    plot.save('demo_plot')
 
 
 if __name__ == '__main__':

@@ -40,6 +40,11 @@ class GraphArtist:
                                         pin_list=self.pin_list)
         return response
 
+    def save(self, path):
+        path = self._add_tex_extension(path)
+        with open(path, 'w') as f:
+            f.write(self.render())
+
     def set_xlabel(self, text):
         self.xlabel = text
 
@@ -92,6 +97,12 @@ class GraphArtist:
                 'If x and y are iterables, they must be the same length'
             index = round(N_x * relative_position)
             return x[index], y[index]
+
+    def _add_tex_extension(self, path):
+        if not '.' in path:
+            return path + '.tex'
+        else:
+            return path
 
     def _convert_none(self, variable):
         if variable is not None:
