@@ -13,6 +13,7 @@ class Artist:
         self.template = environment.get_template('artist_plot.tex')
 
         self.plot_series_list = []
+        self.pin_list = []
         self.axis = axis + 'axis'
         self.width = width
         self.xlabel = None
@@ -26,6 +27,12 @@ class Artist:
         self.plot_series_list.append({'options': options,
                                       'data': zip(x, y)})
 
+    def add_pin(self, x, y, text, location='above right',
+                relative_position=.9):
+        x, y = self._calc_position_for_pin(x, y, relative_position)
+        self.pin_list.append({'x': x, 'y': y, 'text': text,
+                              'location': location})
+
     def render(self):
         response = self.template.render(axis=self.axis,
                                         width=self.width,
@@ -33,7 +40,8 @@ class Artist:
                                         ylabel=self.ylabel,
                                         limits=self.limits,
                                         ticks=self.ticks,
-                                        series_list=self.plot_series_list)
+                                        series_list=self.plot_series_list,
+                                        pin_list = self.pin_list)
         return response
 
     def set_xlabel(self, text):
@@ -77,6 +85,18 @@ class Artist:
         options_string = ','.join(options)
         return options_string
 
+    def _calc_position_for_pin(self, x, y, relative_position):
+        try:
+            N_x = len(x)
+            N_y = len(y)
+        except TypeError:
+            return x, y
+        else:
+            assert N_x == N_y, \
+                'If x and y are iterables, they must be the same length'
+            index = round(N_x * relative_position)
+            return x[index], y[index]
+
     def _convert_none(self, variable):
         if variable is not None:
             return variable
@@ -105,10 +125,13 @@ def main():
     #plt.savefig('demo_plot-mpl.pdf')
 
     plot = Artist(axis='loglog', width=r'.5\linewidth')
-    plot.plot(e_beta_gamma, e_loss, mark=None, linestyle='dashed')
-    plot.plot(mu_beta_gamma, mu_loss, mark='o', linestyle=None)
+    plot.plot(e_beta_gamma, e_loss, mark=None)
+    plot.plot(mu_beta_gamma, mu_loss, mark=None)
     plot.set_xlabel(r'$\beta\gamma$')
     plot.set_ylabel(r'Stopping Power $\left[\si{\mega\electronvolt\centi\meter\squared\per\gram}\right]$')
+    plot.add_pin(e_beta_gamma, e_loss, 'e', location='below right',
+                 relative_position=.8)
+    plot.add_pin(mu_beta_gamma, mu_loss, r'$\mu$', 'above left')
     plot.set_xlimits(1e-2, 1e8)
     plot.set_ylimits(min=1)
     plot.set_logxticks(range(-2, 9, 2))
