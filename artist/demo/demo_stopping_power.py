@@ -36,7 +36,7 @@ def main():
     plt.xlabel(r'$\beta\gamma$')
     plt.ylabel('Stopping Power [MeV cm$^2$ g$^{-1}$]')
     plt.legend()
-    plt.savefig('demo_plot-mpl.pdf')
+    plt.savefig('stopping-power-mpl.pdf')
 
     plot = GraphArtist(axis='loglog', width=r'.5\linewidth')
     plot.plot(e_beta_gamma, e_loss, mark=None)
@@ -52,7 +52,7 @@ def main():
     plot.set_ylimits(min=1)
     plot.set_logxticks(range(-2, 9, 2))
 
-    plot.save('demo_plot')
+    plot.save('stopping-power')
 
 
 if __name__ == '__main__':
