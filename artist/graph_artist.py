@@ -8,6 +8,7 @@ class GraphArtist:
                                          finalize=self._convert_none)
         self.template = environment.get_template('artist_plot.tex')
 
+        self.shaded_regions_list = []
         self.plot_series_list = []
         self.pin_list = []
         self.axis = axis + 'axis'
@@ -29,6 +30,19 @@ class GraphArtist:
         self.pin_list.append({'x': x, 'y': y, 'text': text,
                               'location': location})
 
+    def shade_region(self, x, lower, upper, color='lightgray'):
+        x = list(x)
+        reversed_x = list(x)
+        reversed_x.reverse()
+
+        lower = list(lower)
+        upper = list(upper)
+        upper.reverse()
+
+        x = x + reversed_x
+        y = lower + upper
+        self.shaded_regions_list.append({'data': zip(x, y), 'color': color})
+
     def render(self):
         response = self.template.render(axis=self.axis,
                                         width=self.width,
@@ -36,6 +50,8 @@ class GraphArtist:
                                         ylabel=self.ylabel,
                                         limits=self.limits,
                                         ticks=self.ticks,
+                                        shaded_regions_list=
+                                            self.shaded_regions_list,
                                         series_list=self.plot_series_list,
                                         pin_list=self.pin_list)
         return response

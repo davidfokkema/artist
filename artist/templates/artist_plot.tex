@@ -27,6 +27,14 @@
             every tick/.style={},
         ]
 
+        {% for region in shaded_regions_list %}
+            \addplot[draw=none, fill={{ region.color }}] coordinates {
+            {%- for x, y in region.data %}
+                ({{ x }}, {{ y }})
+            {%- endfor %}
+                } -- cycle;
+        {% endfor %}
+
         {% for series in series_list %}
             \addplot[{{ series.options }}] coordinates {
             {%- for x, y in series.data %}
