@@ -4,6 +4,17 @@ import pylab as plt
 
 from artist import GraphArtist
 
+# For TeX rendering
+plt.rcParams['font.serif'] = 'Computer Modern'
+plt.rcParams['font.sans-serif'] = 'Computer Modern'
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['figure.figsize'] = [4 * x for x in (1, 2. / 3)]
+plt.rcParams['figure.subplot.left'] = 0.175
+plt.rcParams['figure.subplot.bottom'] = 0.175
+plt.rcParams['font.size'] = 10
+plt.rcParams['legend.fontsize'] = 'small'
+plt.rcParams['text.usetex'] = True
+
 
 def main():
     e_data = np.genfromtxt('estar-plastic-scint.txt', skip_header=8,
@@ -19,11 +30,13 @@ def main():
     mu_beta_gamma = mu_p / mu_mass
     mu_loss = mu_data[:, 1]
 
-    #plt.figure()
-    #plt.loglog(e_beta_gamma, e_loss, label="e")
-    #plt.loglog(mu_beta_gamma, mu_loss, label="mu")
-    #plt.legend()
-    #plt.savefig('demo_plot-mpl.pdf')
+    plt.figure()
+    plt.loglog(e_beta_gamma, e_loss, label="e")
+    plt.loglog(mu_beta_gamma, mu_loss, label=r"$\mu$")
+    plt.xlabel(r'$\beta\gamma$')
+    plt.ylabel('Stopping Power [MeV cm$^2$ g$^{-1}$]')
+    plt.legend()
+    plt.savefig('demo_plot-mpl.pdf')
 
     plot = GraphArtist(axis='loglog', width=r'.5\linewidth')
     plot.plot(e_beta_gamma, e_loss, mark=None)
