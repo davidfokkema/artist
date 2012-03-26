@@ -128,7 +128,9 @@ def main():
     plot.plot(e_beta_gamma, e_loss, mark=None)
     plot.plot(mu_beta_gamma, mu_loss, mark=None)
     plot.set_xlabel(r'$\beta\gamma$')
-    plot.set_ylabel(r'Stopping Power $\left[\si{\mega\electronvolt\centi\meter\squared\per\gram}\right]$')
+    plot.set_ylabel(r'Stopping Power $\left[\si{\mega\electronvolt'
+                                              r'\centi\meter\squared'
+                                              r'\per\gram}\right]$')
     plot.add_pin(e_beta_gamma, e_loss, 'e', location='below right',
                  relative_position=.8)
     plot.add_pin(mu_beta_gamma, mu_loss, r'$\mu$', 'above left')
