@@ -24,11 +24,12 @@ class GraphArtist:
         self.plot_series_list.append({'options': options,
                                       'data': zip(x, y)})
 
-    def add_pin(self, x, y, text, location='above right',
-                relative_position=.9):
+    def add_pin_at_xy(self, x, y, text, location='above right',
+                relative_position=.9, use_arrow=True):
         x, y = self._calc_position_for_pin(x, y, relative_position)
         self.pin_list.append({'x': x, 'y': y, 'text': text,
-                              'location': location})
+                              'location': location,
+                              'use_arrow': use_arrow})
 
     def shade_region(self, x, lower, upper, color='lightgray'):
         x = list(x)

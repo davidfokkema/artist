@@ -10,14 +10,14 @@ def main():
 
     graph = GraphArtist(axis='loglog', width=r'.5\linewidth')
     graph.plot(gamma[:, 0], gamma[:, 1], mark=None)
-    graph.add_pin(gamma[:, 0], gamma[:, 1], r'$\gamma$',
-                  relative_position=.2)
+    graph.add_pin_at_xy(gamma[:, 0], gamma[:, 1], r'$\gamma$',
+                        relative_position=.2)
     graph.plot(e[:, 0], e[:, 1], mark=None)
-    graph.add_pin(e[:, 0], e[:, 1], 'e', location='below left',
-                  relative_position=.2)
+    graph.add_pin_at_xy(e[:, 0], e[:, 1], 'e', location='below left',
+                        relative_position=.2)
     graph.plot(mu[:, 0], mu[:, 1], mark=None)
-    graph.add_pin(mu[:, 0], mu[:, 1], r'$\mu$', location='below left',
-                  relative_position=.2)
+    graph.add_pin_at_xy(mu[:, 0], mu[:, 1], r'$\mu$', location='below left',
+                        relative_position=.2)
 
     graph.set_xlabel(r"Core distance [\si{\meter}]")
     graph.set_ylabel(r"Particle density [\si{\per\square\meter}]")
