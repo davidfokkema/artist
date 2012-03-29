@@ -11,13 +11,16 @@ def main():
     graph = GraphArtist(axis='loglog', width=r'.5\linewidth')
 
     graph.plot(gamma[:, 0], gamma[:, 1], mark=None)
-    graph.add_pin(r'$\gamma$', relative_position=.2)
+    graph.add_pin(r'$\gamma$', relative_position=0, location='left',
+                  use_arrow=False)
 
     graph.plot(e[:, 0], e[:, 1], mark=None)
-    graph.add_pin('e', location='below left', relative_position=.2)
+    graph.add_pin('e', relative_position=0, location='left',
+                  use_arrow=False)
 
     graph.plot(mu[:, 0], mu[:, 1], mark=None)
-    graph.add_pin(r'$\mu$', location='below left', relative_position=.2)
+    graph.add_pin(r'$\mu$', relative_position=0, location='left',
+                  use_arrow=False)
 
     graph.set_xlabel(r"Core distance [\si{\meter}]")
     graph.set_ylabel(r"Particle density [\si{\per\square\meter}]")

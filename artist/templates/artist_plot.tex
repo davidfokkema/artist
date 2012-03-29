@@ -49,7 +49,14 @@
         {% endfor %}
 
         {% for pin in pin_list %}
-            \node[coordinate, pin={{ pin.location }}:{ {{ pin.text }} }]
+            {% if pin.use_arrow %}
+                {% set pin_option = 'pin' %}
+            {% else %}
+                {% set pin_option = 'label' %}
+            {% endif %}
+
+            \node[coordinate,
+                  {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
                 at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
         {% endfor %}
     \end{{ '{' }}{{ axis }}}
