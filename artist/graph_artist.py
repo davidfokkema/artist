@@ -24,8 +24,30 @@ class GraphArtist:
         self.plot_series_list.append({'options': options,
                                       'data': zip(x, y)})
 
+    def add_pin(self, text, location='above right', relative_position=.9,
+                use_arrow=True):
+        """Add pin to most recent data series"""
+
+        try:
+            series = self.plot_series_list[-1]
+        except IndexError:
+            raise RuntimeError("""
+                First plot a data series, before using this function""")
+
+        data = series['data']
+        x, y = zip(*data)
+        self.add_pin_at_xy(x, y, text, location, relative_position,
+                           use_arrow)
+
     def add_pin_at_xy(self, x, y, text, location='above right',
                 relative_position=.9, use_arrow=True):
+        """Add pin at x, y location
+
+        If x, y are arrays or lists, relative position is used to pick a
+        point from the arrays.  A relative position of zero will be the
+        first point from the series, while 1.0 will be the last point.
+
+        """
         x, y = self._calc_position_for_pin(x, y, relative_position)
         self.pin_list.append({'x': x, 'y': y, 'text': text,
                               'location': location,
@@ -112,7 +134,7 @@ class GraphArtist:
         else:
             assert N_x == N_y, \
                 'If x and y are iterables, they must be the same length'
-            index = round(N_x * relative_position)
+            index = int(round(N_x * relative_position))
             return x[index], y[index]
 
     def _add_tex_extension(self, path):
