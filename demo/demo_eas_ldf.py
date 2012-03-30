@@ -11,7 +11,7 @@ def main():
     graph = GraphArtist(axis='loglog', width=r'.5\linewidth')
 
     graph.plot(gamma[:, 0], gamma[:, 1], mark=None)
-    graph.add_pin(r'$\gamma$', relative_position=0, location='left',
+    graph.add_pin(r'$\gamma$', relative_position=1., location='right',
                   use_arrow=False)
 
     graph.plot(e[:, 0], e[:, 1], mark=None)

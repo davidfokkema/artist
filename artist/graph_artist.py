@@ -127,14 +127,14 @@ class GraphArtist:
 
     def _calc_position_for_pin(self, x, y, relative_position):
         try:
-            N_x = len(x)
-            N_y = len(y)
+            max_idx_x = len(x) - 1
+            max_idx_y = len(y) - 1
         except TypeError:
             return x, y
         else:
-            assert N_x == N_y, \
+            assert max_idx_x == max_idx_y, \
                 'If x and y are iterables, they must be the same length'
-            index = int(round(N_x * relative_position))
+            index = int(round(max_idx_x * relative_position))
             return x[index], y[index]
 
     def _add_tex_extension(self, path):
