@@ -24,8 +24,8 @@ class GraphArtist:
         self.plot_series_list.append({'options': options,
                                       'data': zip(x, y)})
 
-    def add_pin(self, text, location='above right', relative_position=.9,
-                use_arrow=True):
+    def add_pin(self, text, location='left', use_arrow=False,
+                relative_position=None):
         """Add pin to most recent data series"""
 
         try:
@@ -40,7 +40,7 @@ class GraphArtist:
                            use_arrow)
 
     def add_pin_at_xy(self, x, y, text, location='above right',
-                relative_position=.9, use_arrow=True):
+                      relative_position=.9, use_arrow=True):
         """Add pin at x, y location
 
         If x, y are arrays or lists, relative position is used to pick a
@@ -48,6 +48,14 @@ class GraphArtist:
         first point from the series, while 1.0 will be the last point.
 
         """
+        if relative_position is None:
+            if location == 'left':
+                relative_position = 0.
+            elif location == 'right':
+                relative_position = 1.
+            else:
+                relative_position = .8
+
         x, y = self._calc_position_for_pin(x, y, relative_position)
         self.pin_list.append({'x': x, 'y': y, 'text': text,
                               'location': location,
