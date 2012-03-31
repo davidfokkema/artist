@@ -19,10 +19,15 @@ class GraphArtist:
                        'ymin': None, 'ymax': None}
         self.ticks = {'x': [], 'y': []}
 
-    def plot(self, x, y, mark='o', linestyle='solid'):
-        options = self._parse_plot_options(mark, linestyle)
+    def plot(self, x, y, mark='o', linestyle='solid', use_steps=False):
+        options = self._parse_plot_options(mark, linestyle, use_steps)
         self.plot_series_list.append({'options': options,
                                       'data': zip(x, y)})
+
+    def histogram(self, counts, bin_edges):
+        x = bin_edges
+        y = list(counts) + [counts[-1]]
+        self.plot(x, y, mark=None, use_steps=True)
 
     def add_pin(self, text, location='left', use_arrow=False,
                 relative_position=None):
@@ -118,7 +123,7 @@ class GraphArtist:
     def set_logyticks(self, logticks):
         self.ticks['y'] = ['1e%d' % u for u in logticks]
 
-    def _parse_plot_options(self, mark, linestyle):
+    def _parse_plot_options(self, mark, linestyle, use_steps):
         options = []
         if mark is not None:
             options.append('mark=%s' % mark)
@@ -129,6 +134,9 @@ class GraphArtist:
             options.append(linestyle)
         else:
             options.append('only marks')
+
+        if use_steps is True:
+            options.append('const plot')
 
         options_string = ','.join(options)
         return options_string
