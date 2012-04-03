@@ -5,7 +5,7 @@ demo: demo_plots.pdf
 clean:
 	latexmk -c
 
-distclean:
+distclean: clean
 	rm -f demo_plots.pdf
 	rm -f stopping-power-mpl.pdf stopping-power.tex
 	rm -f shower-front.tex
