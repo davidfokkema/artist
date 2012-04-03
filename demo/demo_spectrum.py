@@ -23,7 +23,7 @@ def main():
     graph.plot(proton['E'], proton['F'], mark=None)
     graph.add_pin('PROTON', 'above right', True, .5)
     graph.plot(akeno_new_lo['E'], akeno_new_lo['F'], mark=None)
-    graph.add_pin('AKENO', 'above right', True, .5)
+    graph.add_pin('AGASA', 'above right', True, .5)
 
     graph.plot(yakutsk['E'], yakutsk['F'], mark=None)
     graph.add_pin('Yakutsk', 'below left', True, .55)
