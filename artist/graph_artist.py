@@ -2,7 +2,7 @@ import jinja2
 
 
 class GraphArtist:
-    def __init__(self, axis='', width=r'.67\linewidth'):
+    def __init__(self, axis='', width=r'.67\linewidth', height=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
                                                         'artist', 'templates'),
                                          finalize=self._convert_none)
@@ -13,6 +13,7 @@ class GraphArtist:
         self.pin_list = []
         self.axis = axis + 'axis'
         self.width = width
+        self.height = height
         self.xlabel = None
         self.ylabel = None
         self.limits = {'xmin': None, 'xmax': None,
@@ -82,6 +83,7 @@ class GraphArtist:
     def render(self):
         response = self.template.render(axis=self.axis,
                                         width=self.width,
+                                        height=self.height,
                                         xlabel=self.xlabel,
                                         ylabel=self.ylabel,
                                         limits=self.limits,

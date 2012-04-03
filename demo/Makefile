@@ -11,10 +11,12 @@ distclean:
 	rm -f shower-front.tex
 	rm -f eas-lateral.tex
 	rm -f histogram-fit.tex
+	rm -f spectrum.tex
 
 demo_plots.pdf: demo_plots.tex \
                 stopping-power-mpl.pdf stopping-power.tex \
-                shower-front.tex eas-lateral.tex histogram-fit.tex
+                shower-front.tex eas-lateral.tex histogram-fit.tex \
+		spectrum.tex
 	latexmk -pdf demo_plots.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
@@ -27,4 +29,7 @@ eas-lateral.tex: demo_eas_ldf.py
 	python $?
 
 histogram-fit.tex: demo_histogram_fit.py
+	python $?
+
+spectrum.tex: demo_spectrum.py
 	python $?

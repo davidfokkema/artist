@@ -9,6 +9,7 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.3}
 \usepackage{graphicx}
+\usepackage{relsize}
 
 \usepackage[detect-family]{siunitx}
 \usepackage[eulergreek]{sansmath}
@@ -51,6 +52,14 @@ initiated by a \SI{1}{\peta\electronvolt} proton.}
 distribution ($\mu = 0$, $\sigma = 1$).  The bin width is \num{.1}.  The
 histogram is fitted with the pdf of the normal distribution, with
 parameters $\mu = \num{3.9e-2}$, $\sigma=\num{1.0}$.}
+\end{figure}
+
+\begin{figure}
+\centering
+\input{spectrum}
+\caption{Differential flux of primary cosmic rays as a function of
+particle energy.  Figure is redrawn from Cronin, Swordy and Gaisser (Sci.
+Am. 1, 1997).}
 \end{figure}
 
 \end{document}
