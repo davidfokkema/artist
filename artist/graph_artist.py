@@ -25,10 +25,10 @@ class GraphArtist:
         self.plot_series_list.append({'options': options,
                                       'data': zip(x, y)})
 
-    def histogram(self, counts, bin_edges):
+    def histogram(self, counts, bin_edges, linestyle='solid'):
         x = bin_edges
         y = list(counts) + [counts[-1]]
-        self.plot(x, y, mark=None, use_steps=True)
+        self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
 
     def add_pin(self, text, location='left', use_arrow=False,
                 relative_position=None):
