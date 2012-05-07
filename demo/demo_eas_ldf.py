@@ -4,9 +4,9 @@ from artist import GraphArtist
 
 
 def main():
-    gamma = np.genfromtxt('showere15-proton.t2001', usecols=(1, 2))
-    e = np.genfromtxt('showere15-proton.t2205', usecols=(1, 2))
-    mu = np.genfromtxt('showere15-proton.t2207', usecols=(1, 2))
+    gamma = np.genfromtxt('data/showere15-proton.t2001', usecols=(1, 2))
+    e = np.genfromtxt('data/showere15-proton.t2205', usecols=(1, 2))
+    mu = np.genfromtxt('data/showere15-proton.t2207', usecols=(1, 2))
 
     graph = GraphArtist(axis='loglog', width=r'.5\linewidth')
 
