@@ -1,4 +1,6 @@
 import jinja2
+import subprocess
+import os
 
 
 class GraphArtist:
@@ -7,6 +9,8 @@ class GraphArtist:
                                                         'artist', 'templates'),
                                          finalize=self._convert_none)
         self.template = environment.get_template('artist_plot.tex')
+        self.document_template = environment.get_template(
+                                    'document_artist_plot.tex')
 
         self.shaded_regions_list = []
         self.plot_series_list = []
@@ -80,24 +84,57 @@ class GraphArtist:
         y = lower + upper
         self.shaded_regions_list.append({'data': zip(x, y), 'color': color})
 
-    def render(self):
-        response = self.template.render(axis=self.axis,
-                                        width=self.width,
-                                        height=self.height,
-                                        xlabel=self.xlabel,
-                                        ylabel=self.ylabel,
-                                        limits=self.limits,
-                                        ticks=self.ticks,
-                                        shaded_regions_list=
-                                            self.shaded_regions_list,
-                                        series_list=self.plot_series_list,
-                                        pin_list=self.pin_list)
+    def render(self, template=None):
+        if not template:
+            template = self.template
+
+        response = template.render(axis=self.axis,
+                                   width=self.width, height=self.height,
+                                   xlabel=self.xlabel, ylabel=self.ylabel,
+                                   limits=self.limits,
+                                   ticks=self.ticks,
+                                   shaded_regions_list=
+                                        self.shaded_regions_list,
+                                   series_list=self.plot_series_list,
+                                   pin_list=self.pin_list)
         return response
 
-    def save(self, path):
-        path = self._add_tex_extension(path)
-        with open(path, 'w') as f:
+    def render_as_document(self):
+        return self.render(self.document_template)
+
+    def save(self, dest_path):
+        dest_path = self._add_tex_extension(dest_path)
+        with open(dest_path, 'w') as f:
             f.write(self.render())
+
+    def save_as_pdf(self, dest_path):
+        build_path = '__build.tex'
+        with open(build_path, 'w') as f:
+            f.write(self.render_as_document())
+        pdf_path = self._build_document(build_path)
+        self._crop_document(pdf_path)
+        os.rename(pdf_path, dest_path)
+
+    def _build_document(self, path):
+        try:
+            subprocess.check_output(['pdflatex', '-halt-on-error', path])
+        except subprocess.CalledProcessError as exc:
+            output_lines = exc.output.split('\n')
+            error_lines = [line for line in output_lines if
+                           line and line[0] == '!']
+            errors = '\n'.join(error_lines)
+            raise RuntimeError("LaTeX compilation failed:\n" + errors)
+
+        pdf_path = path.replace('.tex', '.pdf')
+        return pdf_path
+
+    def _crop_document(self, path):
+        output_path = 'crop-output.pdf'
+        try:
+            subprocess.check_output(['pdfcrop', path, output_path])
+        except subprocess.CalledProcessError as exc:
+            raise RuntimeError("Cropping PDF failed:\n" + exc.output)
+        os.rename(output_path, path)
 
     def set_xlabel(self, text):
         self.xlabel = text
