@@ -1,6 +1,8 @@
 import jinja2
 import subprocess
 import os
+import tempfile
+import shutil
 
 
 class GraphArtist:
@@ -108,16 +110,20 @@ class GraphArtist:
             f.write(self.render())
 
     def save_as_pdf(self, dest_path):
-        build_path = '__build.tex'
+        build_dir = tempfile.mkdtemp()
+        build_path = os.path.join(build_dir, 'document.tex')
         with open(build_path, 'w') as f:
             f.write(self.render_as_document())
         pdf_path = self._build_document(build_path)
         self._crop_document(pdf_path)
         os.rename(pdf_path, dest_path)
+        shutil.rmtree(build_dir)
 
     def _build_document(self, path):
+        dir_path = os.path.dirname(path)
         try:
-            subprocess.check_output(['pdflatex', '-halt-on-error', path])
+            subprocess.check_output(['pdflatex', '-halt-on-error',
+                                     '-output-directory', dir_path, path])
         except subprocess.CalledProcessError as exc:
             output_lines = exc.output.split('\n')
             error_lines = [line for line in output_lines if
