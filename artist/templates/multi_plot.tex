@@ -8,38 +8,57 @@
 % \usepackage{relsize}
 
 \begin{sansmath}
-\begin{tikzpicture}
-\begin{groupplot}[width={{ width }},
-                  group style={rows={{ rows }},columns={{ columns }}}]
-    {% for subplot in subplots %}
-        \nextgroupplot
-        {% for region in subplot.shaded_regions_list %}
-            \addplot[draw=none, fill={{ region.color }}] coordinates {
-            {%- for x, y in region.data %}
-                ({{ x }}, {{ y }})
-            {%- endfor %}
-                } -- cycle;
-        {% endfor %}
-
-        {% for series in subplot.plot_series_list %}
-            \addplot[{{ series.options }}] coordinates {
-            {%- for x, y in series.data %}
-                ({{ x }}, {{ y }})
-            {%- endfor %}
-            };
-        {% endfor %}
-
-        {% for pin in subplot.pin_list %}
-            {%- if pin.use_arrow %}
-                {%- set pin_option = 'pin' %}
-            {%- else %}
-                {%- set pin_option = 'label' %}
+\begin{tikzpicture}[
+        font=\sffamily,
+        every pin/.style={inner sep=2pt, font={\sffamily\smaller}},
+        every label/.style={inner sep=2pt, font={\sffamily\smaller}},
+        every pin edge/.style={<-, >=stealth', shorten <=2pt},
+        pin distance=2.5ex,
+    ]
+    \begin{groupplot}[
+            width={{ width }},
+            {%- if height %}
+            height={{ height }},
             {%- endif %}
-            \node[coordinate,
-                  {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
-                at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
+            %
+            group style={rows={{ rows }},columns={{ columns }},
+                         horizontal sep=4pt, vertical sep=4pt},
+            %
+            tick align=outside,
+            max space between ticks=40,
+            every tick/.style={},
+            %
+            xtick=\empty, ytick=\empty,
+        ]
+        {% for subplot in subplots %}
+            \nextgroupplot[xtick={}, xtick pos=right, xticklabel=\empty]
+            {% for region in subplot.shaded_regions_list %}
+                \addplot[draw=none, fill={{ region.color }}] coordinates {
+                {%- for x, y in region.data %}
+                    ({{ x }}, {{ y }})
+                {%- endfor %}
+                    } -- cycle;
+            {% endfor %}
+
+            {% for series in subplot.plot_series_list %}
+                \addplot[{{ series.options }}] coordinates {
+                {%- for x, y in series.data %}
+                    ({{ x }}, {{ y }})
+                {%- endfor %}
+                };
+            {% endfor %}
+
+            {% for pin in subplot.pin_list %}
+                {%- if pin.use_arrow %}
+                    {%- set pin_option = 'pin' %}
+                {%- else %}
+                    {%- set pin_option = 'label' %}
+                {%- endif %}
+                \node[coordinate,
+                      {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
+                    at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-\end{groupplot}
-\end{tikzpicture}
+    \end{groupplot}
+    \end{tikzpicture}
 \end{sansmath}
