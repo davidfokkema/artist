@@ -1,0 +1,45 @@
+% \usepackage{tikz}
+% \usetikzlibrary{arrows,pgfplots.groupplots}
+% \usepackage{pgfplots}
+% \pgfplotsset{compat=1.3}
+% \usepackage[detect-family]{siunitx}
+% \usepackage[eulergreek]{sansmath}
+% \sisetup{text-sf=\sansmath}
+% \usepackage{relsize}
+
+\begin{sansmath}
+\begin{tikzpicture}
+\begin{groupplot}[width={{ width }},
+                  group style={rows={{ rows }},columns={{ columns }}}]
+    {% for subplot in subplots %}
+        \nextgroupplot
+        {% for region in subplot.shaded_regions_list %}
+            \addplot[draw=none, fill={{ region.color }}] coordinates {
+            {%- for x, y in region.data %}
+                ({{ x }}, {{ y }})
+            {%- endfor %}
+                } -- cycle;
+        {% endfor %}
+
+        {% for series in subplot.plot_series_list %}
+            \addplot[{{ series.options }}] coordinates {
+            {%- for x, y in series.data %}
+                ({{ x }}, {{ y }})
+            {%- endfor %}
+            };
+        {% endfor %}
+
+        {% for pin in subplot.pin_list %}
+            {%- if pin.use_arrow %}
+                {%- set pin_option = 'pin' %}
+            {%- else %}
+                {%- set pin_option = 'label' %}
+            {%- endif %}
+            \node[coordinate,
+                  {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
+                at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
+        {% endfor %}
+    {% endfor %}
+\end{groupplot}
+\end{tikzpicture}
+\end{sansmath}
