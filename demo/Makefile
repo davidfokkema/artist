@@ -13,11 +13,12 @@ distclean: clean
 	rm -f histogram-fit.tex
 	rm -f spectrum.tex
 	rm -f sciencepark.tex
+	rm -f multiplot.tex
 
 demo_plots.pdf: demo_plots.tex \
                 stopping-power-mpl.pdf stopping-power.tex \
                 shower-front.tex eas-lateral.tex histogram-fit.tex \
-		spectrum.tex sciencepark.tex
+		spectrum.tex sciencepark.tex multiplot.tex
 	latexmk -pdf demo_plots.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
@@ -36,4 +37,7 @@ spectrum.tex: demo_spectrum.py
 	python $?
 
 sciencepark.tex: demo_sciencepark.py
+	python $?
+
+multiplot.tex: demo_multiplot.py
 	python $?
