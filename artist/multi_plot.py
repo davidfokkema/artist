@@ -24,28 +24,29 @@ class MultiPlot:
         self.height = height
 
         self.subplots = []
-        for i in range(rows * columns):
-            self.subplots.append(GraphArtist())
+        for i in range(rows):
+            for j in range(columns):
+                self.subplots.append(SubPlot(i, j))
 
     def plot(self, row, column, *args, **kwargs):
         subplot = self._get_subplot_at(row, column)
-        subplot.plot(*args, **kwargs)
+        subplot.plot.plot(*args, **kwargs)
 
     def histogram(self, row, column, *args, **kwargs):
         subplot = self._get_subplot_at(row, column)
-        subplot.histogram(*args, **kwargs)
+        subplot.plot.histogram(*args, **kwargs)
 
     def add_pin(self, row, column, *args, **kwargs):
         subplot = self._get_subplot_at(row, column)
-        subplot.add_pin(*args, **kwargs)
+        subplot.plot.add_pin(*args, **kwargs)
 
     def add_pin_at_xy(self, row, column, *args, **kwargs):
         subplot = self._get_subplot_at(row, column)
-        subplot.add_pin_at_xy(*args, **kwargs)
+        subplot.plot.add_pin_at_xy(*args, **kwargs)
 
     def shade_region(self, row, column, *args, **kwargs):
         subplot = self._get_subplot_at(row, column)
-        subplot.shade_region(*args, **kwargs)
+        subplot.plot.shade_region(*args, **kwargs)
 
     def _get_subplot_at(self, row, column):
         idx = row * self.columns + column
@@ -112,3 +113,10 @@ class MultiPlot:
             return variable
         else:
             return ''
+
+
+class SubPlot:
+    def __init__(self, row, column):
+        self.row = row
+        self.column = column
+        self.plot = GraphArtist()

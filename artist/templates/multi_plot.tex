@@ -32,7 +32,10 @@
         ]
         {% for subplot in subplots %}
             \nextgroupplot[xtick={}, xtick pos=right, xticklabel=\empty]
-            {% for region in subplot.shaded_regions_list %}
+
+            {% set plot = subplot.plot %}
+
+            {% for region in plot.shaded_regions_list %}
                 \addplot[draw=none, fill={{ region.color }}] coordinates {
                 {%- for x, y in region.data %}
                     ({{ x }}, {{ y }})
@@ -40,7 +43,7 @@
                     } -- cycle;
             {% endfor %}
 
-            {% for series in subplot.plot_series_list %}
+            {% for series in plot.plot_series_list %}
                 \addplot[{{ series.options }}] coordinates {
                 {%- for x, y in series.data %}
                     ({{ x }}, {{ y }})
@@ -48,7 +51,7 @@
                 };
             {% endfor %}
 
-            {% for pin in subplot.pin_list %}
+            {% for pin in plot.pin_list %}
                 {%- if pin.use_arrow %}
                     {%- set pin_option = 'pin' %}
                 {%- else %}
@@ -58,6 +61,7 @@
                       {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
                     at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
             {% endfor %}
+
         {% endfor %}
     \end{groupplot}
     \end{tikzpicture}
