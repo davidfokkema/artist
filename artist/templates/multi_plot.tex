@@ -31,7 +31,26 @@
             xtick=\empty, ytick=\empty,
         ]
         {% for subplot in subplots %}
-            \nextgroupplot[xtick={}, xtick pos=right, xticklabel=\empty]
+            \nextgroupplot[
+                {%- if subplot.row == 0 %}
+                    xtick={},
+                    xtick pos=right,
+                    xticklabel=\empty,
+                {%- elif subplot.row == rows - 1 %}
+                    xtick={},
+                    xtick pos=left,
+                    xticklabel=\empty,
+                {%- endif %}
+                {%- if subplot.column == 0 %}
+                    ytick={},
+                    ytick pos=left,
+                    yticklabel=\empty,
+                {%- elif subplot.column == columns - 1 %}
+                    ytick={},
+                    ytick pos=right,
+                    yticklabel=\empty,
+                {%- endif %}
+            ]
 
             {% set plot = subplot.plot %}
 
