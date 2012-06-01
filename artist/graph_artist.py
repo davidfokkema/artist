@@ -105,11 +105,12 @@ class GraphArtist:
         return self.render(self.document_template)
 
     def save(self, dest_path):
-        dest_path = self._add_tex_extension(dest_path)
+        dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
 
     def save_as_pdf(self, dest_path):
+        dest_path = self._add_extension('pdf', dest_path)
         build_dir = tempfile.mkdtemp()
         build_path = os.path.join(build_dir, 'document.tex')
         with open(build_path, 'w') as f:
@@ -198,9 +199,9 @@ class GraphArtist:
             index = int(round(max_idx_x * relative_position))
             return x[index], y[index]
 
-    def _add_tex_extension(self, path):
+    def _add_extension(self, extension, path):
         if not '.' in path:
-            return path + '.tex'
+            return path + '.' + extension
         else:
             return path
 
