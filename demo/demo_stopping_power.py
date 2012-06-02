@@ -44,7 +44,7 @@ def main():
 
     # Artist
 
-    plot = GraphArtist(axis='loglog', width=r'.5\linewidth')
+    plot = GraphArtist(axis='loglog')
     plot.plot(e_beta_gamma, e_loss, mark=None)
     plot.plot(mu_beta_gamma, mu_loss, mark=None)
     plot.set_xlabel(r'$\beta\gamma$')

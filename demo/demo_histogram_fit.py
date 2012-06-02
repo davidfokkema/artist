@@ -27,7 +27,7 @@ def main():
 
 
     # make graph
-    graph = GraphArtist(width=r'.5\linewidth')
+    graph = GraphArtist()
 
     # graph histogram
     graph.histogram(n, bins)

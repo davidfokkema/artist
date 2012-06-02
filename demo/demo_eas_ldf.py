@@ -8,7 +8,7 @@ def main():
     e = np.genfromtxt('data/showere15-proton.t2205', usecols=(1, 2))
     mu = np.genfromtxt('data/showere15-proton.t2207', usecols=(1, 2))
 
-    graph = GraphArtist(axis='loglog', width=r'.5\linewidth')
+    graph = GraphArtist(axis='loglog')
 
     graph.plot(gamma[:, 0], gamma[:, 1], mark=None)
     graph.add_pin(r'$\gamma$')
