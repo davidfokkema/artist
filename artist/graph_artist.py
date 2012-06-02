@@ -17,6 +17,7 @@ class GraphArtist:
         self.shaded_regions_list = []
         self.plot_series_list = []
         self.pin_list = []
+        self.title = None
         self.axis = axis + 'axis'
         self.width = width
         self.height = height
@@ -35,6 +36,9 @@ class GraphArtist:
         x = bin_edges
         y = list(counts) + [counts[-1]]
         self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
+
+    def set_title(self, text):
+        self.title = text
 
     def add_pin(self, text, location='left', use_arrow=False,
                 relative_position=None):
@@ -90,7 +94,7 @@ class GraphArtist:
         if not template:
             template = self.template
 
-        response = template.render(axis=self.axis,
+        response = template.render(axis=self.axis, title=self.title,
                                    width=self.width, height=self.height,
                                    xlabel=self.xlabel, ylabel=self.ylabel,
                                    limits=self.limits,
