@@ -11,6 +11,12 @@
     {\pgfkeysgetvalue{/artist/width}{\defaultwidth}}
     {\def\defaultwidth{ {{ width }} }}
 
+{%- if height %}
+\pgfkeysifdefined{/artist/height}
+    {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+    {\def\defaultheight{ {{ height }} }}
+{%- endif %}
+
 \begin{sansmath}
 \begin{tikzpicture}[
         font=\sffamily,
@@ -22,7 +28,7 @@
     \begin{{ '{' }}{{ axis }}}[
             width=\defaultwidth,
             {%- if height %}
-            height={{ height }},
+            height=\defaultheight,
             {%- endif %}
             %
             xlabel={ {{ xlabel }} },
