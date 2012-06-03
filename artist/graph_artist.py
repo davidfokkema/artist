@@ -17,6 +17,8 @@ class GraphArtist:
         self.shaded_regions_list = []
         self.plot_series_list = []
         self.pin_list = []
+        self.horizontal_lines = []
+        self.vertical_lines = []
         self.title = None
         self.axis = axis + 'axis'
         self.width = width
@@ -90,6 +92,14 @@ class GraphArtist:
         y = lower + upper
         self.shaded_regions_list.append({'data': zip(x, y), 'color': color})
 
+    def draw_horizontal_line(self, yvalue, linestyle=None):
+        self.horizontal_lines.append({'value': yvalue,
+                                      'options': linestyle})
+
+    def draw_vertical_line(self, xvalue, linestyle=None):
+        self.vertical_lines.append({'value': xvalue,
+                                    'options': linestyle})
+
     def render(self, template=None):
         if not template:
             template = self.template
@@ -102,7 +112,9 @@ class GraphArtist:
                                    shaded_regions_list=
                                         self.shaded_regions_list,
                                    series_list=self.plot_series_list,
-                                   pin_list=self.pin_list)
+                                   pin_list=self.pin_list,
+                                   horizontal_lines=self.horizontal_lines,
+                                   vertical_lines=self.vertical_lines)
         return response
 
     def render_as_document(self):

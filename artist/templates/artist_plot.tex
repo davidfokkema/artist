@@ -65,6 +65,18 @@
             };
         {% endfor %}
 
+        {% for line in horizontal_lines %}
+            \draw[{{ line.options }}]
+                ({rel axis cs:0, 0} |- {axis cs:0, {{ line.value }} }) --
+                ({rel axis cs:1, 1} |- {axis cs:0, {{ line.value }} });
+        {% endfor %}
+
+        {% for line in vertical_lines %}
+            \draw[{{ line.options }}]
+                ({rel axis cs:0, 0} -| {axis cs:{{ line.value }}, 0 }) --
+                ({rel axis cs:1, 1} -| {axis cs:{{ line.value }}, 0 });
+        {% endfor %}
+
         {% for pin in pin_list %}
             {%- if pin.use_arrow %}
                 {%- set pin_option = 'pin' %}
