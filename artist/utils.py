@@ -42,7 +42,7 @@ def create_graph_name(suffix='', dirname=None):
     """
     if suffix:
         suffix = '-%s' % suffix
-    caller = get_callers_name()
+    caller = get_callers_name(level=3)
     name = '%s%s%s%s' % (__prefix, caller, suffix, __suffix)
     if dirname:
         name = os.path.join(dirname, name)
