@@ -3,6 +3,7 @@ import subprocess
 import os
 import tempfile
 import shutil
+from itertools import izip_longest
 
 
 class GraphArtist:
@@ -29,10 +30,17 @@ class GraphArtist:
                        'ymin': None, 'ymax': None}
         self.ticks = {'x': [], 'y': []}
 
-    def plot(self, x, y, mark='o', linestyle='solid', use_steps=False):
+    def plot(self, x, y, xerr=[], yerr=[], mark='o',
+             linestyle='solid', use_steps=False):
         options = self._parse_plot_options(mark, linestyle, use_steps)
         self.plot_series_list.append({'options': options,
-                                      'data': zip(x, y)})
+                                      'data': list(izip_longest(
+                                                        x, y, xerr, yerr)),
+                                      'show_xerr': True if len(xerr) else
+                                                   False,
+                                      'show_yerr': True if len(yerr) else
+                                                   False,
+                                     })
 
     def histogram(self, counts, bin_edges, linestyle='solid'):
         x = bin_edges

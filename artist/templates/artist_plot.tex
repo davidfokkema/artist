@@ -58,8 +58,24 @@
         {% endfor %}
 
         {% for series in series_list %}
+            {% if series.show_xerr %}
+            % Draw x-error bars
+            {%- for x, y, xerr, yerr in series.data %}
+            \draw (axis cs:{{ x - xerr }}, {{ y }}) --
+                  (axis cs:{{ x + xerr }}, {{ y }});
+            {%- endfor %}
+            {%- endif %}
+            {%- if series.show_yerr %}
+
+            % Draw y-error bars
+            {%- for x, y, xerr, yerr in series.data %}
+            \draw (axis cs:{{ x }}, {{ y - yerr }}) --
+                  (axis cs:{{ x }}, {{ y + yerr }});
+            {%- endfor %}
+            {% endif %}
+            % Draw series plot
             \addplot[{{ series.options }}] coordinates {
-            {%- for x, y in series.data %}
+            {%- for x, y, xerr, yerr in series.data %}
                 ({{ x }}, {{ y }})
             {%- endfor %}
             };
