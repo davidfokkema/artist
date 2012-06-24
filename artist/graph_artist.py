@@ -196,7 +196,12 @@ class GraphArtist:
     def _parse_plot_options(self, mark, linestyle, use_steps):
         options = []
         if mark is not None:
-            options.append('mark=%s' % mark)
+            if mark == 'o':
+                options.append('mark=*,fill=white')
+            elif mark in ['square', 'triangle', 'diamond', 'pentagon']:
+                options.append('mark=%s*,fill=white' % mark)
+            else:
+                options.append('mark=%s' % mark)
         else:
             options.append('no markers')
 
