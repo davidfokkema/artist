@@ -61,7 +61,7 @@ class GraphArtist:
                 First plot a data series, before using this function""")
 
         data = series['data']
-        x, y = zip(*data)
+        x, y = zip(*data)[:2]
         self.add_pin_at_xy(x, y, text, location, relative_position,
                            use_arrow)
 
