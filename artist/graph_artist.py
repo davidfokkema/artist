@@ -136,6 +136,11 @@ class GraphArtist:
         with open(dest_path, 'w') as f:
             f.write(self.render())
 
+    def save_as_document(self, dest_path):
+        dest_path = self._add_extension('tex', dest_path)
+        with open(dest_path, 'w') as f:
+            f.write(self.render_as_document())
+
     def save_as_pdf(self, dest_path):
         dest_path = self._add_extension('pdf', dest_path)
         build_dir = tempfile.mkdtemp()
