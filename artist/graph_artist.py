@@ -43,6 +43,9 @@ class GraphArtist:
                                      })
 
     def histogram(self, counts, bin_edges, linestyle='solid'):
+        if len(bin_edges) - 1 != len(counts):
+            raise RuntimeError(
+                "The length of bin_edges should be length of counts + 1")
         x = bin_edges
         y = list(counts) + [counts[-1]]
         self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
