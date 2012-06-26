@@ -100,7 +100,7 @@
                 {%- set pin_option = 'label' %}
             {%- endif %}
             \node[coordinate,
-                  {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
+                  {{ pin_option }}={[{{ pin.options }}] {{ pin.location }}:{ {{ pin.text }} }}]
                 at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
         {% endfor %}
     \end{{ '{' }}{{ axis }}}

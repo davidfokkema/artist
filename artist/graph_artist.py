@@ -56,7 +56,7 @@ class GraphArtist:
         self.title = text
 
     def add_pin(self, text, x=None, location='left', use_arrow=False,
-                relative_position=None):
+                relative_position=None, style=None):
         """Add pin to most recent data series"""
 
         try:
@@ -74,10 +74,10 @@ class GraphArtist:
             x, y = series_x, series_y
 
         self.add_pin_at_xy(x, y, text, location, relative_position,
-                           use_arrow)
+                           use_arrow, style)
 
     def add_pin_at_xy(self, x, y, text, location='above right',
-                      relative_position=.9, use_arrow=True):
+                      relative_position=.9, use_arrow=True, style=None):
         """Add pin at x, y location
 
         If x, y are arrays or lists, relative position is used to pick a
@@ -96,7 +96,8 @@ class GraphArtist:
         x, y = self._calc_position_for_pin(x, y, relative_position)
         self.pin_list.append({'x': x, 'y': y, 'text': text,
                               'location': location,
-                              'use_arrow': use_arrow})
+                              'use_arrow': use_arrow,
+                              'options': style})
 
     def shade_region(self, x, lower, upper, color='lightgray'):
         x = list(x)
