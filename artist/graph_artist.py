@@ -1,9 +1,11 @@
-import jinja2
 import subprocess
 import os
 import tempfile
 import shutil
 from itertools import izip_longest
+
+import jinja2
+import numpy as np
 
 
 class GraphArtist:
@@ -53,7 +55,7 @@ class GraphArtist:
     def set_title(self, text):
         self.title = text
 
-    def add_pin(self, text, location='left', use_arrow=False,
+    def add_pin(self, text, x=None, location='left', use_arrow=False,
                 relative_position=None):
         """Add pin to most recent data series"""
 
@@ -64,7 +66,13 @@ class GraphArtist:
                 First plot a data series, before using this function""")
 
         data = series['data']
-        x, y = zip(*data)[:2]
+        series_x, series_y = zip(*data)[:2]
+
+        if x is not None:
+            y = np.interp(x, series_x, series_y)
+        else:
+            x, y = series_x, series_y
+
         self.add_pin_at_xy(x, y, text, location, relative_position,
                            use_arrow)
 
