@@ -7,8 +7,8 @@ import artist
 def main():
     np.random.seed(1)
 
-    graph = artist.MultiPlot(5, 5, width=r'.2\linewidth',
-                             height=r'.2\linewidth')
+    graph = artist.MultiPlot(2, 3, width=r'.33\linewidth',
+                             height=r'.33\linewidth')
     x = np.linspace(-pi, pi)
     graph.plot(0, 1, x, sin(x), mark=None)
     graph.add_pin(0, 1, '$\sin(x)$', relative_position=.5)
@@ -29,6 +29,10 @@ def main():
     graph.shade_region(0, 2, x, lower, upper)
 
     graph.plot(1, 1, range(5), np.random.normal(size=5))
+
+    graph.show_xticklabels_for_all([(0, 0), (1, 1), (0, 2)])
+    graph.show_yticklabels(0, 0)
+    graph.show_yticklabels(1, 2)
 
     graph.save('multiplot')
     graph.save_as_document('preview')

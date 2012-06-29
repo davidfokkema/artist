@@ -48,6 +48,22 @@ class MultiPlot:
         subplot = self._get_subplot_at(row, column)
         subplot.plot.shade_region(*args, **kwargs)
 
+    def show_xticklabels(self, row, column):
+        subplot = self._get_subplot_at(row, column)
+        subplot.show_xticklabels()
+
+    def show_xticklabels_for_all(self, row_column_list):
+        for row, column in row_column_list:
+            self.show_xticklabels(row, column)
+
+    def show_yticklabels(self, row, column):
+        subplot = self._get_subplot_at(row, column)
+        subplot.show_yticklabels()
+
+    def show_yticklabels_for_all(self, row_column_list):
+        for row, column in row_column_list:
+            self.show_yticklabels(row, column)
+
     def _get_subplot_at(self, row, column):
         idx = row * self.columns + column
         return self.subplots[idx]
@@ -125,4 +141,12 @@ class SubPlot:
     def __init__(self, row, column):
         self.row = row
         self.column = column
+        self.show_xticklabel = False
+        self.show_yticklabel = False
         self.plot = GraphArtist()
+
+    def show_xticklabels(self):
+        self.show_xticklabel = True
+
+    def show_yticklabels(self):
+        self.show_yticklabel = True

@@ -54,6 +54,12 @@
                     ytick pos=right,
                     yticklabel=\empty,
                 {%- endif %}
+                {%- if subplot.show_xticklabel %}
+                    xticklabel={},
+                {%- endif %}
+                {%- if subplot.show_yticklabel %}
+                    yticklabel={},
+                {%- endif %}
             ]
 
             {% set plot = subplot.plot %}
