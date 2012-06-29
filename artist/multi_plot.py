@@ -65,11 +65,17 @@ class MultiPlot:
         return self.render(self.document_template)
 
     def save(self, dest_path):
-        dest_path = self._add_tex_extension(dest_path)
+        dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
 
+    def save_as_document(self, dest_path):
+        dest_path = self._add_extension('tex', dest_path)
+        with open(dest_path, 'w') as f:
+            f.write(self.render_as_document())
+
     def save_as_pdf(self, dest_path):
+        dest_path = self._add_extension('pdf', dest_path)
         build_dir = tempfile.mkdtemp()
         build_path = os.path.join(build_dir, 'document.tex')
         with open(build_path, 'w') as f:
@@ -102,9 +108,9 @@ class MultiPlot:
             raise RuntimeError("Cropping PDF failed:\n" + exc.output)
         os.rename(output_path, path)
 
-    def _add_tex_extension(self, path):
+    def _add_extension(self, extension, path):
         if not '.' in path:
-            return path + '.tex'
+            return path + '.' + extension
         else:
             return path
 

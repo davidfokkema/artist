@@ -30,8 +30,9 @@ def main():
 
     graph.plot(1, 1, range(5), np.random.normal(size=5))
 
-    graph.save('multiplot.tex')
-    graph.save_as_pdf('preview.pdf')
+    graph.save('multiplot')
+    graph.save_as_document('preview')
+    graph.save_as_pdf('preview')
 
 
 if __name__ == '__main__':
