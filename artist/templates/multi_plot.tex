@@ -32,12 +32,16 @@
         ]
         {% for subplot in subplots %}
             \nextgroupplot[
+                % Default: empty ticks all round the border of the
+                % multiplot
                 {%- if subplot.row == 0 %}
                     xtick={},
+                    % 'right' means 'top'
                     xtick pos=right,
                     xticklabel=\empty,
                 {%- elif subplot.row == rows - 1 %}
                     xtick={},
+                    % 'left' means 'bottom'
                     xtick pos=left,
                     xticklabel=\empty,
                 {%- endif %}
@@ -53,6 +57,13 @@
             ]
 
             {% set plot = subplot.plot %}
+
+            {% if not plot.shaded_regions_list and not plot.plot_series_list %}
+                % Force something to plot (invisibly).  Otherwise, the
+                % axis will be reset and have a default range *and*
+                % labels.  PGFPLOTS does not allow empty plots.
+                \addplot[] coordinates {(0, 0)};
+            {% endif %}
 
             {% for region in plot.shaded_regions_list %}
                 \addplot[draw=none, fill={{ region.color }}] coordinates {

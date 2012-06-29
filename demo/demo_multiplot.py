@@ -7,8 +7,8 @@ import artist
 def main():
     np.random.seed(1)
 
-    graph = artist.MultiPlot(2, 3, width=r'.35\linewidth',
-                             height=r'.35\linewidth')
+    graph = artist.MultiPlot(5, 5, width=r'.2\linewidth',
+                             height=r'.2\linewidth')
     x = np.linspace(-pi, pi)
     graph.plot(0, 1, x, sin(x), mark=None)
     graph.add_pin(0, 1, '$\sin(x)$', relative_position=.5)
