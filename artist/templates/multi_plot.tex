@@ -8,97 +8,104 @@
 % \usepackage{relsize}
 
 \begin{sansmath}
-\begin{tikzpicture}[
-        font=\sffamily,
-        every pin/.style={inner sep=2pt, font={\sffamily\smaller}},
-        every label/.style={inner sep=2pt, font={\sffamily\smaller}},
-        every pin edge/.style={<-, >=stealth', shorten <=2pt},
-        pin distance=2.5ex,
-    ]
-    \begin{groupplot}[
-            width={{ width }},
-            {%- if height %}
-            height={{ height }},
-            {%- endif %}
-            %
-            group style={rows={{ rows }},columns={{ columns }},
-                         horizontal sep=4pt, vertical sep=4pt},
-            %
-            tick align=outside,
-            max space between ticks=40,
-            every tick/.style={},
-            %
-            xtick=\empty, ytick=\empty,
+\begin{tikzpicture}[font=\sffamily]
+\node[inner sep=0pt] (plot) {
+    \begin{tikzpicture}[
+            inner sep=.3333em,
+            font=\sffamily,
+            every pin/.style={inner sep=2pt, font={\sffamily\smaller}},
+            every label/.style={inner sep=2pt, font={\sffamily\smaller}},
+            every pin edge/.style={<-, >=stealth', shorten <=2pt},
+            pin distance=2.5ex,
         ]
-        {% for subplot in subplots %}
-            \nextgroupplot[
-                % Default: empty ticks all round the border of the
-                % multiplot
-                {%- if subplot.row == 0 %}
-                    xtick={},
-                    % 'right' means 'top'
-                    xtick pos=right,
-                    xticklabel=\empty,
-                {%- elif subplot.row == rows - 1 %}
-                    xtick={},
-                    % 'left' means 'bottom'
-                    xtick pos=left,
-                    xticklabel=\empty,
+        \begin{groupplot}[
+                width={{ width }},
+                {%- if height %}
+                height={{ height }},
                 {%- endif %}
-                {%- if subplot.column == 0 %}
-                    ytick={},
-                    ytick pos=left,
-                    yticklabel=\empty,
-                {%- elif subplot.column == columns - 1 %}
-                    ytick={},
-                    ytick pos=right,
-                    yticklabel=\empty,
-                {%- endif %}
-                {%- if subplot.show_xticklabel %}
-                    xticklabel={},
-                {%- endif %}
-                {%- if subplot.show_yticklabel %}
-                    yticklabel={},
-                {%- endif %}
+                %
+                group style={rows={{ rows }},columns={{ columns }},
+                             horizontal sep=4pt, vertical sep=4pt},
+                %
+                tick align=outside,
+                max space between ticks=40,
+                every tick/.style={},
+                %
+                xtick=\empty, ytick=\empty,
             ]
+            {% for subplot in subplots %}
+                \nextgroupplot[
+                    % Default: empty ticks all round the border of the
+                    % multiplot
+                    {%- if subplot.row == 0 %}
+                        xtick={},
+                        % 'right' means 'top'
+                        xtick pos=right,
+                        xticklabel=\empty,
+                    {%- elif subplot.row == rows - 1 %}
+                        xtick={},
+                        % 'left' means 'bottom'
+                        xtick pos=left,
+                        xticklabel=\empty,
+                    {%- endif %}
+                    {%- if subplot.column == 0 %}
+                        ytick={},
+                        ytick pos=left,
+                        yticklabel=\empty,
+                    {%- elif subplot.column == columns - 1 %}
+                        ytick={},
+                        ytick pos=right,
+                        yticklabel=\empty,
+                    {%- endif %}
+                    {%- if subplot.show_xticklabel %}
+                        xticklabel={},
+                    {%- endif %}
+                    {%- if subplot.show_yticklabel %}
+                        yticklabel={},
+                    {%- endif %}
+                ]
 
-            {% set plot = subplot.plot %}
+                {% set plot = subplot.plot %}
 
-            {% if not plot.shaded_regions_list and not plot.plot_series_list %}
-                % Force something to plot (invisibly).  Otherwise, the
-                % axis will be reset and have a default range *and*
-                % labels.  PGFPLOTS does not allow empty plots.
-                \addplot[] coordinates {(0, 0)};
-            {% endif %}
+                {% if not plot.shaded_regions_list and not plot.plot_series_list %}
+                    % Force something to plot (invisibly).  Otherwise, the
+                    % axis will be reset and have a default range *and*
+                    % labels.  PGFPLOTS does not allow empty plots.
+                    \addplot[] coordinates {(0, 0)};
+                {% endif %}
 
-            {% for region in plot.shaded_regions_list %}
-                \addplot[draw=none, fill={{ region.color }}] coordinates {
-                {%- for x, y in region.data %}
-                    ({{ x }}, {{ y }})
-                {%- endfor %}
-                    } -- cycle;
+                {% for region in plot.shaded_regions_list %}
+                    \addplot[draw=none, fill={{ region.color }}] coordinates {
+                    {%- for x, y in region.data %}
+                        ({{ x }}, {{ y }})
+                    {%- endfor %}
+                        } -- cycle;
+                {% endfor %}
+
+                {% for series in plot.plot_series_list %}
+                    \addplot[{{ series.options }}] coordinates {
+                    {%- for x, y in series.data %}
+                        ({{ x }}, {{ y }})
+                    {%- endfor %}
+                    };
+                {% endfor %}
+
+                {% for pin in plot.pin_list %}
+                    {%- if pin.use_arrow %}
+                        {%- set pin_option = 'pin' %}
+                    {%- else %}
+                        {%- set pin_option = 'label' %}
+                    {%- endif %}
+                    \node[coordinate,
+                          {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
+                        at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
+                {% endfor %}
+
             {% endfor %}
-
-            {% for series in plot.plot_series_list %}
-                \addplot[{{ series.options }}] coordinates {
-                {%- for x, y in series.data %}
-                    ({{ x }}, {{ y }})
-                {%- endfor %}
-                };
-            {% endfor %}
-
-            {% for pin in plot.pin_list %}
-                {%- if pin.use_arrow %}
-                    {%- set pin_option = 'pin' %}
-                {%- else %}
-                    {%- set pin_option = 'label' %}
-                {%- endif %}
-                \node[coordinate,
-                      {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
-                    at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
-            {% endfor %}
-
-        {% endfor %}
-    \end{groupplot}
+        \end{groupplot}
+        \end{tikzpicture}
+    };
+    \node[below] at (plot.south) { {{ xlabel }} };
+    \node[above, rotate=90] at (plot.west) { {{ ylabel }} };
     \end{tikzpicture}
 \end{sansmath}

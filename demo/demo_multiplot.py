@@ -34,6 +34,9 @@ def main():
     graph.show_yticklabels(0, 0)
     graph.show_yticklabels(1, 2)
 
+    graph.set_ylabel(r"Particle density [\si{\per\square\meter}]")
+    graph.set_xlabel(r"Core distance [\si{\meter}]")
+
     graph.save('multiplot')
     graph.save_as_document('preview')
     graph.save_as_pdf('preview')

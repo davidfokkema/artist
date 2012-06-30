@@ -22,6 +22,8 @@ class MultiPlot:
         self.axis = axis
         self.width = width
         self.height = height
+        self.xlabel = None
+        self.ylabel = None
 
         self.subplots = []
         for i in range(rows):
@@ -74,6 +76,7 @@ class MultiPlot:
 
         response = template.render(rows=self.rows, columns=self.columns,
                                    width=self.width, height=self.height,
+                                   xlabel=self.xlabel, ylabel=self.ylabel,
                                    subplots=self.subplots)
         return response
 
@@ -123,6 +126,12 @@ class MultiPlot:
         except subprocess.CalledProcessError as exc:
             raise RuntimeError("Cropping PDF failed:\n" + exc.output)
         os.rename(output_path, path)
+
+    def set_xlabel(self, text):
+        self.xlabel = text
+
+    def set_ylabel(self, text):
+        self.ylabel = text
 
     def _add_extension(self, extension, path):
         if not '.' in path:
