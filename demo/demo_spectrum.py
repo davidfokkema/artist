@@ -3,6 +3,7 @@ import numpy as np
 from artist import GraphArtist
 
 
+
 def main():
     leap = np.genfromtxt('data/leap-prot.dat', delimiter=',',
                          usecols=(0, 1), names=['E', 'F'])
@@ -19,18 +20,24 @@ def main():
                         width=r'.5\linewidth', height=r'.65\linewidth')
 
     graph.plot(leap['E'], leap['F'], mark=None)
-    graph.add_pin('LEAP', 'above right', True, .5)
+    graph.add_pin('LEAP', 'above right', use_arrow=True,
+                  relative_position=.5)
     graph.plot(proton['E'], proton['F'], mark=None)
-    graph.add_pin('PROTON', 'above right', True, .5)
+    graph.add_pin('PROTON', 'above right', use_arrow=True,
+                  relative_position=.5)
     graph.plot(akeno_new_lo['E'], akeno_new_lo['F'], mark=None)
-    graph.add_pin('AGASA', 'above right', True, .5)
+    graph.add_pin('AGASA', 'above right', use_arrow=True,
+                  relative_position=.5)
 
     graph.plot(yakutsk['E'], yakutsk['F'], mark=None)
-    graph.add_pin('Yakutsk', 'below left', True, .55)
+    graph.add_pin('Yakutsk', 'below left', use_arrow=True,
+                  relative_position=.55)
     graph.plot(haverah['E'], haverah['F'], mark=None)
-    graph.add_pin('Haverah Park', 'below left', True, .85)
+    graph.add_pin('Haverah Park', 'below left', use_arrow=True,
+                  relative_position=.85)
     graph.plot(flys_eye['E'], flys_eye['F'], mark=None)
-    graph.add_pin("Fly's Eye", 'below left', True, 1.0)
+    graph.add_pin("Fly's Eye", 'below left', use_arrow=True,
+                  relative_position=1.0)
 
     graph.set_xlabel(r"Energy [\si{\electronvolt}]")
     graph.set_ylabel(r"Flux [\si{\per\square\meter\per\steradian"

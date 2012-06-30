@@ -55,7 +55,7 @@ class GraphArtist:
     def set_title(self, text):
         self.title = text
 
-    def add_pin(self, text, x=None, location='left', use_arrow=False,
+    def add_pin(self, text, location='left', x=None, use_arrow=False,
                 relative_position=None, style=None):
         """Add pin to most recent data series"""
 

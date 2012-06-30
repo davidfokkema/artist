@@ -85,7 +85,7 @@
 
                 {% for series in plot.plot_series_list %}
                     \addplot[{{ series.options }}] coordinates {
-                    {%- for x, y in series.data %}
+                    {%- for x, y, xerr, yerr in series.data %}
                         ({{ x }}, {{ y }})
                     {%- endfor %}
                     };
