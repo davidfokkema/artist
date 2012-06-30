@@ -38,6 +38,10 @@ class MultiPlot:
         subplot = self._get_subplot_at(row, column)
         subplot.plot.histogram(*args, **kwargs)
 
+    def set_title(self, row, column, text):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_title(text)
+
     def add_pin(self, row, column, *args, **kwargs):
         subplot = self._get_subplot_at(row, column)
         subplot.plot.add_pin(*args, **kwargs)
