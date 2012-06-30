@@ -133,6 +133,14 @@ class MultiPlot:
     def set_ylabel(self, text):
         self.ylabel = text
 
+    def set_subplot_xlabel(self, row, column, text):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_xlabel(text)
+
+    def set_subplot_ylabel(self, row, column, text):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_ylabel(text)
+
     def _add_extension(self, extension, path):
         if not '.' in path:
             return path + '.' + extension

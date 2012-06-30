@@ -37,6 +37,9 @@ def main():
     graph.set_ylabel(r"Particle density [\si{\per\square\meter}]")
     graph.set_xlabel(r"Core distance [\si{\meter}]")
 
+    graph.set_subplot_xlabel(0, 1, "number")
+    graph.set_subplot_ylabel(1, 2, r"$\tan x$")
+
     graph.save('multiplot')
     graph.save_as_document('preview')
     graph.save_as_pdf('preview')

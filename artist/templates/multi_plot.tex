@@ -34,6 +34,7 @@
                 xtick=\empty, ytick=\empty,
             ]
             {% for subplot in subplots %}
+                {% set plot = subplot.plot %}
                 \nextgroupplot[
                     % Default: empty ticks all round the border of the
                     % multiplot
@@ -63,9 +64,9 @@
                     {%- if subplot.show_yticklabel %}
                         yticklabel={},
                     {%- endif %}
+                    xlabel={ {{ plot.xlabel }} },
+                    ylabel={ {{ plot.ylabel }} },
                 ]
-
-                {% set plot = subplot.plot %}
 
                 {% if not plot.shaded_regions_list and not plot.plot_series_list %}
                     % Force something to plot (invisibly).  Otherwise, the
