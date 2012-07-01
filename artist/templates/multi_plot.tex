@@ -6,7 +6,17 @@
 % \usepackage[eulergreek]{sansmath}
 % \sisetup{text-sf=\sansmath}
 % \usepackage{relsize}
-
+%
+\pgfkeysifdefined{/artist/width}
+    {\pgfkeysgetvalue{/artist/width}{\defaultwidth}}
+    {\def\defaultwidth{ {{ width }} }}
+%
+{%- if height %}
+\pgfkeysifdefined{/artist/height}
+    {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+    {\def\defaultheight{ {{ height }} }}
+{%- endif %}
+%
 \begin{sansmath}
 \begin{tikzpicture}[font=\sffamily]
 \node[inner sep=0pt] (plot) {
@@ -21,9 +31,9 @@
         \begin{groupplot}[
                 xmode={{ xmode }},
                 ymode={{ ymode }},
-                width={{ width }},
+                width=\defaultwidth,
                 {%- if height %}
-                height={{ height }},
+                height=\defaultheight,
                 {%- endif %}
                 %
                 xmin={ {{ limits.xmin }} },
