@@ -19,10 +19,17 @@
             pin distance=2.5ex,
         ]
         \begin{groupplot}[
+                xmode={{ xmode }},
+                ymode={{ ymode }},
                 width={{ width }},
                 {%- if height %}
                 height={{ height }},
                 {%- endif %}
+                %
+                xmin={ {{ limits.xmin }} },
+                xmax={ {{ limits.xmax }} },
+                ymin={ {{ limits.ymin }} },
+                ymax={ {{ limits.ymax }} },
                 %
                 group style={rows={{ rows }},columns={{ columns }},
                              horizontal sep=4pt, vertical sep=4pt},
@@ -38,23 +45,31 @@
                 \nextgroupplot[
                     % Default: empty ticks all round the border of the
                     % multiplot
-                    {%- if subplot.row == 0 %}
-                        xtick={},
+                    {%- if rows == 1 %}
+                        xtick={ {{ ticks.x | join(', ') }} },
+                        xtick pos=both,
+                        xticklabel=\empty,
+                    {%- elif subplot.row == 0 %}
+                        xtick={ {{ ticks.x | join(', ') }} },
                         % 'right' means 'top'
                         xtick pos=right,
                         xticklabel=\empty,
                     {%- elif subplot.row == rows - 1 %}
-                        xtick={},
+                        xtick={ {{ ticks.x | join(', ') }} },
                         % 'left' means 'bottom'
                         xtick pos=left,
                         xticklabel=\empty,
                     {%- endif %}
-                    {%- if subplot.column == 0 %}
-                        ytick={},
+                    {%- if columns == 1 %}
+                        ytick={ {{ ticks.y | join(', ') }} },
+                        ytick pos=both,
+                        yticklabel=\empty,
+                    {%- elif subplot.column == 0 %}
+                        ytick={ {{ ticks.y | join(', ') }} },
                         ytick pos=left,
                         yticklabel=\empty,
                     {%- elif subplot.column == columns - 1 %}
-                        ytick={},
+                        ytick={ {{ ticks.y | join(', ') }} },
                         ytick pos=right,
                         yticklabel=\empty,
                     {%- endif %}
@@ -90,6 +105,18 @@
                         ({{ x }}, {{ y }})
                     {%- endfor %}
                     };
+                {% endfor %}
+
+                {% for line in plot.horizontal_lines %}
+                    \draw[{{ line.options }}]
+                        ({rel axis cs:0, 0} |- {axis cs:0, {{ line.value }} }) --
+                        ({rel axis cs:1, 1} |- {axis cs:0, {{ line.value }} });
+                {% endfor %}
+
+                {% for line in plot.vertical_lines %}
+                    \draw[{{ line.options }}]
+                        ({rel axis cs:0, 0} -| {axis cs:{{ line.value }}, 0 }) --
+                        ({rel axis cs:1, 1} -| {axis cs:{{ line.value }}, 0 });
                 {% endfor %}
 
                 {% for pin in plot.pin_list %}

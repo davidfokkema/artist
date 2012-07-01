@@ -19,11 +19,14 @@ class MultiPlot:
 
         self.rows = rows
         self.columns = columns
-        self.axis = axis
+        self.xmode, self.ymode = self._get_axis_options(axis)
         self.width = width
         self.height = height
         self.xlabel = None
         self.ylabel = None
+        self.limits = {'xmin': None, 'xmax': None,
+                       'ymin': None, 'ymax': None}
+        self.ticks = {'x': [], 'y': []}
 
         self.subplots = []
         for i in range(rows):
@@ -54,6 +57,14 @@ class MultiPlot:
         subplot = self._get_subplot_at(row, column)
         subplot.plot.shade_region(*args, **kwargs)
 
+    def draw_horizontal_line(self, row, column, yvalue, linestyle=None):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.draw_horizontal_line(yvalue, linestyle)
+
+    def draw_vertical_line(self, row, column, xvalue, linestyle=None):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.draw_vertical_line(xvalue, linestyle)
+
     def show_xticklabels(self, row, column):
         subplot = self._get_subplot_at(row, column)
         subplot.show_xticklabels()
@@ -70,6 +81,26 @@ class MultiPlot:
         for row, column in row_column_list:
             self.show_yticklabels(row, column)
 
+    def set_xlimits(self, min=None, max=None):
+        self.limits['xmin'] = min
+        self.limits['xmax'] = max
+
+    def set_ylimits(self, min=None, max=None):
+        self.limits['ymin'] = min
+        self.limits['ymax'] = max
+
+    def set_xticks(self, ticks):
+        self.ticks['x'] = ticks
+
+    def set_logxticks(self, logticks):
+        self.ticks['x'] = ['1e%d' % u for u in logticks]
+
+    def set_yticks(self, ticks):
+        self.ticks['y'] = ticks
+
+    def set_logyticks(self, logticks):
+        self.ticks['y'] = ['1e%d' % u for u in logticks]
+
     def _get_subplot_at(self, row, column):
         idx = row * self.columns + column
         return self.subplots[idx]
@@ -79,8 +110,10 @@ class MultiPlot:
             template = self.template
 
         response = template.render(rows=self.rows, columns=self.columns,
+                                   xmode=self.xmode, ymode=self.ymode,
                                    width=self.width, height=self.height,
                                    xlabel=self.xlabel, ylabel=self.ylabel,
+                                   limits=self.limits, ticks=self.ticks,
                                    subplots=self.subplots)
         return response
 
@@ -156,6 +189,16 @@ class MultiPlot:
             return variable
         else:
             return ''
+
+    def _get_axis_options(self, axis):
+        if axis == 'loglog':
+            return 'log', 'log'
+        elif axis == 'semilogx':
+            return 'log', 'normal'
+        elif axis == 'semilogy':
+            return 'normal', 'log'
+        else:
+            return 'normal', 'normal'
 
 
 class SubPlot:
