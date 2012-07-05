@@ -266,7 +266,7 @@ class GraphArtist:
             if mark in ['o', 'square', 'triangle', 'diamond', 'pentagon']:
                 if mark == 'o':
                     mark = ''
-                options.append('mark=%s*,mark options=white' % mark)
+                options.append('mark=%s*,mark options=white,only marks' % mark)
         options_string = ','.join(options)
         return options_string
 
