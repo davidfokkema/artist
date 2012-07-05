@@ -49,6 +49,7 @@
                 every tick/.style={},
                 %
                 xtick=\empty, ytick=\empty,
+                scaled ticks=false,
             ]
             {% for subplot in subplots %}
                 {% set plot = subplot.plot %}
@@ -139,6 +140,13 @@
                           {{ pin_option }}={{ pin.location }}:{ {{ pin.text }} }]
                         at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
                 {% endfor %}
+
+                {% if plot.label %}
+                    \node[{{ plot.label.node_location }}=2pt]
+                        at (rel axis cs:{{ plot.label.x }},
+                            {{ plot.label.y }})
+                        { {{ plot.label.text }} };
+                {% endif %}
 
             {% endfor %}
         \end{groupplot}

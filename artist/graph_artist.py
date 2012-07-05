@@ -8,6 +8,16 @@ import jinja2
 import numpy as np
 
 
+RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
+                                           'x': 1, 'y': 1},
+                           'upper left': {'node_location': 'below right',
+                                          'x': 0, 'y': 1},
+                           'lower left': {'node_location': 'above right',
+                                          'x': 0, 'y': 0},
+                           'lower right': {'node_location': 'above left',
+                                          'x': 1, 'y': 0}}
+
+
 class GraphArtist:
     def __init__(self, axis='', width=r'.67\linewidth', height=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
@@ -28,6 +38,7 @@ class GraphArtist:
         self.height = height
         self.xlabel = None
         self.ylabel = None
+        self.label = None
         self.limits = {'xmin': None, 'xmax': None,
                        'ymin': None, 'ymax': None}
         self.ticks = {'x': [], 'y': []}
@@ -54,6 +65,14 @@ class GraphArtist:
 
     def set_title(self, text):
         self.title = text
+
+    def set_label(self, text, location='upper right'):
+        if location in RELATIVE_NODE_LOCATIONS:
+            label = RELATIVE_NODE_LOCATIONS[location].copy()
+            label['text'] = text
+            self.label = label
+        else:
+            raise RuntimeError("Unknown label location: %s" % location)
 
     def add_pin(self, text, location='left', x=None, use_arrow=False,
                 relative_position=None, style=None):
@@ -127,6 +146,7 @@ class GraphArtist:
         response = template.render(axis=self.axis, title=self.title,
                                    width=self.width, height=self.height,
                                    xlabel=self.xlabel, ylabel=self.ylabel,
+                                   label=self.label,
                                    limits=self.limits,
                                    ticks=self.ticks,
                                    shaded_regions_list=

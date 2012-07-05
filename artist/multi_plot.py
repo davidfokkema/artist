@@ -45,6 +45,10 @@ class MultiPlot:
         subplot = self._get_subplot_at(row, column)
         subplot.plot.set_title(text)
 
+    def set_label(self, row, column, text, location='upper right'):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_label(text, location)
+
     def add_pin(self, row, column, *args, **kwargs):
         subplot = self._get_subplot_at(row, column)
         subplot.plot.add_pin(*args, **kwargs)

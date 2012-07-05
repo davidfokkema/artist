@@ -103,6 +103,13 @@
                   {{ pin_option }}={[{{ pin.options }}] {{ pin.location }}:{ {{ pin.text }} }}]
                 at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
         {% endfor %}
+
+        {% if label %}
+            \node[{{ label.node_location }}=2pt]
+                at (rel axis cs:{{ label.x }}, {{ label.y }})
+                { {{ label.text }} };
+        {% endif %}
+
     \end{{ '{' }}{{ axis }}}
 \end{tikzpicture}
 \end{sansmath}

@@ -39,6 +39,7 @@ def main():
     # set labels and limits
     graph.set_xlabel("value")
     graph.set_ylabel("count")
+    graph.set_label("Fit to data")
     graph.set_xlimits(-6, 6)
 
     # save graph to file
