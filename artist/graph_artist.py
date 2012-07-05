@@ -56,7 +56,8 @@ class GraphArtist:
         if options:
             plot_series = self._create_plot_series_object(x, y,
                                                           options=options)
-            self.plot_series_list.append(plot_series)
+            # make sure all background clear operations are performed first
+            self.plot_series_list.insert(0, plot_series)
 
     def _create_plot_series_object(self, x, y, xerr=[], yerr=[],
                                    options=None):
