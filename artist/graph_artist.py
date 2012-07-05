@@ -45,15 +45,25 @@ class GraphArtist:
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
              linestyle='solid', use_steps=False):
+        self._clear_plot_mark_background(x, y, mark)
         options = self._parse_plot_options(mark, linestyle, use_steps)
-        self.plot_series_list.append({'options': options,
-                                      'data': list(izip_longest(
-                                                        x, y, xerr, yerr)),
-                                      'show_xerr': True if len(xerr) else
-                                                   False,
-                                      'show_yerr': True if len(yerr) else
-                                                   False,
-                                     })
+        plot_series = self._create_plot_series_object(x, y, xerr, yerr,
+                                                      options)
+        self.plot_series_list.append(plot_series)
+
+    def _clear_plot_mark_background(self, x, y, mark):
+        options = self._create_mark_background_options(mark)
+        if options:
+            plot_series = self._create_plot_series_object(x, y,
+                                                          options=options)
+            self.plot_series_list.append(plot_series)
+
+    def _create_plot_series_object(self, x, y, xerr=[], yerr=[],
+                                   options=None):
+        return {'options': options, 'data': list(izip_longest(x, y, xerr,
+                                                              yerr)),
+                'show_xerr': True if len(xerr) else False,
+                'show_yerr': True if len(yerr) else False}
 
     def histogram(self, counts, bin_edges, linestyle='solid'):
         if len(bin_edges) - 1 != len(counts):
@@ -230,15 +240,11 @@ class GraphArtist:
     def set_logyticks(self, logticks):
         self.ticks['y'] = ['1e%d' % u for u in logticks]
 
-    def _parse_plot_options(self, mark, linestyle, use_steps):
+    def _parse_plot_options(self, mark=None, linestyle=None,
+                            use_steps=False):
         options = []
         if mark is not None:
-            if mark in ['o', 'square', 'triangle', 'diamond', 'pentagon']:
-                if mark == 'o':
-                    mark = ''
-                options.append('mark=%s*,mark options={fill=white}' % mark)
-            else:
-                options.append('mark=%s' % mark)
+            options.append('mark=%s' % mark)
         else:
             options.append('no markers')
 
@@ -250,6 +256,16 @@ class GraphArtist:
         if use_steps is True:
             options.append('const plot')
 
+        options_string = ','.join(options)
+        return options_string
+
+    def _create_mark_background_options(self, mark=None):
+        options = []
+        if mark is not None:
+            if mark in ['o', 'square', 'triangle', 'diamond', 'pentagon']:
+                if mark == 'o':
+                    mark = ''
+                options.append('mark=%s*,mark options=white' % mark)
         options_string = ','.join(options)
         return options_string
 
