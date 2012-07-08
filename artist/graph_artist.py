@@ -29,6 +29,7 @@ class GraphArtist:
 
         self.shaded_regions_list = []
         self.plot_series_list = []
+        self.histogram2d_list = []
         self.pin_list = []
         self.horizontal_lines = []
         self.vertical_lines = []
@@ -73,6 +74,27 @@ class GraphArtist:
         x = bin_edges
         y = list(counts) + [counts[-1]]
         self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
+
+    def histogram2d(self, counts, x_edges, y_edges, type='bw',
+                    style=None):
+        if counts.shape != (len(x_edges) - 1, len(y_edges) - 1):
+            raise RuntimeError(
+                "The length of x_edges and y_edges should match counts")
+
+        if type not in ['bw', 'reverse_bw', 'area']:
+            raise RuntimeError("Histogram type %s not supported" % type)
+
+        x_centers = (x_edges[:-1] + x_edges[1:]) / 2
+        y_centers = (y_edges[:-1] + y_edges[1:]) / 2
+
+        self.histogram2d_list.append({'x_edges': x_edges,
+                                      'y_edges': y_edges,
+                                      'x_centers': x_centers,
+                                      'y_centers': y_centers,
+                                      'counts': counts,
+                                      'max': counts.max(),
+                                      'type': type,
+                                      'style': style})
 
     def set_title(self, text):
         self.title = text
@@ -163,6 +185,7 @@ class GraphArtist:
                                    shaded_regions_list=
                                         self.shaded_regions_list,
                                    series_list=self.plot_series_list,
+                                   histogram2d_list=self.histogram2d_list,
                                    pin_list=self.pin_list,
                                    horizontal_lines=self.horizontal_lines,
                                    vertical_lines=self.vertical_lines)
