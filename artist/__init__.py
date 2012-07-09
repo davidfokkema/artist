@@ -6,4 +6,4 @@
 """
 from graph_artist import GraphArtist
 from multi_plot import MultiPlot
-from smooth import smooth
+from recursive_smooth import smooth
