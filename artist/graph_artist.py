@@ -302,8 +302,10 @@ class GraphArtist:
         else:
             assert max_idx_x == max_idx_y, \
                 'If x and y are iterables, they must be the same length'
-            index = int(round(max_idx_x * relative_position))
-            return x[index], y[index]
+            x0, x1 = x[0], x[-1]
+            xs = relative_position * (x1 - x0) + x0
+            ys = np.interp(xs, x, y)
+            return xs, ys
 
     def _add_extension(self, extension, path):
         if not '.' in path:
