@@ -95,6 +95,8 @@ class GraphArtist:
                                       'max': counts.max(),
                                       'type': type,
                                       'style': style})
+        self.set_xlimits(min(x_edges), max(x_edges))
+        self.set_ylimits(min(y_edges), max(y_edges))
 
     def set_title(self, text):
         self.title = text
