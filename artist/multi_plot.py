@@ -97,6 +97,14 @@ class MultiPlot:
         self.limits['xmin'] = min
         self.limits['xmax'] = max
 
+    def set_xlimits_for(self, row, column, min=None, max=None):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_xlimits(min, max)
+
+    def set_ylimits_for(self, row, column, min=None, max=None):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_ylimits(min, max)
+
     def set_ylimits(self, min=None, max=None):
         self.limits['ymin'] = min
         self.limits['ymax'] = max

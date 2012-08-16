@@ -104,6 +104,18 @@
                     title={ {{ plot.title }} },
                     xlabel={ {{ plot.xlabel }} },
                     ylabel={ {{ plot.ylabel }} },
+                    {%- if subplot.plot.limits.xmin is not none %}
+                        xmin={ {{ subplot.plot.limits.xmin }} },
+                    {%- endif %}
+                    {%- if subplot.plot.limits.xmax is not none %}
+                        xmax={ {{ subplot.plot.limits.xmax }} },
+                    {%- endif %}
+                    {%- if subplot.plot.limits.ymin is not none %}
+                        ymin={ {{ subplot.plot.limits.ymin }} },
+                    {%- endif %}
+                    {%- if subplot.plot.limits.ymax is not none %}
+                        ymax={ {{ subplot.plot.limits.ymax }} },
+                    {%- endif %}
                 ]
 
                 {% if not plot.shaded_regions_list and not plot.plot_series_list %}
