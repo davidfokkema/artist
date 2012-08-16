@@ -51,7 +51,7 @@
         ]
 
         {% for histogram in histogram2d_list %}
-            % Draw histogram backbround, if needed
+            % Draw histogram background, if needed
             {%- if histogram.type in ['bw', 'reverse_bw'] %}
                 {%- if histogram.type == 'bw' %}
                     {%- set histogrambg = 'black' %}
