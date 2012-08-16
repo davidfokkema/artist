@@ -95,6 +95,12 @@
                     {%- if subplot.show_yticklabel %}
                         yticklabel={},
                     {%- endif %}
+                    {%- if subplot.xticklabel_pos %}
+                        xticklabel pos={{ subplot.xticklabel_pos }},
+                    {%- endif %}
+                    {%- if subplot.yticklabel_pos %}
+                        yticklabel pos={{ subplot.yticklabel_pos }},
+                    {%- endif %}
                     title={ {{ plot.title }} },
                     xlabel={ {{ plot.xlabel }} },
                     ylabel={ {{ plot.ylabel }} },

@@ -85,6 +85,14 @@ class MultiPlot:
         for row, column in row_column_list:
             self.show_yticklabels(row, column)
 
+    def set_xticklabels_position(self, row, column, position):
+        subplot = self._get_subplot_at(row, column)
+        subplot.set_xticklabels_position(position)
+
+    def set_yticklabels_position(self, row, column, position):
+        subplot = self._get_subplot_at(row, column)
+        subplot.set_yticklabels_position(position)
+
     def set_xlimits(self, min=None, max=None):
         self.limits['xmin'] = min
         self.limits['xmax'] = max
@@ -211,6 +219,8 @@ class SubPlot:
         self.column = column
         self.show_xticklabel = False
         self.show_yticklabel = False
+        self.xticklabel_pos = None
+        self.yticklabel_pos = None
         self.plot = GraphArtist()
 
     def show_xticklabels(self):
@@ -218,3 +228,9 @@ class SubPlot:
 
     def show_yticklabels(self):
         self.show_yticklabel = True
+
+    def set_xticklabels_position(self, position):
+        self.xticklabel_pos = position
+
+    def set_yticklabels_position(self, position):
+        self.yticklabel_pos = position
