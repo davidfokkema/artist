@@ -57,7 +57,7 @@
                 \nextgroupplot[
                     % Default: empty ticks all round the border of the
                     % multiplot
-                    {%- if ticks.x is not none %}
+                    {%- if ticks.x is not none and subplot.plot.ticks.x is not none %}
                         {%- if rows == 1 %}
                             xtick={ {{ ticks.x | join(', ') }} },
                             xtick pos=both,
@@ -74,7 +74,7 @@
                             xticklabel=\empty,
                         {%- endif %}
                     {%- endif %}
-                    {%- if ticks.y is not none %}
+                    {%- if ticks.y is not none and subplot.plot.ticks.y is not none %}
                         {%- if columns == 1 %}
                             ytick={ {{ ticks.y | join(', ') }} },
                             ytick pos=both,
