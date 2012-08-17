@@ -89,6 +89,12 @@
                             yticklabel=\empty,
                         {%- endif %}
                     {%- endif %}
+                    {%- if subplot.plot.ticks.x %}
+                        xtick={ {{ subplot.plot.ticks.x | join(', ') }} },
+                    {%- endif %}
+                    {%- if subplot.plot.ticks.y %}
+                        ytick={ {{ subplot.plot.ticks.y | join(', ') }} },
+                    {%- endif %}
                     {%- if subplot.show_xticklabel %}
                         xticklabel={},
                     {%- endif %}

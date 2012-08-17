@@ -129,17 +129,49 @@ class MultiPlot:
             for row, column in row_column_list:
                 self.set_ylimits(row, column, min, max)
 
-    def set_xticks(self, ticks):
-        self.ticks['x'] = ticks
+    def set_xticks(self, row, column, ticks):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_xticks(ticks)
 
-    def set_logxticks(self, logticks):
-        self.ticks['x'] = ['1e%d' % u for u in logticks]
+    def set_xticks_for_all(self, row_column_list, ticks):
+        if row_column_list is None:
+            self.ticks['x'] = ticks
+        else:
+            for row, column in row_column_list:
+                self.set_xticks(row, column, ticks)
 
-    def set_yticks(self, ticks):
-        self.ticks['y'] = ticks
+    def set_logxticks(self, row, column, logticks):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_logxticks(logticks)
 
-    def set_logyticks(self, logticks):
-        self.ticks['y'] = ['1e%d' % u for u in logticks]
+    def set_logxticks_for_all(self, row_column_list, logticks):
+        if row_column_list is None:
+            self.ticks['x'] = ['1e%d' % u for u in logticks]
+        else:
+            for row, column in row_column_list:
+                self.set_logxticks(row, column, logticks)
+
+    def set_yticks(self, row, column, ticks):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_yticks(ticks)
+
+    def set_yticks_for_all(self, row_column_list, ticks):
+        if row_column_list is None:
+            self.ticks['y'] = ticks
+        else:
+            for row, column in row_column_list:
+                self.set_yticks(row, column, ticks)
+
+    def set_logyticks(self, row, column, logticks):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.set_logyticks(logticks)
+
+    def set_logyticks_for_all(self, row_column_list, logticks):
+        if row_column_list is None:
+            self.ticks['y'] = ['1e%d' % u for u in logticks]
+        else:
+            for row, column in row_column_list:
+                self.set_logyticks(row, column, logticks)
 
     def _get_subplot_at(self, row, column):
         idx = row * self.columns + column
