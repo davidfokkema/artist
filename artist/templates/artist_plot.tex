@@ -156,7 +156,11 @@
         {% endfor %}
 
         {% if label %}
+            {%- if label.node_location != 'center' %}
             \node[{{ label.node_location }}=2pt]
+            {%- else %}
+            \node
+            {%- endif %}
                 at (rel axis cs:{{ label.x }}, {{ label.y }})
                 { {{ label.text }} };
         {% endif %}

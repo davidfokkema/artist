@@ -15,7 +15,9 @@ RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
                            'lower left': {'node_location': 'above right',
                                           'x': 0, 'y': 0},
                            'lower right': {'node_location': 'above left',
-                                          'x': 1, 'y': 0}}
+                                           'x': 1, 'y': 0},
+                           'center': {'node_location': 'center',
+                                      'x': 0.5, 'y': 0.5}}
 
 
 class GraphArtist:
