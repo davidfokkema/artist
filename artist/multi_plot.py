@@ -33,6 +33,14 @@ class MultiPlot:
             for j in range(columns):
                 self.subplots.append(SubPlot(i, j))
 
+    def set_empty(self, row, column):
+        subplot = self._get_subplot_at(row, column)
+        subplot.set_empty()
+
+    def set_empty_for_all(self, row_column_list):
+        for row, column in row_column_list:
+            self.set_empty(row, column)
+
     def plot(self, row, column, *args, **kwargs):
         subplot = self._get_subplot_at(row, column)
         subplot.plot.plot(*args, **kwargs)
@@ -277,11 +285,15 @@ class SubPlot:
     def __init__(self, row, column):
         self.row = row
         self.column = column
+        self.empty = False
         self.show_xticklabel = False
         self.show_yticklabel = False
         self.xticklabel_pos = None
         self.yticklabel_pos = None
         self.plot = GraphArtist()
+
+    def set_empty(self):
+        self.empty = True
 
     def show_xticklabels(self):
         self.show_xticklabel = True

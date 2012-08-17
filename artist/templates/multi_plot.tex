@@ -55,6 +55,9 @@
             {% for subplot in subplots %}
                 {% set plot = subplot.plot %}
                 \nextgroupplot[
+                {%- if subplot.empty %}
+                    group/empty plot
+                {%- else %}
                     % Default: empty ticks all round the border of the
                     % multiplot
                     {%- if ticks.x is not none and subplot.plot.ticks.x is not none %}
@@ -122,6 +125,7 @@
                     {%- if subplot.plot.limits.ymax is not none %}
                         ymax={ {{ subplot.plot.limits.ymax }} },
                     {%- endif %}
+                {%- endif %}
                 ]
 
                 {% if not plot.histogram2d_list and not plot.shaded_regions_list and not plot.plot_series_list %}
