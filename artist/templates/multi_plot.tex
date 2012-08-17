@@ -225,11 +225,11 @@
                 {% endfor %}
 
                 {% if plot.label %}
+                    \node[{{ plot.label.style }},
                     {%- if plot.label.node_location != 'center' %}
-                    \node[{{ plot.label.node_location }}=2pt]
-                    {%- else %}
-                    \node
+                          {{ plot.label.node_location }}=2pt
                     {%- endif %}
+                        ]
                         at (rel axis cs:{{ plot.label.x }},
                             {{ plot.label.y }})
                         { {{ plot.label.text }} };

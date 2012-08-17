@@ -103,10 +103,11 @@ class GraphArtist:
     def set_title(self, text):
         self.title = text
 
-    def set_label(self, text, location='upper right'):
+    def set_label(self, text, location='upper right', style=None):
         if location in RELATIVE_NODE_LOCATIONS:
             label = RELATIVE_NODE_LOCATIONS[location].copy()
             label['text'] = text
+            label['style'] = style
             self.label = label
         else:
             raise RuntimeError("Unknown label location: %s" % location)
