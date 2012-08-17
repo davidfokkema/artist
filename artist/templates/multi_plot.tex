@@ -118,12 +118,62 @@
                     {%- endif %}
                 ]
 
-                {% if not plot.shaded_regions_list and not plot.plot_series_list %}
+                {% if not plot.histogram2d_list and not plot.shaded_regions_list and not plot.plot_series_list %}
                     % Force something to plot (invisibly).  Otherwise, the
                     % axis will be reset and have a default range *and*
                     % labels.  PGFPLOTS does not allow empty plots.
                     \addplot[] coordinates {(0, 0)};
                 {% endif %}
+
+                {% for histogram in plot.histogram2d_list %}
+                    % Draw histogram background, if needed
+                    {%- if histogram.type in ['bw', 'reverse_bw'] %}
+                        {%- if histogram.type == 'bw' %}
+                            {%- set histogrambg = 'black' %}
+                        {%- elif histogram.type == 'reverse_bw' %}
+                            {%- set histogrambg = 'white' %}
+                        {%- endif %}
+                        {%- set x0 = histogram.x_edges[0] %}
+                        {%- set x1 = histogram.x_edges[-1] %}
+                        {%- set y0 = histogram.y_edges[0] %}
+                        {%- set y1 = histogram.y_edges[-1] %}
+                        \path[fill,{{ histogrambg }}]
+                            (axis cs:{{ x0 }}, {{ y0 }})
+                            rectangle (axis cs:{{ x1 }}, {{ y1 }});
+                    {%- endif %}
+
+                    % Draw non-empty bins in histogram
+                    {%- for i in range(histogram.x_edges|length - 1) %}
+                        {%- for j in range(histogram.y_edges|length - 1) %}
+                            {%- set x0 = histogram.x_edges[i] %}
+                            {%- set x1 = histogram.x_edges[i + 1] %}
+                            {%- set x = histogram.x_centers[i] %}
+                            {%- set y0 = histogram.y_edges[j] %}
+                            {%- set y1 = histogram.y_edges[j + 1] %}
+                            {%- set y = histogram.y_centers[j] %}
+                            {%- set count = histogram.counts[i][j] %}
+                            {%- set weight = (100 * count / histogram.max) | int %}
+
+                            {%- if weight > 0 %}
+                                {%- if histogram.type == 'area' %}
+                                \draw[{{ histogram.style }},
+                                      scale around={ {{ count / histogram.max }}:
+                                                    (axis cs: {{ x }}, {{ y }})}]
+                                    (axis cs:{{ x0 }}, {{ y0 }})
+                                    rectangle (axis cs:{{ x1 }}, {{ y1 }});
+                                {%- elif histogram.type in ['bw', 'reverse_bw'] %}
+                                \path[{{ histogram.style }},fill,
+                                    {%- if 'reverse' in histogram.type %}
+                                        {%- set weight = 100 - weight %}
+                                    {%- endif %}
+                                      black!{{ 100 - weight }}]
+                                    (axis cs:{{ x0 }}, {{ y0 }})
+                                    rectangle (axis cs:{{ x1 }}, {{ y1 }});
+                                {%- endif %}
+                            {%- endif %}
+                        {%- endfor %}
+                    {%- endfor %}
+                {% endfor %}
 
                 {% for region in plot.shaded_regions_list %}
                     \addplot[draw=none, fill={{ region.color }}] coordinates {

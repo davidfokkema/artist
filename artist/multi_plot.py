@@ -41,6 +41,10 @@ class MultiPlot:
         subplot = self._get_subplot_at(row, column)
         subplot.plot.histogram(*args, **kwargs)
 
+    def histogram2d(self, row, column, *args, **kwargs):
+        subplot = self._get_subplot_at(row, column)
+        subplot.plot.histogram2d(*args, **kwargs)
+
     def set_title(self, row, column, text):
         subplot = self._get_subplot_at(row, column)
         subplot.plot.set_title(text)
@@ -73,17 +77,25 @@ class MultiPlot:
         subplot = self._get_subplot_at(row, column)
         subplot.show_xticklabels()
 
-    def show_xticklabels_for_all(self, row_column_list):
-        for row, column in row_column_list:
-            self.show_xticklabels(row, column)
+    def show_xticklabels_for_all(self, row_column_list=None):
+        if row_column_list is None:
+            for subplot in self.subplots:
+                subplot.show_xticklabels()
+        else:
+            for row, column in row_column_list:
+                self.show_xticklabels(row, column)
 
     def show_yticklabels(self, row, column):
         subplot = self._get_subplot_at(row, column)
         subplot.show_yticklabels()
 
-    def show_yticklabels_for_all(self, row_column_list):
-        for row, column in row_column_list:
-            self.show_yticklabels(row, column)
+    def show_yticklabels_for_all(self, row_column_list=None):
+        if row_column_list is None:
+            for subplot in self.subplots:
+                subplot.show_yticklabels()
+        else:
+            for row, column in row_column_list:
+                self.show_yticklabels(row, column)
 
     def set_xticklabels_position(self, row, column, position):
         subplot = self._get_subplot_at(row, column)
