@@ -105,21 +105,29 @@ class MultiPlot:
         subplot = self._get_subplot_at(row, column)
         subplot.set_yticklabels_position(position)
 
-    def set_xlimits(self, min=None, max=None):
-        self.limits['xmin'] = min
-        self.limits['xmax'] = max
-
-    def set_xlimits_for(self, row, column, min=None, max=None):
+    def set_xlimits(self, row, column, min=None, max=None):
         subplot = self._get_subplot_at(row, column)
         subplot.plot.set_xlimits(min, max)
 
-    def set_ylimits_for(self, row, column, min=None, max=None):
+    def set_xlimits_for_all(self, row_column_list=None, min=None, max=None):
+        if row_column_list is None:
+            self.limits['xmin'] = min
+            self.limits['xmax'] = max
+        else:
+            for row, column in row_column_list:
+                self.set_xlimits(row, column, min, max)
+
+    def set_ylimits(self, row, column, min=None, max=None):
         subplot = self._get_subplot_at(row, column)
         subplot.plot.set_ylimits(min, max)
 
-    def set_ylimits(self, min=None, max=None):
-        self.limits['ymin'] = min
-        self.limits['ymax'] = max
+    def set_ylimits_for_all(self, row_column_list=None, min=None, max=None):
+        if row_column_list is None:
+            self.limits['ymin'] = min
+            self.limits['ymax'] = max
+        else:
+            for row, column in row_column_list:
+                self.set_ylimits(row, column, min, max)
 
     def set_xticks(self, ticks):
         self.ticks['x'] = ticks
