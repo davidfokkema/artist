@@ -3,6 +3,8 @@
 import inspect
 import os
 
+import numpy as np
+
 
 # global suffix and prefix for all subsequent graph names
 __prefix = ''
@@ -58,3 +60,17 @@ def save_graph(graph, suffix='', dirname=None):
     """
     name = create_graph_name(suffix, dirname)
     graph.save(name)
+
+def save_data(data, suffix='', dirname=None):
+    """Save a dataset using caller's name
+
+    :param data: a list or numpy array containing the data
+    :param suffix: optional suffix to add to name
+    :param dirname: optional directory name
+
+    """
+    if type(data) == list:
+        data = np.array(data).T
+
+    name = create_graph_name(suffix, dirname) + '.txt'
+    np.savetxt(name, data)
