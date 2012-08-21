@@ -7,9 +7,10 @@ def main():
     locations = np.genfromtxt('data/sciencepark-locations.txt',
                               names=['x', 'y'])
 
-    graph = GraphArtist(width=r'.5\linewidth', height=r'.65\linewidth')
+    graph = GraphArtist()
 
     graph.plot(locations['x'], locations['y'], linestyle=None)
+    graph.set_axis_equal()
     graph.save('sciencepark')
 
 

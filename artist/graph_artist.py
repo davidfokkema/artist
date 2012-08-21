@@ -45,6 +45,7 @@ class GraphArtist:
         self.limits = {'xmin': None, 'xmax': None,
                        'ymin': None, 'ymax': None}
         self.ticks = {'x': [], 'y': []}
+        self.axis_equal = False
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
              linestyle='solid', use_steps=False):
@@ -187,6 +188,7 @@ class GraphArtist:
                                    label=self.label,
                                    limits=self.limits,
                                    ticks=self.ticks,
+                                   axis_equal=self.axis_equal,
                                    shaded_regions_list=
                                         self.shaded_regions_list,
                                    series_list=self.plot_series_list,
@@ -268,6 +270,9 @@ class GraphArtist:
 
     def set_logyticks(self, logticks):
         self.ticks['y'] = ['1e%d' % u for u in logticks]
+
+    def set_axis_equal(self):
+        self.axis_equal = True
 
     def _parse_plot_options(self, mark=None, linestyle=None,
                             use_steps=False):
