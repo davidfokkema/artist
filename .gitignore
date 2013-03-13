@@ -5,3 +5,7 @@
 *.pyc
 
 .DS_Store
+
+artist.egg-info
+build/
+dist/
