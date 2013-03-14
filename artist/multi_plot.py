@@ -4,7 +4,7 @@ import os
 import subprocess
 import shutil
 
-from graph_artist import GraphArtist
+from graph_artist import Plot
 
 
 class MultiPlot:
@@ -291,7 +291,7 @@ class SubPlot:
         self.show_yticklabel = False
         self.xticklabel_pos = None
         self.yticklabel_pos = None
-        self.plot = GraphArtist()
+        self.plot = Plot()
 
     def set_empty(self):
         self.empty = True

@@ -20,7 +20,7 @@ RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
                                       'x': 0.5, 'y': 0.5}}
 
 
-class GraphArtist:
+class Plot:
     def __init__(self, axis='', width=r'.67\linewidth', height=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
                                                         'artist', 'templates'),
