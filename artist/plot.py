@@ -23,11 +23,10 @@ RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
 class Plot:
     def __init__(self, axis='', width=r'.67\linewidth', height=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
-                                                        'artist', 'templates'),
-                                         finalize=self._convert_none)
+            'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('artist_plot.tex')
         self.document_template = environment.get_template(
-                                    'document_artist_plot.tex')
+            'document_artist_plot.tex')
 
         self.shaded_regions_list = []
         self.plot_series_list = []
@@ -182,20 +181,23 @@ class Plot:
         if not template:
             template = self.template
 
-        response = template.render(axis=self.axis, title=self.title,
-                                   width=self.width, height=self.height,
-                                   xlabel=self.xlabel, ylabel=self.ylabel,
-                                   label=self.label,
-                                   limits=self.limits,
-                                   ticks=self.ticks,
-                                   axis_equal=self.axis_equal,
-                                   shaded_regions_list=
-                                        self.shaded_regions_list,
-                                   series_list=self.plot_series_list,
-                                   histogram2d_list=self.histogram2d_list,
-                                   pin_list=self.pin_list,
-                                   horizontal_lines=self.horizontal_lines,
-                                   vertical_lines=self.vertical_lines)
+        response = template.render(
+            axis=self.axis,
+            title=self.title,
+            width=self.width,
+            height=self.height,
+            xlabel=self.xlabel,
+            ylabel=self.ylabel,
+            label=self.label,
+            limits=self.limits,
+            ticks=self.ticks,
+            axis_equal=self.axis_equal,
+            shaded_regions_list=self.shaded_regions_list,
+            series_list=self.plot_series_list,
+            histogram2d_list=self.histogram2d_list,
+            pin_list=self.pin_list,
+            horizontal_lines=self.horizontal_lines,
+            vertical_lines=self.vertical_lines)
         return response
 
     def render_as_document(self):
