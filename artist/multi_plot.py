@@ -4,7 +4,7 @@ import os
 import subprocess
 import shutil
 
-from graph_artist import Plot
+from plot import Plot
 
 
 class MultiPlot:

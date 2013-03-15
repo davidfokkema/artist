@@ -34,7 +34,9 @@ possible by means of a simple method which renders the plot as a PDF.
 The style of the plots is based on the work of William S. Cleveland.
 
 """
-from graph_artist import Plot
-from graph_artist import Plot as GraphArtist
+from plot import Plot
 from multi_plot import MultiPlot
 from recursive_smooth import smooth
+
+# Backwards compatibility
+from plot import Plot as GraphArtist
