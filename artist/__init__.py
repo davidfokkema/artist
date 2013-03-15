@@ -33,6 +33,29 @@ possible by means of a simple method which renders the plot as a PDF.
 
 The style of the plots is based on the work of William S. Cleveland.
 
+
+Contents
+--------
+
+The following modules are included:
+
+:mod:`~artist.plot`
+    contains the Plot class for creating plots.
+
+:mod:`~artist.multi_plot`
+    contains the MultiPlot class for creating plots comprised of multiple
+    subplots.
+
+:mod:`~artist.simple_smooth`
+    contains a very basic smoothing algorithm.
+
+:mod:`~artist.recursive_smooth`
+    contains a more sophisticated recursive smoothing algorithm.
+
+:mod:`~artist.utils`
+    contains utility functions for e.g. automagic naming of output files
+    based on the name of the function creating the plot.
+
 """
 from plot import Plot
 from multi_plot import MultiPlot
