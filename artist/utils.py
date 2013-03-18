@@ -50,16 +50,20 @@ def create_graph_name(suffix='', dirname=None):
         name = os.path.join(dirname, name)
     return name
 
-def save_graph(graph, suffix='', dirname=None):
+def save_graph(graph, suffix='', dirname=None, pdf=False):
     """Save a graph using caller's name
 
     :type graph: GraphArtist instance
     :param suffix: optional suffix to add to name
     :param dirname: optional directory name
+    :param pdf: if True, the saved graph is additionally rendered and
+        saved as a pdf, alongside the LaTeX file.
 
     """
     name = create_graph_name(suffix, dirname)
     graph.save(name)
+    if pdf:
+        graph.save_as_pdf(name)
 
 def save_data(data, suffix='', dirname=None):
     """Save a dataset using caller's name
