@@ -239,7 +239,8 @@ class MultiPlot:
         return pdf_path
 
     def _crop_document(self, path):
-        output_path = 'crop-output.pdf'
+        dirname = os.path.dirname(path)
+        output_path = os.path.join(dirname, 'crop-output.pdf')
         try:
             subprocess.check_output(['pdfcrop', path, output_path],
                                     stderr=subprocess.STDOUT)
