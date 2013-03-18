@@ -226,7 +226,8 @@ class MultiPlot:
         dir_path = os.path.dirname(path)
         try:
             subprocess.check_output(['pdflatex', '-halt-on-error',
-                                     '-output-directory', dir_path, path])
+                                     '-output-directory', dir_path, path],
+                                    stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
             output_lines = exc.output.split('\n')
             error_lines = [line for line in output_lines if
@@ -240,7 +241,8 @@ class MultiPlot:
     def _crop_document(self, path):
         output_path = 'crop-output.pdf'
         try:
-            subprocess.check_output(['pdfcrop', path, output_path])
+            subprocess.check_output(['pdfcrop', path, output_path],
+                                    stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
             raise RuntimeError("Cropping PDF failed:\n" + exc.output)
         os.rename(output_path, path)
