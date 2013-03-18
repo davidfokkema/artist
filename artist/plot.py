@@ -221,7 +221,7 @@ class Plot:
             f.write(self.render_as_document())
         pdf_path = self._build_document(build_path)
         self._crop_document(pdf_path)
-        os.rename(pdf_path, dest_path)
+        shutil.copyfile(pdf_path, dest_path)
         shutil.rmtree(build_dir)
 
     def _build_document(self, path):
