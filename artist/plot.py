@@ -1,3 +1,5 @@
+"""Create a plot."""
+
 import subprocess
 import os
 import tempfile
@@ -21,6 +23,16 @@ RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
 
 
 class Plot:
+
+    """Create a plot.
+
+    This class creates a 2D plot.  Its various methods add data,
+    annotations and options which is stored in class variables.  Finally,
+    the plot can be rendered using the Jinja2 templating engine resulting
+    in a LaTeX file.
+
+    """
+
     def __init__(self, axis='', width=r'.67\linewidth', height=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
@@ -48,6 +60,25 @@ class Plot:
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
              linestyle='solid', use_steps=False):
+        """Add a data series to the plot.
+
+        :param x: array containing x-values.
+        :param y: array containing y-values.
+        :param xerr: (optional) array containing errors on the x-values.
+        :param yerr: (optional) array containing errors on the y-values.
+        :param mark: the symbol used to mark the data point.  May be None,
+            or any plot mark accepted by TikZ (e.g. *, x, +, o, square,
+            triangle).
+        :param linestyle: the line style used to connect the data points.
+            May be None, or any line style accepted by TikZ (e.g. solid,
+            dashed, dotted, thick, or even combinations like
+            "red,thick,dashed").
+        :param use_steps: if True, draw a stepped plot.
+
+        The dimensions of x, y, xerr and yerr should be equal.  However,
+        xerr and yerr may be empty lists.
+
+        """
         self._clear_plot_mark_background(x, y, mark)
         options = self._parse_plot_options(mark, linestyle, use_steps)
         plot_series = self._create_plot_series_object(x, y, xerr, yerr,
@@ -70,6 +101,26 @@ class Plot:
                 'show_yerr': True if len(yerr) else False}
 
     def histogram(self, counts, bin_edges, linestyle='solid'):
+        """Plot a histogram.
+
+        The user needs to supply the histogram.  This method only plots
+        the results.  You can use NumPy's histogram function.
+
+        :param counts: array containing the count values.
+        :param bin_edges: array containing the bin edges.
+        :param linestyle: the line style used to connect the data points.
+            May be None, or any line style accepted by TikZ (e.g. solid,
+            dashed, dotted, thick, or even combinations like
+            "red,thick,dashed").
+
+        Example::
+
+            >>> plot = artist.Plot()
+            >>> x = np.random.normal(size=1000)
+            >>> n, bins = np.histogram(x)
+            >>> plot.histogram(n, bins)
+
+        """
         if len(bin_edges) - 1 != len(counts):
             raise RuntimeError(
                 "The length of bin_edges should be length of counts + 1")
@@ -79,6 +130,24 @@ class Plot:
 
     def histogram2d(self, counts, x_edges, y_edges, type='bw',
                     style=None):
+        """Plot a two-dimensional histogram.
+
+        The user needs to supply the histogram.  This method only plots
+        the results.  You can use NumPy's histogram2d function.
+
+        :param counts: array containing the count values.
+        :param x_edges: array containing the x-axis bin edges.
+        :param y_edges: array containing the y-axis bin edges.
+        :param type: the type of histogram.  Allowed values are 'bw' for
+            filled squares with shades from black (minimum value) to white
+            (maximum value), 'reverse_bw' for filled squares with the
+            shades reversed and 'area' for squares where the area of the
+            square is a measure of the count in the bin.
+        :param style: optional TikZ styles to apply (e.g. 'red').  Note
+            that many color styles are overridden by the 'bw' and
+            'reverse_bw' types.
+
+        """
         if counts.shape != (len(x_edges) - 1, len(y_edges) - 1):
             raise RuntimeError(
                 "The length of x_edges and y_edges should match counts")
@@ -101,9 +170,19 @@ class Plot:
         self.set_ylimits(min(y_edges), max(y_edges))
 
     def set_title(self, text):
+        """Set a title text."""
+
         self.title = text
 
     def set_label(self, text, location='upper right', style=None):
+        """Set a label for the plot.
+
+        :param text: the label text.
+        :param location: the location of the label inside the plot.  May
+            be one of 'center', 'upper right', 'lower right', 'upper
+            left', 'lower left'.
+
+        """
         if location in RELATIVE_NODE_LOCATIONS:
             label = RELATIVE_NODE_LOCATIONS[location].copy()
             label['text'] = text
@@ -114,8 +193,24 @@ class Plot:
 
     def add_pin(self, text, location='left', x=None, use_arrow=False,
                 relative_position=None, style=None):
-        """Add pin to most recent data series"""
+        """Add pin to most recent data series.
 
+        :param text: the text of the pin label.
+        :param location: the location of the pin relative to the data
+            point.  Any location accepted by TikZ is allowed.
+        :type location: string
+        :param x: the x location of the data point (in the most recent
+            data series) at which to place the label.  This is
+            interpolated between the actual data points.  If None, only
+            the relative_position parameter is used.
+        :param use_arrow: specifies whether to draw an arrow between the
+            data point and the pin label text.
+        :type use_arrow: boolean
+        :param relative_position: location of the data point as a relative
+            number between 0 and 1.
+        :param style: optional TikZ styles to apply (e.g. 'red').
+
+        """
         try:
             series = self.plot_series_list[-1]
         except IndexError:
@@ -135,10 +230,24 @@ class Plot:
 
     def add_pin_at_xy(self, x, y, text, location='above right',
                       relative_position=.9, use_arrow=True, style=None):
-        """Add pin at x, y location
+        """Add pin at x, y location.
+
+        :param x: array, list or float, specifying the location of the
+            pin.
+        :param y: array, list or float, specifying the location of the
+            pin.
+        :param text: the text of the pin label.
+        :param location: the location of the pin relative to the data
+            point.  Any location accepted by TikZ is allowed.
+        :param relative_position: location of the data point as a relative
+            number between 0 and 1.
+        :param use_arrow: specifies whether to draw an arrow between the
+            data point and the pin label text.
+        :type use_arrow: boolean
+        :param style: optional TikZ styles to apply (e.g. 'red').
 
         If x, y are arrays or lists, relative position is used to pick a
-        point from the arrays.  A relative position of zero will be the
+        point from the arrays.  A relative position of 0.0 will be the
         first point from the series, while 1.0 will be the last point.
 
         """
@@ -157,6 +266,14 @@ class Plot:
                               'options': style})
 
     def shade_region(self, x, lower, upper, color='lightgray'):
+        """Shade a region between upper and lower bounds.
+
+        :param x: array containing x-values
+        :param lower: array containing y-values of lower bounds
+        :param upper: array containing y-values of upper bounds
+        :param color: TikZ style to color the region
+
+        """
         x = list(x)
         reversed_x = list(x)
         reversed_x.reverse()
@@ -170,14 +287,37 @@ class Plot:
         self.shaded_regions_list.append({'data': zip(x, y), 'color': color})
 
     def draw_horizontal_line(self, yvalue, linestyle=None):
+        """Draw a horizontal line.
+
+        :param yvalue: y-value of the line
+        :param linestyle: TikZ linestyle (e.g. dashed, solid, red)
+
+        """
         self.horizontal_lines.append({'value': yvalue,
                                       'options': linestyle})
 
     def draw_vertical_line(self, xvalue, linestyle=None):
+        """Draw a vertical line.
+
+        :param xvalue: x-value of the line
+        :param linestyle: TikZ linestyle (e.g. dashed, solid, red)
+
+        """
         self.vertical_lines.append({'value': xvalue,
                                     'options': linestyle})
 
     def render(self, template=None):
+        """Render the plot using a template.
+
+        Once the plot is complete, it needs to be rendered.  Artist uses
+        the Jinja2 templating engine.  The default template results in a
+        LaTeX file which can be included in your document.
+
+        :param template: a user-supplied template or None.
+        :type template: string or None.
+        :returns: the rendered template as string.
+
+        """
         if not template:
             template = self.template
 
@@ -201,19 +341,44 @@ class Plot:
         return response
 
     def render_as_document(self):
+        """Render the plot as a stand-alone document.
+
+        :returns: the rendered template as string.
+
+        """
         return self.render(self.document_template)
 
     def save(self, dest_path):
+        r"""Save the plot as a includable LaTeX file.
+
+        The output file can be included (using \input) in your LaTeX
+        document.
+
+        :param dest_path: path of the file.
+
+        """
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
 
     def save_as_document(self, dest_path):
+        """Save the plot as a stand-alone LaTeX file.
+
+        :param dest_path: path of the file.
+
+        """
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render_as_document())
 
     def save_as_pdf(self, dest_path):
+        """Save the plot as a PDF file.
+
+        Save and render the plot using LaTeX to create a PDF file.
+
+        :param dest_path: path of the file.
+
+        """
         dest_path = self._add_extension('pdf', dest_path)
         build_dir = tempfile.mkdtemp()
         build_path = os.path.join(build_dir, 'document.tex')
@@ -251,32 +416,88 @@ class Plot:
         os.rename(output_path, path)
 
     def set_xlabel(self, text):
+        """Set a label for the x-axis.
+
+        :param text: text of the label.
+
+        """
         self.xlabel = text
 
     def set_ylabel(self, text):
+        """Set a label for the y-axis.
+
+        :param text: text of the label.
+
+        """
         self.ylabel = text
 
     def set_xlimits(self, min=None, max=None):
+        """Set limits for the x-axis.
+
+        :param min: minimum value to be displayed.  If None, it will be
+            calculated.
+        :param max: maximum value to be displayed.  If None, it will be
+            calculated.
+
+        """
         self.limits['xmin'] = min
         self.limits['xmax'] = max
 
     def set_ylimits(self, min=None, max=None):
+        """Set limits for the y-axis.
+
+        :param min: minimum value to be displayed.  If None, it will be
+            calculated.
+        :param max: maximum value to be displayed.  If None, it will be
+            calculated.
+
+        """
         self.limits['ymin'] = min
         self.limits['ymax'] = max
 
     def set_xticks(self, ticks):
+        """Set ticks for the x-axis.
+
+        :param ticks: locations for the ticks along the axis.
+
+        """
         self.ticks['x'] = ticks
 
     def set_logxticks(self, logticks):
+        """Set ticks for the logarithmic x-axis.
+
+        :param ticks: logarithm of the locations for the ticks along the
+            axis.
+
+        For example, if you specify [1, 2, 3], ticks will be placed at 10,
+        100 and 1000.
+
+        """
         self.ticks['x'] = ['1e%d' % u for u in logticks]
 
     def set_yticks(self, ticks):
+        """Set ticks for the y-axis.
+
+        :param ticks: locations for the ticks along the axis.
+
+        """
         self.ticks['y'] = ticks
 
     def set_logyticks(self, logticks):
+        """Set ticks for the logarithmic y-axis.
+
+        :param ticks: logarithm of the locations for the ticks along the
+            axis.
+
+        For example, if you specify [1, 2, 3], ticks will be placed at 10,
+        100 and 1000.
+
+        """
         self.ticks['y'] = ['1e%d' % u for u in logticks]
 
     def set_axis_equal(self):
+        """Scale the axes so the unit vectors have equal length."""
+
         self.axis_equal = True
 
     def _parse_plot_options(self, mark=None, linestyle=None,
