@@ -41,18 +41,6 @@ class MultiPlot:
         for row, column in row_column_list:
             self.set_empty(row, column)
 
-    def plot(self, row, column, *args, **kwargs):
-        subplot = self.get_subplot_at(row, column)
-        subplot.plot.plot(*args, **kwargs)
-
-    def histogram(self, row, column, *args, **kwargs):
-        subplot = self.get_subplot_at(row, column)
-        subplot.plot.histogram(*args, **kwargs)
-
-    def histogram2d(self, row, column, *args, **kwargs):
-        subplot = self.get_subplot_at(row, column)
-        subplot.plot.histogram2d(*args, **kwargs)
-
     def set_title(self, row, column, text):
         subplot = self.get_subplot_at(row, column)
         subplot.plot.set_title(text)
@@ -61,26 +49,6 @@ class MultiPlot:
                   style=None):
         subplot = self.get_subplot_at(row, column)
         subplot.plot.set_label(text, location, style)
-
-    def add_pin(self, row, column, *args, **kwargs):
-        subplot = self.get_subplot_at(row, column)
-        subplot.plot.add_pin(*args, **kwargs)
-
-    def add_pin_at_xy(self, row, column, *args, **kwargs):
-        subplot = self.get_subplot_at(row, column)
-        subplot.plot.add_pin_at_xy(*args, **kwargs)
-
-    def shade_region(self, row, column, *args, **kwargs):
-        subplot = self.get_subplot_at(row, column)
-        subplot.plot.shade_region(*args, **kwargs)
-
-    def draw_horizontal_line(self, row, column, yvalue, linestyle=None):
-        subplot = self.get_subplot_at(row, column)
-        subplot.plot.draw_horizontal_line(yvalue, linestyle)
-
-    def draw_vertical_line(self, row, column, xvalue, linestyle=None):
-        subplot = self.get_subplot_at(row, column)
-        subplot.plot.draw_vertical_line(xvalue, linestyle)
 
     def show_xticklabels(self, row, column):
         subplot = self.get_subplot_at(row, column)
