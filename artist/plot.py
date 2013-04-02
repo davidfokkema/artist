@@ -31,6 +31,11 @@ class BasePlotContainer:
 
     """
 
+    # The templates must be initialized on instantiation.
+    template = None
+    document_template = None
+
+
     def render(self, template=None):
         """Render the plot using a template.
 
