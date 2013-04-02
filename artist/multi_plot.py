@@ -31,7 +31,7 @@ class MultiPlot:
         self.subplots = []
         for i in range(rows):
             for j in range(columns):
-                self.subplots.append(SubPlot(i, j))
+                self.subplots.append(SubPlotContainer(i, j))
 
     def set_empty(self, row, column):
         subplot = self.get_subplot_at(row, column)
@@ -253,7 +253,7 @@ class MultiPlot:
             return 'normal', 'normal'
 
 
-class SubPlot:
+class SubPlotContainer:
     def __init__(self, row, column):
         self.row = row
         self.column = column
