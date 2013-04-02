@@ -22,7 +22,125 @@ RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
                                       'x': 0.5, 'y': 0.5}}
 
 
-class Plot:
+class BasePlotContainer:
+
+    """Base class for stand-alone plots.
+
+    This class provides methods for rendering the plot.  To provide
+    methods for plotting and annotating, subclass this base class.
+
+    """
+
+    def render(self, template=None):
+        """Render the plot using a template.
+
+        Once the plot is complete, it needs to be rendered.  Artist uses
+        the Jinja2 templating engine.  The default template results in a
+        LaTeX file which can be included in your document.
+
+        :param template: a user-supplied template or None.
+        :type template: string or None.
+        :returns: the rendered template as string.
+
+        This is a very minimal implementation.  Override this method to
+        include variables in the template.render call.
+
+        """
+        if not template:
+            template = self.template
+
+        response = template.render()
+        return response
+
+    def render_as_document(self):
+        """Render the plot as a stand-alone document.
+
+        :returns: the rendered template as string.
+
+        """
+        return self.render(self.document_template)
+
+    def save(self, dest_path):
+        r"""Save the plot as a includable LaTeX file.
+
+        The output file can be included (using \input) in your LaTeX
+        document.
+
+        :param dest_path: path of the file.
+
+        """
+        dest_path = self._add_extension('tex', dest_path)
+        with open(dest_path, 'w') as f:
+            f.write(self.render())
+
+    def save_as_document(self, dest_path):
+        """Save the plot as a stand-alone LaTeX file.
+
+        :param dest_path: path of the file.
+
+        """
+        dest_path = self._add_extension('tex', dest_path)
+        with open(dest_path, 'w') as f:
+            f.write(self.render_as_document())
+
+    def save_as_pdf(self, dest_path):
+        """Save the plot as a PDF file.
+
+        Save and render the plot using LaTeX to create a PDF file.
+
+        :param dest_path: path of the file.
+
+        """
+        dest_path = self._add_extension('pdf', dest_path)
+        build_dir = tempfile.mkdtemp()
+        build_path = os.path.join(build_dir, 'document.tex')
+        with open(build_path, 'w') as f:
+            f.write(self.render_as_document())
+        pdf_path = self._build_document(build_path)
+        self._crop_document(pdf_path)
+        shutil.copyfile(pdf_path, dest_path)
+        shutil.rmtree(build_dir)
+
+    def _build_document(self, path):
+        dir_path = os.path.dirname(path)
+        try:
+            subprocess.check_output(['pdflatex', '-halt-on-error',
+                                     '-output-directory', dir_path, path],
+                                    stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as exc:
+            output_lines = exc.output.split('\n')
+            error_lines = [line for line in output_lines if
+                           line and line[0] == '!']
+            errors = '\n'.join(error_lines)
+            raise RuntimeError("LaTeX compilation failed:\n" + errors)
+
+        pdf_path = path.replace('.tex', '.pdf')
+        return pdf_path
+
+    def _crop_document(self, path):
+        dirname = os.path.dirname(path)
+        output_path = os.path.join(dirname, 'crop-output.pdf')
+        try:
+            subprocess.check_output(['pdfcrop', path, output_path],
+                                    stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as exc:
+            raise RuntimeError("Cropping PDF failed:\n" + exc.output)
+        os.rename(output_path, path)
+
+    def _add_extension(self, extension, path):
+        if not '.' in path:
+            return path + '.' + extension
+        else:
+            return path
+
+    def _convert_none(self, variable):
+        if variable is not None:
+            return variable
+        else:
+            return ''
+
+
+class Plot(BasePlotContainer):
 
     """Create a plot.
 
@@ -340,81 +458,6 @@ class Plot:
             vertical_lines=self.vertical_lines)
         return response
 
-    def render_as_document(self):
-        """Render the plot as a stand-alone document.
-
-        :returns: the rendered template as string.
-
-        """
-        return self.render(self.document_template)
-
-    def save(self, dest_path):
-        r"""Save the plot as a includable LaTeX file.
-
-        The output file can be included (using \input) in your LaTeX
-        document.
-
-        :param dest_path: path of the file.
-
-        """
-        dest_path = self._add_extension('tex', dest_path)
-        with open(dest_path, 'w') as f:
-            f.write(self.render())
-
-    def save_as_document(self, dest_path):
-        """Save the plot as a stand-alone LaTeX file.
-
-        :param dest_path: path of the file.
-
-        """
-        dest_path = self._add_extension('tex', dest_path)
-        with open(dest_path, 'w') as f:
-            f.write(self.render_as_document())
-
-    def save_as_pdf(self, dest_path):
-        """Save the plot as a PDF file.
-
-        Save and render the plot using LaTeX to create a PDF file.
-
-        :param dest_path: path of the file.
-
-        """
-        dest_path = self._add_extension('pdf', dest_path)
-        build_dir = tempfile.mkdtemp()
-        build_path = os.path.join(build_dir, 'document.tex')
-        with open(build_path, 'w') as f:
-            f.write(self.render_as_document())
-        pdf_path = self._build_document(build_path)
-        self._crop_document(pdf_path)
-        shutil.copyfile(pdf_path, dest_path)
-        shutil.rmtree(build_dir)
-
-    def _build_document(self, path):
-        dir_path = os.path.dirname(path)
-        try:
-            subprocess.check_output(['pdflatex', '-halt-on-error',
-                                     '-output-directory', dir_path, path],
-                                    stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as exc:
-            output_lines = exc.output.split('\n')
-            error_lines = [line for line in output_lines if
-                           line and line[0] == '!']
-            errors = '\n'.join(error_lines)
-            raise RuntimeError("LaTeX compilation failed:\n" + errors)
-
-        pdf_path = path.replace('.tex', '.pdf')
-        return pdf_path
-
-    def _crop_document(self, path):
-        dirname = os.path.dirname(path)
-        output_path = os.path.join(dirname, 'crop-output.pdf')
-        try:
-            subprocess.check_output(['pdfcrop', path, output_path],
-                                    stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as exc:
-            raise RuntimeError("Cropping PDF failed:\n" + exc.output)
-        os.rename(output_path, path)
-
     def set_xlabel(self, text):
         """Set a label for the x-axis.
 
@@ -542,15 +585,3 @@ class Plot:
             xs = relative_position * (x1 - x0) + x0
             ys = np.interp(xs, x, y)
             return xs, ys
-
-    def _add_extension(self, extension, path):
-        if not '.' in path:
-            return path + '.' + extension
-        else:
-            return path
-
-    def _convert_none(self, variable):
-        if variable is not None:
-            return variable
-        else:
-            return ''
