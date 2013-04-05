@@ -4,10 +4,10 @@ import os
 import subprocess
 import shutil
 
-from plot import Plot
+from plot import BasePlotContainer, Plot
 
 
-class MultiPlot:
+class MultiPlot(BasePlotContainer):
     def __init__(self, rows, columns, axis='',
                  width=r'.67\linewidth', height=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
@@ -170,56 +170,6 @@ class MultiPlot:
                                    subplots=self.subplots)
         return response
 
-    def render_as_document(self):
-        return self.render(self.document_template)
-
-    def save(self, dest_path):
-        dest_path = self._add_extension('tex', dest_path)
-        with open(dest_path, 'w') as f:
-            f.write(self.render())
-
-    def save_as_document(self, dest_path):
-        dest_path = self._add_extension('tex', dest_path)
-        with open(dest_path, 'w') as f:
-            f.write(self.render_as_document())
-
-    def save_as_pdf(self, dest_path):
-        dest_path = self._add_extension('pdf', dest_path)
-        build_dir = tempfile.mkdtemp()
-        build_path = os.path.join(build_dir, 'document.tex')
-        with open(build_path, 'w') as f:
-            f.write(self.render_as_document())
-        pdf_path = self._build_document(build_path)
-        self._crop_document(pdf_path)
-        shutil.copyfile(pdf_path, dest_path)
-        shutil.rmtree(build_dir)
-
-    def _build_document(self, path):
-        dir_path = os.path.dirname(path)
-        try:
-            subprocess.check_output(['pdflatex', '-halt-on-error',
-                                     '-output-directory', dir_path, path],
-                                    stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as exc:
-            output_lines = exc.output.split('\n')
-            error_lines = [line for line in output_lines if
-                           line and line[0] == '!']
-            errors = '\n'.join(error_lines)
-            raise RuntimeError("LaTeX compilation failed:\n" + errors)
-
-        pdf_path = path.replace('.tex', '.pdf')
-        return pdf_path
-
-    def _crop_document(self, path):
-        dirname = os.path.dirname(path)
-        output_path = os.path.join(dirname, 'crop-output.pdf')
-        try:
-            subprocess.check_output(['pdfcrop', path, output_path],
-                                    stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as exc:
-            raise RuntimeError("Cropping PDF failed:\n" + exc.output)
-        os.rename(output_path, path)
-
     def set_xlabel(self, text):
         self.xlabel = text
 
@@ -233,18 +183,6 @@ class MultiPlot:
     def set_subplot_ylabel(self, row, column, text):
         subplot = self.get_subplot_at(row, column)
         subplot.set_ylabel(text)
-
-    def _add_extension(self, extension, path):
-        if not '.' in path:
-            return path + '.' + extension
-        else:
-            return path
-
-    def _convert_none(self, variable):
-        if variable is not None:
-            return variable
-        else:
-            return ''
 
     def _get_axis_options(self, axis):
         if axis == 'loglog':
