@@ -22,7 +22,7 @@ RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
                                       'x': 0.5, 'y': 0.5}}
 
 
-class BasePlotContainer:
+class BasePlotContainer(object):
 
     """Base class for stand-alone plots.
 
@@ -145,24 +145,8 @@ class BasePlotContainer:
             return ''
 
 
-class Plot(BasePlotContainer):
-
-    """Create a plot.
-
-    This class creates a 2D plot.  Its various methods add data,
-    annotations and options which is stored in class variables.  Finally,
-    the plot can be rendered using the Jinja2 templating engine resulting
-    in a LaTeX file.
-
-    """
-
-    def __init__(self, axis='', width=r'.67\linewidth', height=None):
-        environment = jinja2.Environment(loader=jinja2.PackageLoader(
-            'artist', 'templates'), finalize=self._convert_none)
-        self.template = environment.get_template('artist_plot.tex')
-        self.document_template = environment.get_template(
-            'document_artist_plot.tex')
-
+class SubPlot(object):
+    def __init__(self):
         self.shaded_regions_list = []
         self.plot_series_list = []
         self.histogram2d_list = []
@@ -170,9 +154,6 @@ class Plot(BasePlotContainer):
         self.horizontal_lines = []
         self.vertical_lines = []
         self.title = None
-        self.axis = axis + 'axis'
-        self.width = width
-        self.height = height
         self.xlabel = None
         self.ylabel = None
         self.label = None
@@ -429,40 +410,6 @@ class Plot(BasePlotContainer):
         self.vertical_lines.append({'value': xvalue,
                                     'options': linestyle})
 
-    def render(self, template=None):
-        """Render the plot using a template.
-
-        Once the plot is complete, it needs to be rendered.  Artist uses
-        the Jinja2 templating engine.  The default template results in a
-        LaTeX file which can be included in your document.
-
-        :param template: a user-supplied template or None.
-        :type template: string or None.
-        :returns: the rendered template as string.
-
-        """
-        if not template:
-            template = self.template
-
-        response = template.render(
-            axis=self.axis,
-            title=self.title,
-            width=self.width,
-            height=self.height,
-            xlabel=self.xlabel,
-            ylabel=self.ylabel,
-            label=self.label,
-            limits=self.limits,
-            ticks=self.ticks,
-            axis_equal=self.axis_equal,
-            shaded_regions_list=self.shaded_regions_list,
-            series_list=self.plot_series_list,
-            histogram2d_list=self.histogram2d_list,
-            pin_list=self.pin_list,
-            horizontal_lines=self.horizontal_lines,
-            vertical_lines=self.vertical_lines)
-        return response
-
     def set_xlabel(self, text):
         """Set a label for the x-axis.
 
@@ -590,3 +537,62 @@ class Plot(BasePlotContainer):
             xs = relative_position * (x1 - x0) + x0
             ys = np.interp(xs, x, y)
             return xs, ys
+
+
+class Plot(SubPlot, BasePlotContainer):
+
+    """Create a plot.
+
+    This class creates a 2D plot.  Its various methods add data,
+    annotations and options which is stored in class variables.  Finally,
+    the plot can be rendered using the Jinja2 templating engine resulting
+    in a LaTeX file.
+
+    """
+
+    def __init__(self, axis='', width=r'.67\linewidth', height=None):
+        environment = jinja2.Environment(loader=jinja2.PackageLoader(
+            'artist', 'templates'), finalize=self._convert_none)
+        self.template = environment.get_template('artist_plot.tex')
+        self.document_template = environment.get_template(
+            'document_artist_plot.tex')
+
+        self.width = width
+        self.height = height
+        self.axis = axis + 'axis'
+
+        super(Plot, self).__init__()
+
+    def render(self, template=None):
+        """Render the plot using a template.
+
+        Once the plot is complete, it needs to be rendered.  Artist uses
+        the Jinja2 templating engine.  The default template results in a
+        LaTeX file which can be included in your document.
+
+        :param template: a user-supplied template or None.
+        :type template: string or None.
+        :returns: the rendered template as string.
+
+        """
+        if not template:
+            template = self.template
+
+        response = template.render(
+            axis=self.axis,
+            title=self.title,
+            width=self.width,
+            height=self.height,
+            xlabel=self.xlabel,
+            ylabel=self.ylabel,
+            label=self.label,
+            limits=self.limits,
+            ticks=self.ticks,
+            axis_equal=self.axis_equal,
+            shaded_regions_list=self.shaded_regions_list,
+            series_list=self.plot_series_list,
+            histogram2d_list=self.histogram2d_list,
+            pin_list=self.pin_list,
+            horizontal_lines=self.horizontal_lines,
+            vertical_lines=self.vertical_lines)
+        return response

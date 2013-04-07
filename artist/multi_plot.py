@@ -4,7 +4,7 @@ import os
 import subprocess
 import shutil
 
-from plot import BasePlotContainer, Plot
+from plot import BasePlotContainer, SubPlot
 
 
 class MultiPlot(BasePlotContainer):
@@ -204,7 +204,7 @@ class SubPlotContainer:
         self.show_yticklabel = False
         self.xticklabel_pos = None
         self.yticklabel_pos = None
-        self.plot = Plot()
+        self.plot = SubPlot()
 
     def set_empty(self):
         self.empty = True
