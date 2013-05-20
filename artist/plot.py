@@ -163,7 +163,7 @@ class SubPlot(object):
         self.axis_equal = False
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
-             linestyle='solid', use_steps=False):
+             linestyle='solid', use_steps=False, markstyle=None):
         """Add a data series to the plot.
 
         :param x: array containing x-values.
@@ -178,13 +178,16 @@ class SubPlot(object):
             dashed, dotted, thick, or even combinations like
             "red,thick,dashed").
         :param use_steps: if True, draw a stepped plot.
+        :param markstyle: the style of the plot marks (e.g. 'mark
+            size=.75pt')
 
         The dimensions of x, y, xerr and yerr should be equal.  However,
         xerr and yerr may be empty lists.
 
         """
         self._clear_plot_mark_background(x, y, mark)
-        options = self._parse_plot_options(mark, linestyle, use_steps)
+        options = self._parse_plot_options(mark, linestyle, use_steps,
+                                           markstyle)
         plot_series = self._create_plot_series_object(x, y, xerr, yerr,
                                                       options)
         self.plot_series_list.append(plot_series)
@@ -496,7 +499,7 @@ class SubPlot(object):
         self.axis_equal = True
 
     def _parse_plot_options(self, mark=None, linestyle=None,
-                            use_steps=False):
+                            use_steps=False, markstyle=None):
         options = []
         if mark is not None:
             options.append('mark=%s' % mark)
@@ -510,6 +513,9 @@ class SubPlot(object):
 
         if use_steps is True:
             options.append('const plot')
+
+        if markstyle is not None:
+            options.append('mark options={%s}' % markstyle)
 
         options_string = ','.join(options)
         return options_string
