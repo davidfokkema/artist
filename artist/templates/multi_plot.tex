@@ -110,6 +110,8 @@
                     {%- if subplot.yticklabel_pos %}
                         yticklabel pos={{ subplot.yticklabel_pos }},
                     {%- endif %}
+                    axis equal={{ plot.axis_equal | lower }},
+                    %
                     title={ {{ plot.title }} },
                     xlabel={ {{ plot.xlabel }} },
                     ylabel={ {{ plot.ylabel }} },
