@@ -8,6 +8,7 @@ from itertools import izip_longest
 
 import jinja2
 import numpy as np
+from math import log10
 
 
 RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
@@ -539,8 +540,13 @@ class SubPlot(object):
         else:
             assert max_idx_x == max_idx_y, \
                 'If x and y are iterables, they must be the same length'
+
             x0, x1 = x[0], x[-1]
-            xs = relative_position * (x1 - x0) + x0
+            if 'loglog' in self.axis or 'logx' in self.axis:
+                xs = 10 ** (relative_position * (log10(x1) - log10(x0)) +
+                            log10(x0))
+            else:
+                xs = relative_position * (x1 - x0) + x0
             ys = np.interp(xs, x, y)
             return xs, ys
 
