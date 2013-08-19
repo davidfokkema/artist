@@ -35,8 +35,8 @@ class MultiPlot(BasePlotContainer):
                                                       self.ymode))
 
     def set_empty(self, row, column):
-        subplotcontainer = self.get_subplotcontainer_at(row, column)
-        subplotcontainer.set_empty()
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_empty()
 
     def set_empty_for_all(self, row_column_list):
         for row, column in row_column_list:
@@ -52,36 +52,36 @@ class MultiPlot(BasePlotContainer):
         subplot.set_label(text, location, style)
 
     def show_xticklabels(self, row, column):
-        subplotcontainer = self.get_subplotcontainer_at(row, column)
-        subplotcontainer.show_xticklabels()
+        subplot = self.get_subplot_at(row, column)
+        subplot.show_xticklabels()
 
     def show_xticklabels_for_all(self, row_column_list=None):
         if row_column_list is None:
-            for subplotcontainer in self.subplots:
-                subplotcontainer.show_xticklabels()
+            for subplot in self.subplots:
+                subplot.show_xticklabels()
         else:
             for row, column in row_column_list:
                 self.show_xticklabels(row, column)
 
     def show_yticklabels(self, row, column):
-        subplotcontainer = self.get_subplotcontainer_at(row, column)
-        subplotcontainer.show_yticklabels()
+        subplot = self.get_subplot_at(row, column)
+        subplot.show_yticklabels()
 
     def show_yticklabels_for_all(self, row_column_list=None):
         if row_column_list is None:
-            for subplotcontainer in self.subplots:
-                subplotcontainer.show_yticklabels()
+            for subplot in self.subplots:
+                subplot.show_yticklabels()
         else:
             for row, column in row_column_list:
                 self.show_yticklabels(row, column)
 
     def set_xticklabels_position(self, row, column, position):
-        subplotcontainer = self.get_subplotcontainer_at(row, column)
-        subplotcontainer.set_xticklabels_position(position)
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_xticklabels_position(position)
 
     def set_yticklabels_position(self, row, column, position):
-        subplotcontainer = self.get_subplotcontainer_at(row, column)
-        subplotcontainer.set_yticklabels_position(position)
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_yticklabels_position(position)
 
     def set_xlimits(self, row, column, min=None, max=None):
         subplot = self.get_subplot_at(row, column)
@@ -151,13 +151,9 @@ class MultiPlot(BasePlotContainer):
             for row, column in row_column_list:
                 self.set_logyticks(row, column, logticks)
 
-    def get_subplotcontainer_at(self, row, column):
+    def get_subplot_at(self, row, column):
         idx = row * self.columns + column
         return self.subplots[idx]
-
-    def get_subplot_at(self, row, column):
-        container = self.get_subplotcontainer_at(row, column)
-        return container
 
     def render(self, template=None):
         if not template:
