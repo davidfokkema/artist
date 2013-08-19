@@ -19,7 +19,7 @@ class MultiPlot(BasePlotContainer):
 
         self.rows = rows
         self.columns = columns
-        self.xmode, self.ymode = self._get_axis_options(axis)
+        self.xmode, self.ymode = self._get_axis_modes(axis)
         self.width = width
         self.height = height
         self.xlabel = None
@@ -31,7 +31,8 @@ class MultiPlot(BasePlotContainer):
         self.subplots = []
         for i in range(rows):
             for j in range(columns):
-                self.subplots.append(SubPlotContainer(i, j))
+                self.subplots.append(SubPlotContainer(i, j, self.xmode,
+                                                      self.ymode))
 
     def set_empty(self, row, column):
         subplotcontainer = self.get_subplotcontainer_at(row, column)
@@ -156,7 +157,7 @@ class MultiPlot(BasePlotContainer):
 
     def get_subplot_at(self, row, column):
         container = self.get_subplotcontainer_at(row, column)
-        return container.plot
+        return container
 
     def render(self, template=None):
         if not template:
@@ -184,27 +185,18 @@ class MultiPlot(BasePlotContainer):
         subplot = self.get_subplot_at(row, column)
         subplot.set_ylabel(text)
 
-    def _get_axis_options(self, axis):
-        if axis == 'loglog':
-            return 'log', 'log'
-        elif axis == 'semilogx':
-            return 'log', 'normal'
-        elif axis == 'semilogy':
-            return 'normal', 'log'
-        else:
-            return 'normal', 'normal'
 
-
-class SubPlotContainer:
-    def __init__(self, row, column):
+class SubPlotContainer(SubPlot):
+    def __init__(self, row, column, xmode, ymode):
         self.row = row
         self.column = column
+        self.xmode, self.ymode = xmode, ymode
         self.empty = False
         self.show_xticklabel = False
         self.show_yticklabel = False
         self.xticklabel_pos = None
         self.yticklabel_pos = None
-        self.plot = SubPlot()
+        super(SubPlotContainer, self).__init__()
 
     def set_empty(self):
         self.empty = True

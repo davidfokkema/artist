@@ -25,7 +25,9 @@
         every pin edge/.style={<-, >=stealth', shorten <=2pt},
         pin distance=2.5ex,
     ]
-    \begin{{ '{' }}{{ axis }}}[
+    \begin{axis}[
+            xmode={{ xmode }},
+            ymode={{ ymode }},
             width=\defaultwidth,
             {%- if height %}
             height=\defaultheight,
@@ -166,6 +168,6 @@
                 { {{ label.text }} };
         {% endif %}
 
-    \end{{ '{' }}{{ axis }}}
+    \end{axis}
 \end{tikzpicture}
 \end{sansmath}

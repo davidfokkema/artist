@@ -145,6 +145,16 @@ class BasePlotContainer(object):
         else:
             return ''
 
+    def _get_axis_modes(self, axis):
+        if axis == 'loglog':
+            return 'log', 'log'
+        elif axis == 'semilogx':
+            return 'log', 'normal'
+        elif axis == 'semilogy':
+            return 'normal', 'log'
+        else:
+            return 'normal', 'normal'
+
 
 class SubPlot(object):
     def __init__(self):
@@ -542,7 +552,7 @@ class SubPlot(object):
                 'If x and y are iterables, they must be the same length'
 
             x0, x1 = x[0], x[-1]
-            if 'loglog' in self.axis or 'logx' in self.axis:
+            if self.xmode == 'log':
                 xs = 10 ** (relative_position * (log10(x1) - log10(x0)) +
                             log10(x0))
             else:
@@ -571,7 +581,7 @@ class Plot(SubPlot, BasePlotContainer):
 
         self.width = width
         self.height = height
-        self.axis = axis + 'axis'
+        self.xmode, self.ymode = self._get_axis_modes(axis)
 
         super(Plot, self).__init__()
 
@@ -591,7 +601,8 @@ class Plot(SubPlot, BasePlotContainer):
             template = self.template
 
         response = template.render(
-            axis=self.axis,
+            xmode=self.xmode,
+            ymode=self.ymode,
             title=self.title,
             width=self.width,
             height=self.height,

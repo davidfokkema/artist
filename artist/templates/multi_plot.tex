@@ -53,14 +53,14 @@
                 scaled ticks=false,
             ]
             {% for subplot in subplots %}
-                {% set plot = subplot.plot %}
+                {% set plot = subplot %}
                 \nextgroupplot[
                 {%- if subplot.empty %}
                     group/empty plot
                 {%- else %}
                     % Default: empty ticks all round the border of the
                     % multiplot
-                    {%- if ticks.x is not none and subplot.plot.ticks.x is not none %}
+                    {%- if ticks.x is not none and subplot.ticks.x is not none %}
                         {%- if rows == 1 %}
                             xtick={ {{ ticks.x | join(', ') }} },
                             xtick pos=both,
@@ -77,7 +77,7 @@
                             xticklabel=\empty,
                         {%- endif %}
                     {%- endif %}
-                    {%- if ticks.y is not none and subplot.plot.ticks.y is not none %}
+                    {%- if ticks.y is not none and subplot.ticks.y is not none %}
                         {%- if columns == 1 %}
                             ytick={ {{ ticks.y | join(', ') }} },
                             ytick pos=both,
@@ -92,11 +92,11 @@
                             yticklabel=\empty,
                         {%- endif %}
                     {%- endif %}
-                    {%- if subplot.plot.ticks.x %}
-                        xtick={ {{ subplot.plot.ticks.x | join(', ') }} },
+                    {%- if subplot.ticks.x %}
+                        xtick={ {{ subplot.ticks.x | join(', ') }} },
                     {%- endif %}
-                    {%- if subplot.plot.ticks.y %}
-                        ytick={ {{ subplot.plot.ticks.y | join(', ') }} },
+                    {%- if subplot.ticks.y %}
+                        ytick={ {{ subplot.ticks.y | join(', ') }} },
                     {%- endif %}
                     {%- if subplot.show_xticklabel %}
                         xticklabel={},
@@ -115,17 +115,17 @@
                     title={ {{ plot.title }} },
                     xlabel={ {{ plot.xlabel }} },
                     ylabel={ {{ plot.ylabel }} },
-                    {%- if subplot.plot.limits.xmin is not none %}
-                        xmin={ {{ subplot.plot.limits.xmin }} },
+                    {%- if subplot.limits.xmin is not none %}
+                        xmin={ {{ subplot.limits.xmin }} },
                     {%- endif %}
-                    {%- if subplot.plot.limits.xmax is not none %}
-                        xmax={ {{ subplot.plot.limits.xmax }} },
+                    {%- if subplot.limits.xmax is not none %}
+                        xmax={ {{ subplot.limits.xmax }} },
                     {%- endif %}
-                    {%- if subplot.plot.limits.ymin is not none %}
-                        ymin={ {{ subplot.plot.limits.ymin }} },
+                    {%- if subplot.limits.ymin is not none %}
+                        ymin={ {{ subplot.limits.ymin }} },
                     {%- endif %}
-                    {%- if subplot.plot.limits.ymax is not none %}
-                        ymax={ {{ subplot.plot.limits.ymax }} },
+                    {%- if subplot.limits.ymax is not none %}
+                        ymax={ {{ subplot.limits.ymax }} },
                     {%- endif %}
                 {%- endif %}
                 ]
