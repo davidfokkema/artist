@@ -55,16 +55,6 @@
 
         {% include 'subplot.tex' %}
 
-        {% if label %}
-            \node[{{ label.style }},
-            {%- if label.node_location != 'center' %}
-                  {{ label.node_location }}=2pt
-            {%- endif %}
-                ]
-                at (rel axis cs:{{ label.x }}, {{ label.y }})
-                { {{ label.text }} };
-        {% endif %}
-
     \end{axis}
 \end{tikzpicture}
 \end{sansmath}

@@ -608,7 +608,6 @@ class Plot(SubPlot, BasePlotContainer):
             height=self.height,
             xlabel=self.xlabel,
             ylabel=self.ylabel,
-            label=self.label,
             limits=self.limits,
             ticks=self.ticks,
             axis_equal=self.axis_equal,

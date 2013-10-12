@@ -102,3 +102,14 @@
           {{ pin_option }}={[{{ pin.options }}] {{ pin.location }}:{ {{ pin.text }} }}]
         at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
 {% endfor %}
+
+{% if plot.label %}
+    \node[{{ plot.label.style }},
+    {%- if plot.label.node_location != 'center' %}
+          {{ plot.label.node_location }}=2pt
+    {%- endif %}
+        ]
+        at (rel axis cs:{{ plot.label.x }},
+            {{ plot.label.y }})
+        { {{ plot.label.text }} };
+{% endif %}
