@@ -15,7 +15,7 @@ class MultiPlot(BasePlotContainer):
                                          finalize=self._convert_none)
         self.template = environment.get_template('multi_plot.tex')
         self.document_template = environment.get_template(
-                                    'document_multi_plot.tex')
+                                    'document.tex')
 
         self.rows = rows
         self.columns = columns
@@ -164,7 +164,8 @@ class MultiPlot(BasePlotContainer):
                                    width=self.width, height=self.height,
                                    xlabel=self.xlabel, ylabel=self.ylabel,
                                    limits=self.limits, ticks=self.ticks,
-                                   subplots=self.subplots)
+                                   subplots=self.subplots,
+                                   plot_template=self.template)
         return response
 
     def set_xlabel(self, text):

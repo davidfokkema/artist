@@ -577,7 +577,7 @@ class Plot(SubPlot, BasePlotContainer):
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('artist_plot.tex')
         self.document_template = environment.get_template(
-            'document_artist_plot.tex')
+            'document.tex')
 
         self.width = width
         self.height = height
@@ -611,5 +611,6 @@ class Plot(SubPlot, BasePlotContainer):
             limits=self.limits,
             ticks=self.ticks,
             axis_equal=self.axis_equal,
-            plot=self)
+            plot=self,
+            plot_template=self.template)
         return response
