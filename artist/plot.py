@@ -575,7 +575,7 @@ class Plot(SubPlot, BasePlotContainer):
     def __init__(self, axis='', width=r'.67\linewidth', height=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
-        self.template = environment.get_template('artist_plot.tex')
+        self.template = environment.get_template('plot.tex')
         self.document_template = environment.get_template(
             'document.tex')
 
