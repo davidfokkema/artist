@@ -10,25 +10,34 @@ def main():
     graph = artist.MultiPlot(2, 3, width=r'.33\linewidth',
                              height=r'.33\linewidth')
     x = np.linspace(-pi, pi)
-    graph.plot(0, 1, x, sin(x), mark=None)
-    graph.add_pin(0, 1, '$\sin(x)$', relative_position=.5)
-    graph.plot(1, 0, x, cos(x), mark=None)
-    graph.add_pin_at_xy(1, 0, 1, .5, '$\cos(x)$', use_arrow=True)
-    graph.plot(1, 2, x, tan(x), mark=None)
+
+    subplot = graph.get_subplot_at(0, 1)
+    subplot.plot(x, sin(x), mark=None)
+    subplot.add_pin('$\sin(x)$', relative_position=.5)
+
+    subplot = graph.get_subplot_at(1, 0)
+    subplot.plot(x, cos(x), mark=None)
+    subplot.add_pin_at_xy(1, .5, '$\cos(x)$', use_arrow=True)
+
+    subplot = graph.get_subplot_at(1, 2)
+    subplot.plot(x, tan(x), mark=None)
 
     x = np.random.normal(size=1000)
     n, bins = np.histogram(x, bins=20)
-    graph.histogram(0, 0, n, bins)
-    graph.add_pin(0, 0, 'histogram', location='left', relative_position=.5)
+    subplot = graph.get_subplot_at(0, 0)
+    subplot.histogram(n, bins)
+    subplot.add_pin('histogram', location='left', relative_position=.5)
 
     x = range(5)
     lower = np.random.uniform(-2, -1, size=5)
     median = np.random.uniform(-.5, .5, size=5)
     upper = np.random.uniform(1, 2, size=5)
-    graph.plot(0, 2, x, median, mark='*')
-    graph.shade_region(0, 2, x, lower, upper)
+    subplot = graph.get_subplot_at(0, 2)
+    subplot.plot(x, median, mark='*')
+    subplot.shade_region(x, lower, upper)
 
-    graph.plot(1, 1, range(5), np.random.normal(size=5))
+    subplot = graph.get_subplot_at(1, 1)
+    subplot.plot(range(5), np.random.normal(size=5))
 
     graph.show_xticklabels_for_all([(0, 0), (1, 1), (0, 2)])
     graph.show_yticklabels(0, 0)

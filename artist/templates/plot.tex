@@ -1,0 +1,60 @@
+% \usepackage{tikz}
+% \usetikzlibrary{arrows}
+% \usepackage{pgfplots}
+% \pgfplotsset{compat=1.3}
+% \usepackage[detect-family]{siunitx}
+% \usepackage[eulergreek]{sansmath}
+% \sisetup{text-sf=\sansmath}
+% \usepackage{relsize}
+%
+\pgfkeysifdefined{/artist/width}
+    {\pgfkeysgetvalue{/artist/width}{\defaultwidth}}
+    {\def\defaultwidth{ {{ width }} }}
+%
+{%- if height %}
+\pgfkeysifdefined{/artist/height}
+    {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+    {\def\defaultheight{ {{ height }} }}
+{%- endif %}
+%
+\begin{sansmath}
+\begin{tikzpicture}[
+        font=\sffamily,
+        every pin/.style={inner sep=2pt, font={\sffamily\smaller}},
+        every label/.style={inner sep=2pt, font={\sffamily\smaller}},
+        every pin edge/.style={<-, >=stealth', shorten <=2pt},
+        pin distance=2.5ex,
+    ]
+    \begin{axis}[
+            xmode={{ xmode }},
+            ymode={{ ymode }},
+            width=\defaultwidth,
+            {%- if height %}
+            height=\defaultheight,
+            {%- endif %}
+            axis equal={{ axis_equal | lower }},
+            %
+            title={ {{ title }} },
+            %
+            xlabel={ {{ xlabel }} },
+            ylabel={ {{ ylabel }} },
+            %
+            xmin={ {{ limits.xmin }} },
+            xmax={ {{ limits.xmax }} },
+            ymin={ {{ limits.ymin }} },
+            ymax={ {{ limits.ymax }} },
+            %
+            xtick={ {{ ticks.x | join(', ') }} },
+            ytick={ {{ ticks.y | join(', ') }} },
+            %
+            tick align=outside,
+            max space between ticks=40,
+            every tick/.style={},
+            axis on top,
+        ]
+
+        {% include 'subplot.tex' %}
+
+    \end{axis}
+\end{tikzpicture}
+\end{sansmath}

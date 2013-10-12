@@ -8,6 +8,7 @@ from itertools import izip_longest
 
 import jinja2
 import numpy as np
+from math import log10
 
 
 RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
@@ -22,24 +23,141 @@ RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
                                       'x': 0.5, 'y': 0.5}}
 
 
-class Plot:
+class BasePlotContainer(object):
 
-    """Create a plot.
+    """Base class for stand-alone plots.
 
-    This class creates a 2D plot.  Its various methods add data,
-    annotations and options which is stored in class variables.  Finally,
-    the plot can be rendered using the Jinja2 templating engine resulting
-    in a LaTeX file.
+    This class provides methods for rendering the plot.  To provide
+    methods for plotting and annotating, subclass this base class.
 
     """
 
-    def __init__(self, axis='', width=r'.67\linewidth', height=None):
-        environment = jinja2.Environment(loader=jinja2.PackageLoader(
-            'artist', 'templates'), finalize=self._convert_none)
-        self.template = environment.get_template('artist_plot.tex')
-        self.document_template = environment.get_template(
-            'document_artist_plot.tex')
+    # The templates must be initialized on instantiation.
+    template = None
+    document_template = None
 
+
+    def render(self, template=None):
+        """Render the plot using a template.
+
+        Once the plot is complete, it needs to be rendered.  Artist uses
+        the Jinja2 templating engine.  The default template results in a
+        LaTeX file which can be included in your document.
+
+        :param template: a user-supplied template or None.
+        :type template: string or None.
+        :returns: the rendered template as string.
+
+        This is a very minimal implementation.  Override this method to
+        include variables in the template.render call.
+
+        """
+        if not template:
+            template = self.template
+
+        response = template.render()
+        return response
+
+    def render_as_document(self):
+        """Render the plot as a stand-alone document.
+
+        :returns: the rendered template as string.
+
+        """
+        return self.render(self.document_template)
+
+    def save(self, dest_path):
+        r"""Save the plot as a includable LaTeX file.
+
+        The output file can be included (using \input) in your LaTeX
+        document.
+
+        :param dest_path: path of the file.
+
+        """
+        dest_path = self._add_extension('tex', dest_path)
+        with open(dest_path, 'w') as f:
+            f.write(self.render())
+
+    def save_as_document(self, dest_path):
+        """Save the plot as a stand-alone LaTeX file.
+
+        :param dest_path: path of the file.
+
+        """
+        dest_path = self._add_extension('tex', dest_path)
+        with open(dest_path, 'w') as f:
+            f.write(self.render_as_document())
+
+    def save_as_pdf(self, dest_path):
+        """Save the plot as a PDF file.
+
+        Save and render the plot using LaTeX to create a PDF file.
+
+        :param dest_path: path of the file.
+
+        """
+        dest_path = self._add_extension('pdf', dest_path)
+        build_dir = tempfile.mkdtemp()
+        build_path = os.path.join(build_dir, 'document.tex')
+        with open(build_path, 'w') as f:
+            f.write(self.render_as_document())
+        pdf_path = self._build_document(build_path)
+        self._crop_document(pdf_path)
+        shutil.copyfile(pdf_path, dest_path)
+        shutil.rmtree(build_dir)
+
+    def _build_document(self, path):
+        dir_path = os.path.dirname(path)
+        try:
+            subprocess.check_output(['pdflatex', '-halt-on-error',
+                                     '-output-directory', dir_path, path],
+                                    stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as exc:
+            output_lines = exc.output.split('\n')
+            error_lines = [line for line in output_lines if
+                           line and line[0] == '!']
+            errors = '\n'.join(error_lines)
+            raise RuntimeError("LaTeX compilation failed:\n" + errors)
+
+        pdf_path = path.replace('.tex', '.pdf')
+        return pdf_path
+
+    def _crop_document(self, path):
+        dirname = os.path.dirname(path)
+        output_path = os.path.join(dirname, 'crop-output.pdf')
+        try:
+            subprocess.check_output(['pdfcrop', path, output_path],
+                                    stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as exc:
+            raise RuntimeError("Cropping PDF failed:\n" + exc.output)
+        os.rename(output_path, path)
+
+    def _add_extension(self, extension, path):
+        if not '.' in path:
+            return path + '.' + extension
+        else:
+            return path
+
+    def _convert_none(self, variable):
+        if variable is not None:
+            return variable
+        else:
+            return ''
+
+    def _get_axis_modes(self, axis):
+        if axis == 'loglog':
+            return 'log', 'log'
+        elif axis == 'semilogx':
+            return 'log', 'normal'
+        elif axis == 'semilogy':
+            return 'normal', 'log'
+        else:
+            return 'normal', 'normal'
+
+
+class SubPlot(object):
+    def __init__(self):
         self.shaded_regions_list = []
         self.plot_series_list = []
         self.histogram2d_list = []
@@ -47,9 +165,6 @@ class Plot:
         self.horizontal_lines = []
         self.vertical_lines = []
         self.title = None
-        self.axis = axis + 'axis'
-        self.width = width
-        self.height = height
         self.xlabel = None
         self.ylabel = None
         self.label = None
@@ -59,7 +174,7 @@ class Plot:
         self.axis_equal = False
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
-             linestyle='solid', use_steps=False):
+             linestyle='solid', use_steps=False, markstyle=None):
         """Add a data series to the plot.
 
         :param x: array containing x-values.
@@ -74,13 +189,16 @@ class Plot:
             dashed, dotted, thick, or even combinations like
             "red,thick,dashed").
         :param use_steps: if True, draw a stepped plot.
+        :param markstyle: the style of the plot marks (e.g. 'mark
+            size=.75pt')
 
         The dimensions of x, y, xerr and yerr should be equal.  However,
         xerr and yerr may be empty lists.
 
         """
         self._clear_plot_mark_background(x, y, mark)
-        options = self._parse_plot_options(mark, linestyle, use_steps)
+        options = self._parse_plot_options(mark, linestyle, use_steps,
+                                           markstyle)
         plot_series = self._create_plot_series_object(x, y, xerr, yerr,
                                                       options)
         self.plot_series_list.append(plot_series)
@@ -306,115 +424,6 @@ class Plot:
         self.vertical_lines.append({'value': xvalue,
                                     'options': linestyle})
 
-    def render(self, template=None):
-        """Render the plot using a template.
-
-        Once the plot is complete, it needs to be rendered.  Artist uses
-        the Jinja2 templating engine.  The default template results in a
-        LaTeX file which can be included in your document.
-
-        :param template: a user-supplied template or None.
-        :type template: string or None.
-        :returns: the rendered template as string.
-
-        """
-        if not template:
-            template = self.template
-
-        response = template.render(
-            axis=self.axis,
-            title=self.title,
-            width=self.width,
-            height=self.height,
-            xlabel=self.xlabel,
-            ylabel=self.ylabel,
-            label=self.label,
-            limits=self.limits,
-            ticks=self.ticks,
-            axis_equal=self.axis_equal,
-            shaded_regions_list=self.shaded_regions_list,
-            series_list=self.plot_series_list,
-            histogram2d_list=self.histogram2d_list,
-            pin_list=self.pin_list,
-            horizontal_lines=self.horizontal_lines,
-            vertical_lines=self.vertical_lines)
-        return response
-
-    def render_as_document(self):
-        """Render the plot as a stand-alone document.
-
-        :returns: the rendered template as string.
-
-        """
-        return self.render(self.document_template)
-
-    def save(self, dest_path):
-        r"""Save the plot as a includable LaTeX file.
-
-        The output file can be included (using \input) in your LaTeX
-        document.
-
-        :param dest_path: path of the file.
-
-        """
-        dest_path = self._add_extension('tex', dest_path)
-        with open(dest_path, 'w') as f:
-            f.write(self.render())
-
-    def save_as_document(self, dest_path):
-        """Save the plot as a stand-alone LaTeX file.
-
-        :param dest_path: path of the file.
-
-        """
-        dest_path = self._add_extension('tex', dest_path)
-        with open(dest_path, 'w') as f:
-            f.write(self.render_as_document())
-
-    def save_as_pdf(self, dest_path):
-        """Save the plot as a PDF file.
-
-        Save and render the plot using LaTeX to create a PDF file.
-
-        :param dest_path: path of the file.
-
-        """
-        dest_path = self._add_extension('pdf', dest_path)
-        build_dir = tempfile.mkdtemp()
-        build_path = os.path.join(build_dir, 'document.tex')
-        with open(build_path, 'w') as f:
-            f.write(self.render_as_document())
-        pdf_path = self._build_document(build_path)
-        self._crop_document(pdf_path)
-        shutil.copyfile(pdf_path, dest_path)
-        shutil.rmtree(build_dir)
-
-    def _build_document(self, path):
-        dir_path = os.path.dirname(path)
-        try:
-            subprocess.check_output(['pdflatex', '-halt-on-error',
-                                     '-output-directory', dir_path, path],
-                                    stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as exc:
-            output_lines = exc.output.split('\n')
-            error_lines = [line for line in output_lines if
-                           line and line[0] == '!']
-            errors = '\n'.join(error_lines)
-            raise RuntimeError("LaTeX compilation failed:\n" + errors)
-
-        pdf_path = path.replace('.tex', '.pdf')
-        return pdf_path
-
-    def _crop_document(self, path):
-        dirname = os.path.dirname(path)
-        output_path = os.path.join(dirname, 'crop-output.pdf')
-        try:
-            subprocess.check_output(['pdfcrop', path, output_path],
-                                    stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as exc:
-            raise RuntimeError("Cropping PDF failed:\n" + exc.output)
-        os.rename(output_path, path)
-
     def set_xlabel(self, text):
         """Set a label for the x-axis.
 
@@ -501,7 +510,7 @@ class Plot:
         self.axis_equal = True
 
     def _parse_plot_options(self, mark=None, linestyle=None,
-                            use_steps=False):
+                            use_steps=False, markstyle=None):
         options = []
         if mark is not None:
             options.append('mark=%s' % mark)
@@ -515,6 +524,9 @@ class Plot:
 
         if use_steps is True:
             options.append('const plot')
+
+        if markstyle is not None:
+            options.append('mark options={%s}' % markstyle)
 
         options_string = ','.join(options)
         return options_string
@@ -538,19 +550,67 @@ class Plot:
         else:
             assert max_idx_x == max_idx_y, \
                 'If x and y are iterables, they must be the same length'
+
             x0, x1 = x[0], x[-1]
-            xs = relative_position * (x1 - x0) + x0
+            if self.xmode == 'log':
+                xs = 10 ** (relative_position * (log10(x1) - log10(x0)) +
+                            log10(x0))
+            else:
+                xs = relative_position * (x1 - x0) + x0
             ys = np.interp(xs, x, y)
             return xs, ys
 
-    def _add_extension(self, extension, path):
-        if not '.' in path:
-            return path + '.' + extension
-        else:
-            return path
 
-    def _convert_none(self, variable):
-        if variable is not None:
-            return variable
-        else:
-            return ''
+class Plot(SubPlot, BasePlotContainer):
+
+    """Create a plot.
+
+    This class creates a 2D plot.  Its various methods add data,
+    annotations and options which is stored in class variables.  Finally,
+    the plot can be rendered using the Jinja2 templating engine resulting
+    in a LaTeX file.
+
+    """
+
+    def __init__(self, axis='', width=r'.67\linewidth', height=None):
+        environment = jinja2.Environment(loader=jinja2.PackageLoader(
+            'artist', 'templates'), finalize=self._convert_none)
+        self.template = environment.get_template('plot.tex')
+        self.document_template = environment.get_template(
+            'document.tex')
+
+        self.width = width
+        self.height = height
+        self.xmode, self.ymode = self._get_axis_modes(axis)
+
+        super(Plot, self).__init__()
+
+    def render(self, template=None):
+        """Render the plot using a template.
+
+        Once the plot is complete, it needs to be rendered.  Artist uses
+        the Jinja2 templating engine.  The default template results in a
+        LaTeX file which can be included in your document.
+
+        :param template: a user-supplied template or None.
+        :type template: string or None.
+        :returns: the rendered template as string.
+
+        """
+        if not template:
+            template = self.template
+
+        response = template.render(
+            xmode=self.xmode,
+            ymode=self.ymode,
+            title=self.title,
+            width=self.width,
+            height=self.height,
+            xlabel=self.xlabel,
+            ylabel=self.ylabel,
+            limits=self.limits,
+            ticks=self.ticks,
+            axis_equal=self.axis_equal,
+            plot=self,
+            plot_template=self.template)
+        return response
