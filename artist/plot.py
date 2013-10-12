@@ -612,10 +612,5 @@ class Plot(SubPlot, BasePlotContainer):
             limits=self.limits,
             ticks=self.ticks,
             axis_equal=self.axis_equal,
-            shaded_regions_list=self.shaded_regions_list,
-            series_list=self.plot_series_list,
-            histogram2d_list=self.histogram2d_list,
-            pin_list=self.pin_list,
-            horizontal_lines=self.horizontal_lines,
-            vertical_lines=self.vertical_lines)
+            plot=self)
         return response

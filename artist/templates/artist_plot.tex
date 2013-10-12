@@ -53,7 +53,7 @@
             axis on top,
         ]
 
-        {% for histogram in histogram2d_list %}
+        {% for histogram in plot.histogram2d_list %}
             % Draw histogram background, if needed
             {%- if histogram.type in ['bw', 'reverse_bw'] %}
                 {%- if histogram.type == 'bw' %}
@@ -103,7 +103,7 @@
             {%- endfor %}
         {% endfor %}
 
-        {% for region in shaded_regions_list %}
+        {% for region in plot.shaded_regions_list %}
             \addplot[draw=none, fill={{ region.color }}] coordinates {
             {%- for x, y in region.data %}
                 ({{ x }}, {{ y }})
@@ -111,7 +111,7 @@
                 } -- cycle;
         {% endfor %}
 
-        {% for series in series_list %}
+        {% for series in plot.plot_series_list %}
             {% if series.show_xerr %}
             % Draw x-error bars
             {%- for x, y, xerr, yerr in series.data %}
@@ -135,19 +135,19 @@
             };
         {% endfor %}
 
-        {% for line in horizontal_lines %}
+        {% for line in plot.horizontal_lines %}
             \draw[{{ line.options }}]
                 ({rel axis cs:0, 0} |- {axis cs:0, {{ line.value }} }) --
                 ({rel axis cs:1, 1} |- {axis cs:0, {{ line.value }} });
         {% endfor %}
 
-        {% for line in vertical_lines %}
+        {% for line in plot.vertical_lines %}
             \draw[{{ line.options }}]
                 ({rel axis cs:0, 0} -| {axis cs:{{ line.value }}, 0 }) --
                 ({rel axis cs:1, 1} -| {axis cs:{{ line.value }}, 0 });
         {% endfor %}
 
-        {% for pin in pin_list %}
+        {% for pin in plot.pin_list %}
             {%- if pin.use_arrow %}
                 {%- set pin_option = 'pin' %}
             {%- else %}
