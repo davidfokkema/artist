@@ -11,11 +11,10 @@ class MultiPlot(BasePlotContainer):
     def __init__(self, rows, columns, axis='',
                  width=r'.67\linewidth', height=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
-                                                    'artist', 'templates'),
-                                         finalize=self._convert_none)
+            'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('multi_plot.tex')
         self.document_template = environment.get_template(
-                                    'document.tex')
+            'document.tex')
 
         self.rows = rows
         self.columns = columns

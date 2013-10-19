@@ -16,11 +16,13 @@ def set_prefix(prefix):
     global __prefix
     __prefix = prefix
 
+
 def set_suffix(suffix):
     """Set global suffix for all graph names"""
 
     global __suffix
     __suffix = suffix
+
 
 def get_callers_name(level=2):
     """Return name of caller
@@ -34,6 +36,7 @@ def get_callers_name(level=2):
     frame_record = inspect.stack()[level]
     function_name = frame_record[3]
     return function_name
+
 
 def create_graph_name(suffix='', dirname=None):
     """Create a graph name
@@ -50,6 +53,7 @@ def create_graph_name(suffix='', dirname=None):
         name = os.path.join(dirname, name)
     return name
 
+
 def save_graph(graph, suffix='', dirname=None, pdf=False):
     """Save a graph using caller's name
 
@@ -64,6 +68,7 @@ def save_graph(graph, suffix='', dirname=None, pdf=False):
     graph.save(name)
     if pdf:
         graph.save_as_pdf(name)
+
 
 def save_data(data, suffix='', dirname=None):
     """Save a dataset using caller's name

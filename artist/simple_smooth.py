@@ -23,6 +23,7 @@ def smooth(x, y, degree=3):
 
         return smoothed_x, smoothed_y
 
+
 def isodd(x):
     """Determine if number is odd"""
 

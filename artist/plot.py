@@ -36,8 +36,8 @@ class BasePlotContainer(object):
     template = None
     document_template = None
 
-
     def render(self, template=None):
+
         """Render the plot using a template.
 
         Once the plot is complete, it needs to be rendered.  Artist uses
