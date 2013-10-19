@@ -25,7 +25,6 @@ def main():
     popt, pcov = scipy.optimize.curve_fit(f, x, y)
     print "Parameters from fit (N, mu, sigma):", popt
 
-
     # make graph
     graph = GraphArtist()
 
