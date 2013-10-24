@@ -1,4 +1,18 @@
-"""Create a plot."""
+"""Create a plot.
+
+Contents
+--------
+
+:class:`BasePlotContainer`
+    Base class for standalone plots.
+
+:class:`SubPlot`
+    Plot data in a data rectangle.
+
+:class:`Plot`
+    Create a plot containing a single subplot.
+
+"""
 
 import subprocess
 import os
@@ -37,7 +51,6 @@ class BasePlotContainer(object):
     document_template = None
 
     def render(self, template=None):
-
         """Render the plot using a template.
 
         Once the plot is complete, it needs to be rendered.  Artist uses
@@ -157,6 +170,16 @@ class BasePlotContainer(object):
 
 
 class SubPlot(object):
+
+    """Plot data in a data rectangle.
+
+    Provides methods to plot or histogram data, shade regions, add labels,
+    pins and titles.  This class is not meant to be used directly.
+    Instead, use the Plot class for single plots, or the MultiPlot class
+    for plots containing multiple subplots.
+
+    """
+
     def __init__(self):
         self.shaded_regions_list = []
         self.plot_series_list = []
@@ -299,6 +322,7 @@ class SubPlot(object):
         :param location: the location of the label inside the plot.  May
             be one of 'center', 'upper right', 'lower right', 'upper
             left', 'lower left'.
+        :param style: any TikZ style to style the text.
 
         """
         if location in RELATIVE_NODE_LOCATIONS:
@@ -563,12 +587,12 @@ class SubPlot(object):
 
 class Plot(SubPlot, BasePlotContainer):
 
-    """Create a plot.
+    """Create a plot containing a single subplot.
 
     This class creates a 2D plot.  Its various methods add data,
     annotations and options which is stored in class variables.  Finally,
     the plot can be rendered using the Jinja2 templating engine resulting
-    in a LaTeX file.
+    in a LaTeX or PDF file.
 
     """
 
