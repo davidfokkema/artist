@@ -233,7 +233,7 @@ class MultiPlot(BasePlotContainer):
         subplot = self.get_subplot_at(row, column)
         subplot.set_xticks(ticks)
 
-    def set_xticks_for_all(self, row_column_list, ticks):
+    def set_xticks_for_all(self, row_column_list=None, ticks=None):
         """Manually specify the x-axis tick values.
 
         :param row_column_list: a list containing (row, column) tuples to
@@ -257,7 +257,7 @@ class MultiPlot(BasePlotContainer):
         subplot = self.get_subplot_at(row, column)
         subplot.set_logxticks(logticks)
 
-    def set_logxticks_for_all(self, row_column_list, logticks):
+    def set_logxticks_for_all(self, row_column_list=None, logticks=None):
         if row_column_list is None:
             self.ticks['x'] = ['1e%d' % u for u in logticks]
         else:
@@ -268,7 +268,7 @@ class MultiPlot(BasePlotContainer):
         subplot = self.get_subplot_at(row, column)
         subplot.set_yticks(ticks)
 
-    def set_yticks_for_all(self, row_column_list, ticks):
+    def set_yticks_for_all(self, row_column_list=None, ticks=None):
         if row_column_list is None:
             self.ticks['y'] = ticks
         else:
@@ -279,7 +279,7 @@ class MultiPlot(BasePlotContainer):
         subplot = self.get_subplot_at(row, column)
         subplot.set_logyticks(logticks)
 
-    def set_logyticks_for_all(self, row_column_list, logticks):
+    def set_logyticks_for_all(self, row_column_list=None, logticks=None):
         if row_column_list is None:
             self.ticks['y'] = ['1e%d' % u for u in logticks]
         else:
