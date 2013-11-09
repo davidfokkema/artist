@@ -1,4 +1,4 @@
-"""Artist makes beautiful plots
+"""Artist makes beautiful plots.
 
 Artist is a 2D plotting library for Python.  It's main focus is the
 output.  Artist creates a LaTeX file which can be included in your paper

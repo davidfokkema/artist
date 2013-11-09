@@ -1,10 +1,10 @@
-"""Simple averaging smoother"""
+"""Simple averaging smoother."""
 
 import numpy as np
 
 
 def smooth(x, y, degree=3):
-    """Smooth y-values and return new x, y pair"""
+    """Smooth y-values and return new x, y pair."""
 
     if degree == 1:
         return x, y
@@ -23,9 +23,13 @@ def smooth(x, y, degree=3):
 
         return smoothed_x, smoothed_y
 
-def isodd(x):
-    """Determine if number is odd"""
 
+def isodd(x):
+    """Determine if number is odd.
+
+    :return: boolean
+
+    """
     if x % 2 == 1:
         return True
     else:

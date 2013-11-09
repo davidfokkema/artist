@@ -3,7 +3,6 @@ import numpy as np
 from artist import GraphArtist
 
 
-
 def main():
     leap = np.genfromtxt('data/leap-prot.dat', delimiter=',',
                          usecols=(0, 1), names=['E', 'F'])
@@ -41,13 +40,14 @@ def main():
 
     graph.set_xlabel(r"Energy [\si{\electronvolt}]")
     graph.set_ylabel(r"Flux [\si{\per\square\meter\per\steradian"
-                                "\per\second\per\giga\electronvolt}]")
+                     "\per\second\per\giga\electronvolt}]")
 
     x = np.logspace(11, 17)
     graph.plot(x, 1.5e29 * x ** -2.75, mark=None, linestyle='dashed')
 
     graph.set_logxticks(range(6, 22, 3))
     graph.save('spectrum')
+
 
 def read_data(path, energy_col, flux_col):
     data = np.genfromtxt(path, usecols=(energy_col, flux_col),

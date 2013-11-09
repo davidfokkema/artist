@@ -1,10 +1,10 @@
-"""Recursive linear interpolation smoother"""
+"""Recursive linear interpolation smoother."""
 
 import numpy as np
 
 
 def smooth(x, y, degree=1, logx=False, logy=False):
-    """Smooth y-values and return new x, y pair
+    """Smooth y-values and return new x, y pair.
 
     :param x, y: data values
     :param degree: degree of smoothing
