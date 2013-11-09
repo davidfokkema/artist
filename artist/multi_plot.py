@@ -59,20 +59,32 @@ class MultiPlot(BasePlotContainer):
                                                       self.ymode))
 
     def set_empty(self, row, column):
-        """Keeps one of the subplots completely empty."""
+        """Keep one of the subplots completely empty.
 
+        :param row, column: specify the subplot.
+
+        """
         subplot = self.get_subplot_at(row, column)
         subplot.set_empty()
 
     def set_empty_for_all(self, row_column_list):
-        """Keeps all specified subplots completely empty."""
+        """Keep all specified subplots completely empty.
 
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+
+        """
         for row, column in row_column_list:
             self.set_empty(row, column)
 
     def set_title(self, row, column, text):
-        """Set a title text."""
+        """Set a title text.
 
+        :param row, column: specify the subplot.
+        :param text: title text.
+
+        """
         subplot = self.get_subplot_at(row, column)
         subplot.set_title(text)
 
@@ -92,8 +104,11 @@ class MultiPlot(BasePlotContainer):
         subplot.set_label(text, location, style)
 
     def show_xticklabels(self, row, column):
-        """Show the x-axis tick labels for a subplot."""
+        """Show the x-axis tick labels for a subplot.
 
+        :param row, column: specify the subplot.
+
+        """
         subplot = self.get_subplot_at(row, column)
         subplot.show_xticklabels()
 
@@ -113,8 +128,11 @@ class MultiPlot(BasePlotContainer):
                 self.show_xticklabels(row, column)
 
     def show_yticklabels(self, row, column):
-        """Show the y-axis tick labels for a subplot."""
+        """Show the y-axis tick labels for a subplot.
 
+        :param row, column: specify the subplot.
+
+        """
         subplot = self.get_subplot_at(row, column)
         subplot.show_yticklabels()
 
@@ -238,6 +256,7 @@ class MultiPlot(BasePlotContainer):
 
         :param row_column_list: a list containing (row, column) tuples to
             specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
         :param ticks: list of tick values.
 
         """
@@ -251,13 +270,29 @@ class MultiPlot(BasePlotContainer):
         """Manually specify the x-axis log tick values.
 
         :param row, column: specify the subplot.
-        :param logticks: list of tick . FIXME
+        :param logticks: logarithm of the locations for the ticks along the
+            axis.
+
+        For example, if you specify [1, 2, 3], ticks will be placed at 10,
+        100 and 1000.
 
         """
         subplot = self.get_subplot_at(row, column)
         subplot.set_logxticks(logticks)
 
     def set_logxticks_for_all(self, row_column_list=None, logticks=None):
+        """Manually specify the x-axis log tick values.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param logticks: logarithm of the locations for the ticks along the
+            axis.
+
+        For example, if you specify [1, 2, 3], ticks will be placed at 10,
+        100 and 1000.
+
+        """
         if row_column_list is None:
             self.ticks['x'] = ['1e%d' % u for u in logticks]
         else:
@@ -265,10 +300,24 @@ class MultiPlot(BasePlotContainer):
                 self.set_logxticks(row, column, logticks)
 
     def set_yticks(self, row, column, ticks):
+        """Manually specify the y-axis tick values.
+
+        :param row, column: specify the subplot.
+        :param ticks: list of tick values.
+
+        """
         subplot = self.get_subplot_at(row, column)
         subplot.set_yticks(ticks)
 
     def set_yticks_for_all(self, row_column_list=None, ticks=None):
+        """Manually specify the y-axis tick values.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param ticks: list of tick values.
+
+        """
         if row_column_list is None:
             self.ticks['y'] = ticks
         else:
@@ -276,10 +325,32 @@ class MultiPlot(BasePlotContainer):
                 self.set_yticks(row, column, ticks)
 
     def set_logyticks(self, row, column, logticks):
+        """Manually specify the y-axis log tick values.
+
+        :param row, column: specify the subplot.
+        :param logticks: logarithm of the locations for the ticks along the
+            axis.
+
+        For example, if you specify [1, 2, 3], ticks will be placed at 10,
+        100 and 1000.
+
+        """
         subplot = self.get_subplot_at(row, column)
         subplot.set_logyticks(logticks)
 
     def set_logyticks_for_all(self, row_column_list=None, logticks=None):
+        """Manually specify the y-axis log tick values.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param logticks: logarithm of the locations for the ticks along the
+            axis.
+
+        For example, if you specify [1, 2, 3], ticks will be placed at 10,
+        100 and 1000.
+
+        """
         if row_column_list is None:
             self.ticks['y'] = ['1e%d' % u for u in logticks]
         else:
@@ -287,10 +358,26 @@ class MultiPlot(BasePlotContainer):
                 self.set_logyticks(row, column, logticks)
 
     def get_subplot_at(self, row, column):
+        """Return the subplot at row, column position.
+
+        :param row, column: specify the subplot.
+
+        """
         idx = row * self.columns + column
         return self.subplots[idx]
 
     def render(self, template=None):
+        """Render the plot using a template.
+
+        Once the plot is complete, it needs to be rendered.  Artist uses
+        the Jinja2 templating engine.  The default template results in a
+        LaTeX file which can be included in your document.
+
+        :param template: a user-supplied template or None.
+        :type template: string or None.
+        :returns: the rendered template as string.
+
+        """
         if not template:
             template = self.template
 
@@ -304,21 +391,52 @@ class MultiPlot(BasePlotContainer):
         return response
 
     def set_xlabel(self, text):
+        """Set a label for the x-axis.
+
+        :param text: text of the label.
+
+        """
         self.xlabel = text
 
     def set_ylabel(self, text):
+        """Set a label for the y-axis.
+
+        :param text: text of the label.
+
+        """
         self.ylabel = text
 
     def set_subplot_xlabel(self, row, column, text):
+        """Set a label for the x-axis of a subplot.
+
+        :param row, column: specify the subplot.
+        :param text: text of the label.
+
+        """
         subplot = self.get_subplot_at(row, column)
         subplot.set_xlabel(text)
 
     def set_subplot_ylabel(self, row, column, text):
+        """Set a label for the y-axis of a subplot.
+
+        :param row, column: specify the subplot.
+        :param text: text of the label.
+
+        """
         subplot = self.get_subplot_at(row, column)
         subplot.set_ylabel(text)
 
 
 class SubPlotContainer(SubPlot):
+
+    """Add metadata to a SubPlot, for inclusion in MultiPlots.
+
+    This class adds some metadata to a subplot, including the mode of the
+    plot and whether to show tick labels.  For use in MultiPlots, the row
+    and column position are attributes.
+
+    """
+
     def __init__(self, row, column, xmode, ymode):
         self.row = row
         self.column = column
@@ -331,15 +449,31 @@ class SubPlotContainer(SubPlot):
         super(SubPlotContainer, self).__init__()
 
     def set_empty(self):
+        """Set the plot to be completely empty."""
+
         self.empty = True
 
     def show_xticklabels(self):
+        """Show the x-axis tick labels for this subplot."""
+
         self.show_xticklabel = True
 
     def show_yticklabels(self):
+        """Show the y-axis tick labels for this subplot."""
+
         self.show_yticklabel = True
 
     def set_xticklabels_position(self, position):
+        """Specify the position of the axis tick labels.
+
+        This is generally only useful for multiplots containing only one
+        row.  This can be used to e.g. alternatively draw the tick labels
+        on the bottom or the top of the subplot.
+
+        :param position: 'top' or 'bottom' to specify the position of the
+            tick labels.
+
+        """
         self.xticklabel_pos = position
 
     def set_yticklabels_position(self, position):

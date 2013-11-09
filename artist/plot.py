@@ -499,8 +499,8 @@ class SubPlot(object):
     def set_logxticks(self, logticks):
         """Set ticks for the logarithmic x-axis.
 
-        :param ticks: logarithm of the locations for the ticks along the
-            axis.
+        :param logticks: logarithm of the locations for the ticks along
+            the axis.
 
         For example, if you specify [1, 2, 3], ticks will be placed at 10,
         100 and 1000.
@@ -519,8 +519,8 @@ class SubPlot(object):
     def set_logyticks(self, logticks):
         """Set ticks for the logarithmic y-axis.
 
-        :param ticks: logarithm of the locations for the ticks along the
-            axis.
+        :param logticks: logarithm of the locations for the ticks along
+            the axis.
 
         For example, if you specify [1, 2, 3], ticks will be placed at 10,
         100 and 1000.
