@@ -1,4 +1,4 @@
-"""Utility functions"""
+"""Utility functions."""
 
 import inspect
 import os
@@ -12,20 +12,30 @@ __suffix = ''
 
 
 def set_prefix(prefix):
-    """Set global prefix for all graph names"""
+    """Set global prefix for all graph names.
+
+    :param prefix: prefix for all plot names
+    :type prefix: string
+
+    """
     global __prefix
     __prefix = prefix
 
 
 def set_suffix(suffix):
-    """Set global suffix for all graph names"""
+    """Set global suffix for all graph names.
+
+    :param prefix: suffix for all plot names
+    :type prefix: string
+
+    """
 
     global __suffix
     __suffix = suffix
 
 
 def get_callers_name(level=2):
-    """Return name of caller
+    """Return name of caller.
 
     Return the name of the caller, optionally nested multiple levels deep.
 
@@ -39,10 +49,13 @@ def get_callers_name(level=2):
 
 
 def create_graph_name(suffix='', dirname=None):
-    """Create a graph name
+    """Create a graph name using the name of the caller.
 
     :param suffix: optional suffix to add to name
     :param dirname: optional directory name
+
+    :return: path for the named graph
+    :rtype: string
 
     """
     if suffix:
@@ -55,7 +68,7 @@ def create_graph_name(suffix='', dirname=None):
 
 
 def save_graph(graph, suffix='', dirname=None, pdf=False):
-    """Save a graph using caller's name
+    """Save a graph using caller's name.
 
     :type graph: GraphArtist instance
     :param suffix: optional suffix to add to name
@@ -71,7 +84,7 @@ def save_graph(graph, suffix='', dirname=None, pdf=False):
 
 
 def save_data(data, suffix='', dirname=None):
-    """Save a dataset using caller's name
+    """Save a dataset using caller's name.
 
     :param data: a list or numpy array containing the data
     :param suffix: optional suffix to add to name
