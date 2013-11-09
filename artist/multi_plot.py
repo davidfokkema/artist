@@ -163,11 +163,8 @@ class MultiPlot(BasePlotContainer):
             tick labels.
 
         """
-        pgfplots_translation = {'top': 'right', 'bottom': 'left'}
-        fixed_position = pgfplots_translation[position]
-
         subplot = self.get_subplot_at(row, column)
-        subplot.set_xticklabels_position(fixed_position)
+        subplot.set_xticklabels_position(position)
 
     def set_yticklabels_position(self, row, column, position):
         """Specify the position of the axis tick labels.
@@ -474,7 +471,20 @@ class SubPlotContainer(SubPlot):
             tick labels.
 
         """
-        self.xticklabel_pos = position
+        pgfplots_translation = {'top': 'right', 'bottom': 'left'}
+        fixed_position = pgfplots_translation[position]
+
+        self.xticklabel_pos = fixed_position
 
     def set_yticklabels_position(self, position):
+        """Specify the position of the axis tick labels.
+
+        This is generally only useful for multiplots containing only one
+        column.  This can be used to e.g. alternatively draw the tick
+        labels on the left or the right of the subplot.
+
+        :param position: 'left' or 'right' to specify the position of the
+            tick labels.
+
+        """
         self.yticklabel_pos = position
