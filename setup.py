@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name = "artist",
-      version = "0.10.0",
+      version = "0.11.0",
       packages = find_packages(),
       url = "http://github.com/davidfokkema/artist/",
       bugtrack_url='http://github.com/davidfokkema/artist/issues',
