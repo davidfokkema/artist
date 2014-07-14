@@ -20,4 +20,5 @@ setup(name = "artist",
                    'Topic :: Education',
                    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'],
       install_requires = ['jinja2', 'numpy'],
+      package_data={'artist': ['templates/*.tex']},
 )
