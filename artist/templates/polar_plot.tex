@@ -52,6 +52,8 @@
             %
             xtick={ {{ ticks.x | join(', ') }} },
             ytick={ {{ ticks.y | join(', ') }} },
+            xticklabel=$\pgfmathprintnumber{\tick}^\circ$,
+            yticklabel=$\pgfmathprintnumber{\tick}^\circ$,
             yticklabel shift={-5.75cm},
             %
             tick align=outside,
