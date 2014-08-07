@@ -600,8 +600,7 @@ class Plot(SubPlot, BasePlotContainer):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('plot.tex')
-        self.document_template = environment.get_template(
-            'document.tex')
+        self.document_template = environment.get_template('document.tex')
 
         self.width = width
         self.height = height
@@ -638,3 +637,27 @@ class Plot(SubPlot, BasePlotContainer):
             plot=self,
             plot_template=self.template)
         return response
+
+
+class PolarPlot(Plot):
+
+    """Create a plot containing a single polar subplot.
+
+    This class creates a 2D plot.  Its various methods add data,
+    annotations and options which is stored in class variables.  Finally,
+    the plot can be rendered using the Jinja2 templating engine resulting
+    in a LaTeX or PDF file.
+
+    """
+
+    def __init__(self, axis='', width=r'.67\linewidth', height=None):
+        environment = jinja2.Environment(loader=jinja2.PackageLoader(
+            'artist', 'templates'), finalize=self._convert_none)
+        self.template = environment.get_template('polar_plot.tex')
+        self.document_template = environment.get_template('document.tex')
+
+        self.width = width
+        self.height = height
+        self.xmode, self.ymode = self._get_axis_modes(axis)
+
+        super(Plot, self).__init__()

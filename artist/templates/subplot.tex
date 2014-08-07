@@ -65,7 +65,6 @@
     {%- endfor %}
     {%- endif %}
     {%- if series.show_yerr %}
-
     % Draw y-error bars
     {%- for x, y, xerr, yerr in series.data %}
     \draw (axis cs:{{ x }}, {{ y - yerr }}) --
