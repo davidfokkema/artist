@@ -37,6 +37,7 @@
             {%- endif %}
             axis equal={{ axis_equal | lower }},
             y axis line style={yshift=-5cm},
+            major y tick style={yshift=-5cm},
             %
             title={ {{ title }} },
             %
@@ -56,7 +57,8 @@
             yticklabel=$\pgfmathprintnumber{\tick}^\circ$,
             yticklabel shift={-5.75cm},
             %
-            tick align=inside,
+            ytick align=outside,
+            xtick align=inside,
             max space between ticks=40,
             every tick/.style={},
             axis on top,
