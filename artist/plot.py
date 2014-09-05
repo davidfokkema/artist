@@ -187,6 +187,7 @@ class SubPlot(object):
         self.pin_list = []
         self.horizontal_lines = []
         self.vertical_lines = []
+        self.axis_background = None
         self.title = None
         self.xlabel = None
         self.ylabel = None
@@ -448,6 +449,14 @@ class SubPlot(object):
         self.vertical_lines.append({'value': xvalue,
                                     'options': linestyle})
 
+    def set_axis_background(self, color='white'):
+        """Set a fill color for the axis background.
+
+        :param color: TikZ style to color the axis background.
+
+        """
+        self.axis_background = 'fill=%s' % color
+
     def set_xlabel(self, text):
         """Set a label for the x-axis.
 
@@ -624,6 +633,7 @@ class Plot(SubPlot, BasePlotContainer):
             template = self.template
 
         response = template.render(
+            axis_background=self.axis_background,
             xmode=self.xmode,
             ymode=self.ymode,
             title=self.title,
