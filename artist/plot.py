@@ -313,7 +313,7 @@ class SubPlot(object):
         self.set_xlimits(min(x_edges), max(x_edges))
         self.set_ylimits(min(y_edges), max(y_edges))
 
-    def scatter(self, x, y, mark='o', markstyle='mark size=.75pt'):
+    def scatter(self, x, y, mark='o', markstyle=None):
         """Plot a series of points.
 
         Plot a series of points (marks) that are not connected by a
