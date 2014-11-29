@@ -311,6 +311,30 @@ class SubPlot(object):
         self.set_xlimits(min(x_edges), max(x_edges))
         self.set_ylimits(min(y_edges), max(y_edges))
 
+    def scatter(self, x, y, mark='o', markstyle='mark size=.75pt'):
+        """Plot a series of points.
+
+        Plot a series of points (marks) that are not connected by a
+        line. Shortcut for plot with linestyle=None.
+
+        :param x: array containing x-values.
+        :param y: array containing y-values.
+        :param mark: the symbol used to mark the data points. May be
+            any plot mark accepted by TikZ (e.g. *, x, +, o, square,
+            triangle).
+        :param markstyle: the style of the plot marks (e.g. 'mark
+            size=.75pt')
+
+        Example::
+
+            >>> plot = artist.Plot()
+            >>> x = np.random.normal(size=20)
+            >>> y = np.random.normal(size=20)
+            >>> plot.scatter(x, y, mark='*')
+
+        """
+        self.plot(x, y, mark=mark, linestyle=None, markstyle=markstyle)
+
     def set_title(self, text):
         """Set a title text."""
 
