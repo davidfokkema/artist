@@ -12,6 +12,9 @@ Contents
 :class:`Plot`
     Create a plot containing a single subplot.
 
+:class:`PolarPlot`
+    Create a plot containing a single polar subplot.
+
 """
 
 import subprocess
@@ -237,8 +240,8 @@ class SubPlot(object):
 
     def _create_plot_series_object(self, x, y, xerr=[], yerr=[],
                                    options=None):
-        return {'options': options, 'data': list(izip_longest(x, y, xerr,
-                                                              yerr)),
+        return {'options': options,
+                'data': list(izip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
                 'show_yerr': True if len(yerr) else False}
 
@@ -270,8 +273,7 @@ class SubPlot(object):
         y = list(counts) + [counts[-1]]
         self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
 
-    def histogram2d(self, counts, x_edges, y_edges, type='bw',
-                    style=None):
+    def histogram2d(self, counts, x_edges, y_edges, type='bw', style=None):
         """Plot a two-dimensional histogram.
 
         The user needs to supply the histogram.  This method only plots
@@ -381,8 +383,8 @@ class SubPlot(object):
         try:
             series = self.plot_series_list[-1]
         except IndexError:
-            raise RuntimeError("""
-                First plot a data series, before using this function""")
+            raise RuntimeError(
+                "First plot a data series, before using this function")
 
         data = series['data']
         series_x, series_y = zip(*data)[:2]
@@ -677,21 +679,16 @@ class PolarPlot(Plot):
 
     """Create a plot containing a single polar subplot.
 
-    This class creates a 2D plot.  Its various methods add data,
-    annotations and options which is stored in class variables.  Finally,
-    the plot can be rendered using the Jinja2 templating engine resulting
-    in a LaTeX or PDF file.
+    Same as the Plot but uses polar axes. The x values are the phi
+    coordinates in degrees. The y values are the r coordinates in
+    arbitrary units.
+
+    Histogram plots do not work properly when using the polar class.
 
     """
 
     def __init__(self, axis='', width=r'.67\linewidth', height=None):
+        super(PolarPlot, self).__init__()
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('polar_plot.tex')
-        self.document_template = environment.get_template('document.tex')
-
-        self.width = width
-        self.height = height
-        self.xmode, self.ymode = self._get_axis_modes(axis)
-
-        super(Plot, self).__init__()
