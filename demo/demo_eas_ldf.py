@@ -1,6 +1,6 @@
 import numpy as np
 
-from artist import GraphArtist
+from artist import Plot
 
 
 def main():
@@ -8,7 +8,7 @@ def main():
     e = np.genfromtxt('data/showere15-proton.t2205', usecols=(1, 2))
     mu = np.genfromtxt('data/showere15-proton.t2207', usecols=(1, 2))
 
-    graph = GraphArtist(axis='loglog')
+    graph = Plot(axis='loglog')
 
     graph.plot(gamma[:, 0], gamma[:, 1], mark=None)
     graph.add_pin(r'$\gamma$')

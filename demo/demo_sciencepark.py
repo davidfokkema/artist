@@ -1,6 +1,6 @@
 import numpy as np
 
-from artist import GraphArtist
+from artist import Plot
 
 
 def main():
@@ -11,9 +11,9 @@ def main():
         'data/SP-DIR-plot_sciencepark_cluster-stations.txt',
         names=['id', 'x', 'y'])
 
-    graph = GraphArtist()
+    graph = Plot()
 
-    graph.plot(locations['x'], locations['y'], linestyle=None)
+    graph.scatter(locations['x'], locations['y'])
     graph.set_axis_equal()
 
     locations = ['right'] * len(stations)
@@ -43,7 +43,7 @@ def main():
     graph.set_xlabel(r"Distance [\si{\meter}]")
     graph.set_ylabel(r"Distance [\si{\meter}]")
 
-    graph.save('sciencepark')
+    graph.save_as_pdf('sciencepark')
 
 
 if __name__ == '__main__':
