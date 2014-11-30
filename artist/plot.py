@@ -683,8 +683,6 @@ class PolarPlot(Plot):
     coordinates in degrees. The y values are the r coordinates in
     arbitrary units.
 
-    Histogram plots do not work properly when using the polar class.
-
     """
 
     def __init__(self, axis='', width=r'.67\linewidth', height=None):
