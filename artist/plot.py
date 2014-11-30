@@ -710,7 +710,7 @@ class PolarPlot(Plot):
 
             >>> plot = artist.PolarPlot()
             >>> x = np.random.uniform(0, 360, size=1000)
-            >>> n, bins = np.histogram(x, bins=120)
+            >>> n, bins = np.histogram(x, bins=np.linspace(0, 360, 37))
             >>> plot.histogram(n, bins)
 
         """
@@ -722,8 +722,9 @@ class PolarPlot(Plot):
         y = []
 
         for i in range(len(bin_edges) - 1):
-            x.append(bin_edges[i])
-            y.append(counts[i])
+            for bin_edge in np.arange(bin_edges[i], bin_edges[i + 1], step=.2):
+                x.append(bin_edge)
+                y.append(counts[i])
             x.append(bin_edges[i + 1])
             y.append(counts[i])
 

@@ -6,9 +6,9 @@ from artist import PolarPlot
 def main():
     plot = PolarPlot()
     x = np.random.uniform(0, 360, 10000)
-    n, bins = np.histogram(x, bins=180)
+    n, bins = np.histogram(x, bins=np.linspace(0, 360, 181))
     plot.histogram(n, bins)
-    plot.save('test_histogram')
+    plot.save('polar_histogram')
 
 
 if __name__ == '__main__':
