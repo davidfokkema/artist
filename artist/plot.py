@@ -692,3 +692,42 @@ class PolarPlot(Plot):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('polar_plot.tex')
+
+    def histogram(self, counts, bin_edges, linestyle='solid'):
+        """Plot a polar histogram.
+
+        The user needs to supply the histogram.  This method only plots
+        the results.  You can use NumPy's histogram function.
+
+        :param counts: array containing the count values.
+        :param bin_edges: array containing the bin edges.
+        :param linestyle: the line style used to connect the data points.
+            May be None, or any line style accepted by TikZ (e.g. solid,
+            dashed, dotted, thick, or even combinations like
+            "red,thick,dashed").
+
+        Example::
+
+            >>> plot = artist.PolarPlot()
+            >>> x = np.random.uniform(0, 360, size=1000)
+            >>> n, bins = np.histogram(x, bins=120)
+            >>> plot.histogram(n, bins)
+
+        """
+        if len(bin_edges) - 1 != len(counts):
+            raise RuntimeError(
+                "The length of bin_edges should be length of counts + 1")
+
+        x = []
+        y = []
+
+        for i in range(len(bin_edges) - 1):
+            x.append(bin_edges[i])
+            y.append(counts[i])
+            x.append(bin_edges[i + 1])
+            y.append(counts[i])
+
+        x.append(bin_edges[0])
+        y.append(counts[0])
+
+        self.plot(x, y, mark=None, linestyle=linestyle)
