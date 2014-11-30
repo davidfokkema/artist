@@ -726,7 +726,9 @@ class PolarPlot(Plot):
             x.append(bin_edges[i + 1])
             y.append(counts[i])
 
-        x.append(bin_edges[0])
-        y.append(counts[0])
+        # If last edge is same as first bin edge, connect the ends.
+        if bin_edges[-1] % 360 == bin_edges[0] % 360:
+            x.append(bin_edges[0])
+            y.append(counts[0])
 
         self.plot(x, y, mark=None, linestyle=linestyle)
