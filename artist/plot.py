@@ -197,7 +197,8 @@ class SubPlot(object):
         self.label = None
         self.limits = {'xmin': None, 'xmax': None,
                        'ymin': None, 'ymax': None}
-        self.ticks = {'x': [], 'y': []}
+        self.ticks = {'x': [], 'y': [],
+                      'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
@@ -563,6 +564,34 @@ class SubPlot(object):
         """
         self.ticks['y'] = ['1e%d' % u for u in logticks]
 
+    def set_xtick_suffix(self, suffix):
+        """Set the suffix for the ticks of the x-axis.
+
+        :param suffix: string added after each tick. If the value is
+                       `degree` or `precent` the corresponding symbols
+                       will be added.
+
+        """
+        if suffix == 'degree':
+            suffix = '^\circ'
+        elif suffix == 'percent':
+            suffix = '\%'
+
+        self.ticks['xsuffix'] = suffix
+
+    def set_ytick_suffix(self, suffix):
+        """Set ticks for the y-axis.
+
+        :param ticks: locations for the ticks along the axis.
+
+        """
+        if suffix == 'degree':
+            suffix = '^\circ'
+        elif suffix == 'percent':
+            suffix = '\%'
+
+        self.ticks['ysuffix'] = suffix
+
     def set_axis_equal(self):
         """Scale the axes so the unit vectors have equal length."""
 
@@ -685,11 +714,13 @@ class PolarPlot(Plot):
 
     """
 
-    def __init__(self, axis='', width=r'.67\linewidth', height=None):
-        super(PolarPlot, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(PolarPlot, self).__init__(*args, **kwargs)
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('polar_plot.tex')
+
+        self.set_xtick_suffix('degree')
 
     def histogram(self, counts, bin_edges, linestyle='solid'):
         """Plot a polar histogram.

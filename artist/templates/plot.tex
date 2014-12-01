@@ -47,6 +47,12 @@
             %
             xtick={ {{ ticks.x | join(', ') }} },
             ytick={ {{ ticks.y | join(', ') }} },
+            {%- if ticks.xsuffix %}
+            xticklabel=$\pgfmathprintnumber{\tick}{{ ticks.xsuffix }}$,
+            {%- endif %}
+            {%- if ticks.ysuffix %}
+            yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
+            {%- endif %}
             %
             tick align=outside,
             max space between ticks=40,
