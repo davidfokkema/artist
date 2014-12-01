@@ -43,7 +43,7 @@ def main():
     graph.set_xlabel(r"Distance [\si{\meter}]")
     graph.set_ylabel(r"Distance [\si{\meter}]")
 
-    graph.save_as_pdf('sciencepark')
+    graph.save('sciencepark')
 
 
 if __name__ == '__main__':
