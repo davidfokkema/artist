@@ -763,3 +763,8 @@ class PolarPlot(Plot):
             y.append(counts[0])
 
         self.plot(x, y, mark=None, linestyle=linestyle)
+
+    def set_ylimits(self, min=None, max=None):
+        """Do not allow setting y limits, it messes with the axes."""
+
+        pass

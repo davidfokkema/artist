@@ -12,13 +12,17 @@
 \pgfkeysifdefined{/artist/width}
     {\pgfkeysgetvalue{/artist/width}{\defaultwidth}}
     {\def\defaultwidth{ {{ width }} }}
-%
-{%- if height %}
 \pgfkeysifdefined{/artist/height}
     {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+{%- if height %}
     {\def\defaultheight{ {{ height }} }}
+{%- else %}
+    {\def\defaultheight{ {{ width }} }}
 {%- endif %}
-%
+
+\newlength{\ytickshift}
+\pgfmathsetlength{\ytickshift}{-.5*\defaultheight-.75cm}
+
 \begin{sansmath}
 \begin{tikzpicture}[
         font=\sffamily,
@@ -37,15 +41,17 @@
             height=\defaultheight,
             {%- endif %}
             axis equal={{ axis_equal | lower }},
-            y axis line style={yshift=-5cm},
-            major y tick style={yshift=-5cm},
+            y axis line style={yshift=-.5*\defaultheight},
+            major y tick style={yshift=-.5*\defaultheight},
             %
             title={ {{ title }} },
             %
             xlabel={ {{ xlabel }} },
             ylabel={ {{ ylabel }} },
-            xlabel style={xshift=1.5cm, rotate=-30},
-            ylabel style={xshift=-.5cm, rotate=-90},
+            xlabel style={xshift=.25*\defaultwidth,
+                          yshift=-.06*\defaultheight,
+                          rotate=-45},
+            ylabel style={rotate=-90, yshift=-.5cm},
             %
             xmin={ {{ limits.xmin }} },
             xmax={ {{ limits.xmax }} },
@@ -60,7 +66,8 @@
             {%- if ticks.ysuffix %}
             yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
             {%- endif %}
-            yticklabel shift={-5.75cm},
+            yticklabel shift={\ytickshift},
+            xticklabel shift={0.075cm},
             %
             ytick align=outside,
             xtick align=inside,
