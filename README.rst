@@ -13,7 +13,8 @@ on-the-fly as a stand-alone PDF file.
 
 For instance the cosmic-ray flux spectrum:
 
-![Example plot](doc/images/tutorial/spectrum.png)
+.. image:: doc/images/tutorial/spectrum.png
+   :width: 293px
 
 
 Rationale
