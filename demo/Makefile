@@ -15,11 +15,13 @@ distclean: clean
 	rm -f sciencepark.tex
 	rm -f multiplot.tex
 	rm -f polar_histogram.tex
+	rm -f discrete_directions.tex
 
 demo_plots.pdf: demo_plots.tex \
 		stopping-power-mpl.pdf stopping-power.tex \
 		shower-front.tex eas-lateral.tex histogram-fit.tex \
-		spectrum.tex sciencepark.tex multiplot.tex polar_histogram.tex
+		spectrum.tex sciencepark.tex multiplot.tex polar_histogram.tex \
+		discrete_directions.tex
 	latexmk -pdf demo_plots.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
@@ -44,4 +46,7 @@ multiplot.tex: demo_multiplot.py
 	python $?
 
 polar_histogram.tex: demo_polar_histogram.py
+	python $?
+
+discrete_directions.tex: demo_discrete_directions.py
 	python $?
