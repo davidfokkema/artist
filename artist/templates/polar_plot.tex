@@ -60,6 +60,13 @@
             %
             xtick={ {{ ticks.x | join(', ') }} },
             ytick={ {{ ticks.y | join(', ') }} },
+            {%- if plot.use_radians %}
+            xticklabels={$0$,$\frac{1}{6}\pi$,$\frac{2}{6}\pi$,
+                         $\frac{1}{2}\pi$,$\frac{4}{6}\pi$,$\frac{5}{6}\pi$,
+                         $\pm\pi$,$-\frac{5}{6}\pi$,$-\frac{4}{6}\pi$,
+                         $-\frac{1}{2}\pi$,$-\frac{2}{6}\pi$,
+                         $-\frac{1}{6}\pi$},
+            {%- endif %}
             {%- if ticks.xsuffix %}
             xticklabel=$\pgfmathprintnumber{\tick}{{ ticks.xsuffix }}$,
             {%- endif %}

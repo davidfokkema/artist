@@ -709,18 +709,31 @@ class PolarPlot(Plot):
     """Create a plot containing a single polar subplot.
 
     Same as the Plot but uses polar axes. The x values are the phi
-    coordinates in degrees. The y values are the r coordinates in
-    arbitrary units.
+    coordinates in degrees (or radians). The y values are the r
+    coordinates in arbitrary units.
+
+    :param use_radians: If this keyword is set to True the units for x
+        values and x axis labels are radians.
 
     """
 
     def __init__(self, *args, **kwargs):
+        self.use_radians = kwargs.pop('use_radians', False)
         super(PolarPlot, self).__init__(*args, **kwargs)
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('polar_plot.tex')
 
-        self.set_xtick_suffix('degree')
+        if not self.use_radians:
+            self.set_xtick_suffix('degree')
+        else:
+            self.set_xticks([0, 30, 60, 90, 120, 150,
+                             180, 210, 240, 270, 300, 330])
+
+    def plot(self, x, y, **kwargs):
+        if self.use_radians:
+            x = np.degrees(x)
+        super(PolarPlot, self).plot(x, y, **kwargs)
 
     def histogram(self, counts, bin_edges, linestyle='solid'):
         """Plot a polar histogram.
@@ -750,15 +763,23 @@ class PolarPlot(Plot):
         x = []
         y = []
 
+        if self.use_radians:
+            circle = 2 * np.pi
+        else:
+            circle = 360.
+
+        step = circle / 1800.
+
         for i in range(len(bin_edges) - 1):
-            for bin_edge in np.arange(bin_edges[i], bin_edges[i + 1], step=.2):
+            for bin_edge in np.arange(bin_edges[i], bin_edges[i + 1],
+                                      step=step):
                 x.append(bin_edge)
                 y.append(counts[i])
             x.append(bin_edges[i + 1])
             y.append(counts[i])
 
         # If last edge is same as first bin edge, connect the ends.
-        if bin_edges[-1] % 360 == bin_edges[0] % 360:
+        if bin_edges[-1] % circle == bin_edges[0] % circle:
             x.append(bin_edges[0])
             y.append(counts[0])
 
