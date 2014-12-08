@@ -225,15 +225,17 @@ class SubPlot(object):
         xerr and yerr may be empty lists.
 
         """
-        self._clear_plot_mark_background(x, y, mark)
+        # clear the background of the marks
+        self._clear_plot_mark_background(x, y, mark, markstyle)
+        # draw the plot series over the background
         options = self._parse_plot_options(mark, linestyle, use_steps,
                                            markstyle)
         plot_series = self._create_plot_series_object(x, y, xerr, yerr,
                                                       options)
         self.plot_series_list.append(plot_series)
 
-    def _clear_plot_mark_background(self, x, y, mark):
-        options = self._create_mark_background_options(mark)
+    def _clear_plot_mark_background(self, x, y, mark, markstyle):
+        options = self._create_mark_background_options(mark, markstyle)
         if options:
             plot_series = self._create_plot_series_object(x, y,
                                                           options=options)
@@ -644,13 +646,15 @@ class SubPlot(object):
         options_string = ','.join(options)
         return options_string
 
-    def _create_mark_background_options(self, mark=None):
+    def _create_mark_background_options(self, mark=None, markstyle=None):
         options = []
         if mark is not None:
             if mark in ['o', 'square', 'triangle', 'diamond', 'pentagon']:
                 if mark == 'o':
                     mark = ''
                 options.append('mark=%s*,mark options=white,only marks' % mark)
+                if markstyle:
+                    options.append(',%s' % markstyle)
         options_string = ','.join(options)
         return options_string
 
