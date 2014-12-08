@@ -46,7 +46,7 @@
             %
             title={ {{ title }} },
             %
-            xlabel={ {{ xlabel }} },
+            xlabel={},
             ylabel={ {{ ylabel }} },
             xlabel style={xshift=.25*\defaultwidth,
                           yshift=-.06*\defaultheight,
@@ -83,8 +83,15 @@
             axis on top,
         ]
 
+        % hack to calculate the position for the xlabel
+        \coordinate (C) at ([rotate=-45,yshift=1.5cm] xticklabel* cs: 0);
+
         {% include 'subplot.tex' %}
 
     \end{polaraxis}
+
+    % hack to draw the xlabel without being clipped
+    \node[rotate=-45] at (C) { {{ xlabel }} };
+
 \end{tikzpicture}
 \end{sansmath}
