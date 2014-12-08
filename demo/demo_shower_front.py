@@ -1,12 +1,12 @@
 import numpy as np
 
-from artist import GraphArtist
+from artist import Plot
 
 
 def main():
-    x, t25, t50, t75 = np.loadtxt('DIR-boxplot_arrival_times-1.txt')
+    x, t25, t50, t75 = np.loadtxt('data/DIR-boxplot_arrival_times-1.txt')
 
-    graph = GraphArtist()
+    graph = Plot()
     graph.plot(x, t50, mark='*')
     graph.shade_region(x, t25, t75)
     graph.set_xlabel(r"Core distance [\si{\meter}]")

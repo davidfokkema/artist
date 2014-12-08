@@ -2,7 +2,7 @@ import numpy as np
 from numpy import sqrt
 import pylab as plt
 
-from artist import GraphArtist
+from artist import Plot
 
 # For TeX rendering
 plt.rcParams['font.serif'] = 'Computer Modern'
@@ -40,7 +40,7 @@ def main():
     plt.savefig('stopping-power-mpl.pdf')
 
     # Artist
-    plot = GraphArtist(axis='loglog')
+    plot = Plot(axis='loglog')
     plot.plot(e_beta_gamma, e_loss, mark=None)
     plot.plot(mu_beta_gamma, mu_loss, mark=None)
     plot.set_xlabel(r'$\beta\gamma$')

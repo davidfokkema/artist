@@ -2,7 +2,7 @@ import numpy as np
 import scipy.optimize
 import scipy.stats
 
-from artist import GraphArtist
+from artist import Plot
 
 
 def main():
@@ -26,7 +26,7 @@ def main():
     print "Parameters from fit (N, mu, sigma):", popt
 
     # make graph
-    graph = GraphArtist()
+    graph = Plot()
 
     # graph histogram
     graph.histogram(n, bins)

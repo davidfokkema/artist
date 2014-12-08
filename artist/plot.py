@@ -12,6 +12,9 @@ Contents
 :class:`Plot`
     Create a plot containing a single subplot.
 
+:class:`PolarPlot`
+    Create a plot containing a single polar subplot.
+
 """
 
 import subprocess
@@ -187,13 +190,16 @@ class SubPlot(object):
         self.pin_list = []
         self.horizontal_lines = []
         self.vertical_lines = []
+        self.axis_background = None
         self.title = None
         self.xlabel = None
         self.ylabel = None
         self.label = None
         self.limits = {'xmin': None, 'xmax': None,
                        'ymin': None, 'ymax': None}
-        self.ticks = {'x': [], 'y': []}
+        self.ticks = {'x': [], 'y': [],
+                      'xlabels': '', 'ylabels': '',
+                      'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
@@ -236,8 +242,8 @@ class SubPlot(object):
 
     def _create_plot_series_object(self, x, y, xerr=[], yerr=[],
                                    options=None):
-        return {'options': options, 'data': list(izip_longest(x, y, xerr,
-                                                              yerr)),
+        return {'options': options,
+                'data': list(izip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
                 'show_yerr': True if len(yerr) else False}
 
@@ -269,8 +275,7 @@ class SubPlot(object):
         y = list(counts) + [counts[-1]]
         self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
 
-    def histogram2d(self, counts, x_edges, y_edges, type='bw',
-                    style=None):
+    def histogram2d(self, counts, x_edges, y_edges, type='bw', style=None):
         """Plot a two-dimensional histogram.
 
         The user needs to supply the histogram.  This method only plots
@@ -309,6 +314,30 @@ class SubPlot(object):
                                       'style': style})
         self.set_xlimits(min(x_edges), max(x_edges))
         self.set_ylimits(min(y_edges), max(y_edges))
+
+    def scatter(self, x, y, mark='o', markstyle=None):
+        """Plot a series of points.
+
+        Plot a series of points (marks) that are not connected by a
+        line. Shortcut for plot with linestyle=None.
+
+        :param x: array containing x-values.
+        :param y: array containing y-values.
+        :param mark: the symbol used to mark the data points. May be
+            any plot mark accepted by TikZ (e.g. *, x, +, o, square,
+            triangle).
+        :param markstyle: the style of the plot marks (e.g. 'mark
+            size=.75pt')
+
+        Example::
+
+            >>> plot = artist.Plot()
+            >>> x = np.random.normal(size=20)
+            >>> y = np.random.normal(size=20)
+            >>> plot.scatter(x, y, mark='*')
+
+        """
+        self.plot(x, y, mark=mark, linestyle=None, markstyle=markstyle)
 
     def set_title(self, text):
         """Set a title text."""
@@ -356,8 +385,8 @@ class SubPlot(object):
         try:
             series = self.plot_series_list[-1]
         except IndexError:
-            raise RuntimeError("""
-                First plot a data series, before using this function""")
+            raise RuntimeError(
+                "First plot a data series, before using this function")
 
         data = series['data']
         series_x, series_y = zip(*data)[:2]
@@ -448,6 +477,14 @@ class SubPlot(object):
         self.vertical_lines.append({'value': xvalue,
                                     'options': linestyle})
 
+    def set_axis_background(self, color='white'):
+        """Set a fill color for the axis background.
+
+        :param color: TikZ style to color the axis background.
+
+        """
+        self.axis_background = 'fill=%s' % color
+
     def set_xlabel(self, text):
         """Set a label for the x-axis.
 
@@ -496,6 +533,14 @@ class SubPlot(object):
         """
         self.ticks['x'] = ticks
 
+    def set_yticks(self, ticks):
+        """Set ticks for the y-axis.
+
+        :param ticks: locations for the ticks along the axis.
+
+        """
+        self.ticks['y'] = ticks
+
     def set_logxticks(self, logticks):
         """Set ticks for the logarithmic x-axis.
 
@@ -508,14 +553,6 @@ class SubPlot(object):
         """
         self.ticks['x'] = ['1e%d' % u for u in logticks]
 
-    def set_yticks(self, ticks):
-        """Set ticks for the y-axis.
-
-        :param ticks: locations for the ticks along the axis.
-
-        """
-        self.ticks['y'] = ticks
-
     def set_logyticks(self, logticks):
         """Set ticks for the logarithmic y-axis.
 
@@ -527,6 +564,58 @@ class SubPlot(object):
 
         """
         self.ticks['y'] = ['1e%d' % u for u in logticks]
+
+    def set_xtick_labels(self, labels):
+        """Set tick labels for the x-axis.
+
+        Also set the x-ticks positions to ensure the labels end up on
+        the correct place.
+
+        :param labels: list of labels for the ticks along the axis.
+
+        """
+        self.ticks['xlabels'] = labels
+
+    def set_ytick_labels(self, labels):
+        """Set tick labels for the y-axis.
+
+        Also set the y-ticks positions to ensure the labels end up on
+        the correct place.
+
+        :param labels: list of labels for the ticks along the axis.
+
+        """
+        self.ticks['ylabels'] = labels
+
+    def set_xtick_suffix(self, suffix):
+        """Set the suffix for the ticks of the x-axis.
+
+        :param suffix: string added after each tick. If the value is
+                       `degree` or `precent` the corresponding symbols
+                       will be added.
+
+        """
+        if suffix == 'degree':
+            suffix = '^\circ'
+        elif suffix == 'percent':
+            suffix = '\%'
+
+        self.ticks['xsuffix'] = suffix
+
+    def set_ytick_suffix(self, suffix):
+        """Set ticks for the y-axis.
+
+        :param suffix: string added after each tick. If the value is
+                       `degree` or `precent` the corresponding symbols
+                       will be added.
+
+        """
+        if suffix == 'degree':
+            suffix = '^\circ'
+        elif suffix == 'percent':
+            suffix = '\%'
+
+        self.ticks['ysuffix'] = suffix
 
     def set_axis_equal(self):
         """Scale the axes so the unit vectors have equal length."""
@@ -600,8 +689,7 @@ class Plot(SubPlot, BasePlotContainer):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('plot.tex')
-        self.document_template = environment.get_template(
-            'document.tex')
+        self.document_template = environment.get_template('document.tex')
 
         self.width = width
         self.height = height
@@ -625,6 +713,7 @@ class Plot(SubPlot, BasePlotContainer):
             template = self.template
 
         response = template.render(
+            axis_background=self.axis_background,
             xmode=self.xmode,
             ymode=self.ymode,
             title=self.title,
@@ -638,3 +727,96 @@ class Plot(SubPlot, BasePlotContainer):
             plot=self,
             plot_template=self.template)
         return response
+
+
+class PolarPlot(Plot):
+
+    """Create a plot containing a single polar subplot.
+
+    Same as the Plot but uses polar axes. The x values are the phi
+    coordinates in degrees (or radians). The y values are the r
+    coordinates in arbitrary units.
+
+    :param use_radians: If this keyword is set to True the units for x
+        values and x axis labels are radians.
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.use_radians = kwargs.pop('use_radians', False)
+        super(PolarPlot, self).__init__(*args, **kwargs)
+        environment = jinja2.Environment(loader=jinja2.PackageLoader(
+            'artist', 'templates'), finalize=self._convert_none)
+        self.template = environment.get_template('polar_plot.tex')
+
+        if not self.use_radians:
+            self.set_xtick_suffix('degree')
+        else:
+            self.set_xticks([0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300,
+                             330])
+            self.set_xtick_labels([r'$0$', r'$\frac{1}{6}\pi$',
+                                   r'$\frac{2}{6}\pi$', r'$\frac{1}{2}\pi$',
+                                   r'$\frac{4}{6}\pi$', r'$\frac{5}{6}\pi$',
+                                   r'$\pm\pi$', r'$-\frac{5}{6}\pi$',
+                                   r'$-\frac{4}{6}\pi$', r'$-\frac{1}{2}\pi$',
+                                   r'$-\frac{2}{6}\pi$', r'$-\frac{1}{6}\pi$'])
+
+    def plot(self, x, y, **kwargs):
+        if self.use_radians:
+            x = np.degrees(x)
+        super(PolarPlot, self).plot(x, y, **kwargs)
+
+    def histogram(self, counts, bin_edges, linestyle='solid'):
+        """Plot a polar histogram.
+
+        The user needs to supply the histogram.  This method only plots
+        the results.  You can use NumPy's histogram function.
+
+        :param counts: array containing the count values.
+        :param bin_edges: array containing the bin edges.
+        :param linestyle: the line style used to connect the data points.
+            May be None, or any line style accepted by TikZ (e.g. solid,
+            dashed, dotted, thick, or even combinations like
+            "red,thick,dashed").
+
+        Example::
+
+            >>> plot = artist.PolarPlot()
+            >>> x = np.random.uniform(0, 360, size=1000)
+            >>> n, bins = np.histogram(x, bins=np.linspace(0, 360, 37))
+            >>> plot.histogram(n, bins)
+
+        """
+        if len(bin_edges) - 1 != len(counts):
+            raise RuntimeError(
+                "The length of bin_edges should be length of counts + 1")
+
+        x = []
+        y = []
+
+        if self.use_radians:
+            circle = 2 * np.pi
+        else:
+            circle = 360.
+
+        step = circle / 1800.
+
+        for i in range(len(bin_edges) - 1):
+            for bin_edge in np.arange(bin_edges[i], bin_edges[i + 1],
+                                      step=step):
+                x.append(bin_edge)
+                y.append(counts[i])
+            x.append(bin_edges[i + 1])
+            y.append(counts[i])
+
+        # If last edge is same as first bin edge, connect the ends.
+        if bin_edges[-1] % circle == bin_edges[0] % circle:
+            x.append(bin_edges[0])
+            y.append(counts[0])
+
+        self.plot(x, y, mark=None, linestyle=linestyle)
+
+    def set_xlimits(self, min=None, max=None):
+        """Do not allow setting x limits, it messes with the axes."""
+
+        pass

@@ -1,6 +1,6 @@
 import numpy as np
 
-from artist import GraphArtist
+from artist import Plot
 
 
 def main():
@@ -15,8 +15,7 @@ def main():
     yakutsk = read_data('data/yakustk', 1, 0)
     haverah = read_data('data/haverah', 1, 0)
 
-    graph = GraphArtist(axis='loglog',
-                        width=r'.5\linewidth', height=r'.65\linewidth')
+    graph = Plot(axis='loglog', width=r'.5\linewidth', height=r'.65\linewidth')
 
     graph.plot(leap['E'], leap['F'], mark=None)
     graph.add_pin('LEAP', 'above right', use_arrow=True,

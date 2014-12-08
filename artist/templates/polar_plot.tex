@@ -2,21 +2,27 @@
 % \usetikzlibrary{arrows}
 % \usepackage{pgfplots}
 % \pgfplotsset{compat=1.3}
+% \usepgfplotslibrary{polar}
 % \usepackage[detect-family]{siunitx}
 % \usepackage[eulergreek]{sansmath}
 % \sisetup{text-sf=\sansmath}
 % \usepackage{relsize}
-%
+
 \pgfkeysifdefined{/artist/width}
     {\pgfkeysgetvalue{/artist/width}{\defaultwidth}}
     {\def\defaultwidth{ {{ width }} }}
-%
-{%- if height %}
 \pgfkeysifdefined{/artist/height}
     {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+{%- if height %}
     {\def\defaultheight{ {{ height }} }}
+{%- else %}
+    {\def\defaultheight{ {{ width }} }}
 {%- endif %}
-%
+
+\let\ytickshift\relax
+\newlength{\ytickshift}
+\pgfmathsetlength{\ytickshift}{-.5*\defaultheight-.75cm}
+
 \begin{sansmath}
 \begin{tikzpicture}[
         font=\sffamily,
@@ -25,8 +31,9 @@
         every pin edge/.style={<-, >=stealth', shorten <=2pt},
         pin distance=2.5ex,
     ]
-    \begin{axis}[
+    \begin{polaraxis}[
             axis background/.style={ {{ axis_background }} },
+            grid style={opacity=.3},
             xmode={{ xmode }},
             ymode={{ ymode }},
             width=\defaultwidth,
@@ -34,11 +41,17 @@
             height=\defaultheight,
             {%- endif %}
             axis equal={{ axis_equal | lower }},
+            y axis line style={yshift=-.5*\defaultheight},
+            major y tick style={yshift=-.5*\defaultheight},
             %
             title={ {{ title }} },
             %
-            xlabel={ {{ xlabel }} },
+            xlabel={},
             ylabel={ {{ ylabel }} },
+            xlabel style={xshift=.25*\defaultwidth,
+                          yshift=-.06*\defaultheight,
+                          rotate=-45},
+            ylabel style={rotate=-90, yshift=-.5cm},
             %
             xmin={ {{ limits.xmin }} },
             xmax={ {{ limits.xmax }} },
@@ -59,15 +72,25 @@
             {%- if ticks.ysuffix %}
             yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
             {%- endif %}
+            yticklabel shift={\ytickshift},
+            xticklabel shift={0.075cm},
             %
-            tick align=outside,
+            ytick align=outside,
+            xtick align=inside,
             max space between ticks=40,
             every tick/.style={},
             axis on top,
         ]
 
+        % hack to calculate the position for the xlabel
+        \coordinate (C) at ([rotate=-45,yshift=1.5cm] xticklabel* cs: 0);
+
         {% include 'subplot.tex' %}
 
-    \end{axis}
+    \end{polaraxis}
+
+    % hack to draw the xlabel without being clipped
+    \node[rotate=-45] at (C) { {{ xlabel }} };
+
 \end{tikzpicture}
 \end{sansmath}
