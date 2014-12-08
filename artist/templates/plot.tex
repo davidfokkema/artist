@@ -47,6 +47,12 @@
             %
             xtick={ {{ ticks.x | join(', ') }} },
             ytick={ {{ ticks.y | join(', ') }} },
+            {%- if ticks.xlabels %}
+            xticklabels={ {{ ticks.xlabels | join(', ') }} },
+            {%- endif %}
+            {%- if ticks.ylabels %}
+            yticklabels={ {{ ticks.ylabels | join(', ') }} },
+            {%- endif %}
             {%- if ticks.xsuffix %}
             xticklabel=$\pgfmathprintnumber{\tick}{{ ticks.xsuffix }}$,
             {%- endif %}

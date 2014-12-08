@@ -198,6 +198,7 @@ class SubPlot(object):
         self.limits = {'xmin': None, 'xmax': None,
                        'ymin': None, 'ymax': None}
         self.ticks = {'x': [], 'y': [],
+                      'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
 
@@ -532,6 +533,14 @@ class SubPlot(object):
         """
         self.ticks['x'] = ticks
 
+    def set_yticks(self, ticks):
+        """Set ticks for the y-axis.
+
+        :param ticks: locations for the ticks along the axis.
+
+        """
+        self.ticks['y'] = ticks
+
     def set_logxticks(self, logticks):
         """Set ticks for the logarithmic x-axis.
 
@@ -544,14 +553,6 @@ class SubPlot(object):
         """
         self.ticks['x'] = ['1e%d' % u for u in logticks]
 
-    def set_yticks(self, ticks):
-        """Set ticks for the y-axis.
-
-        :param ticks: locations for the ticks along the axis.
-
-        """
-        self.ticks['y'] = ticks
-
     def set_logyticks(self, logticks):
         """Set ticks for the logarithmic y-axis.
 
@@ -563,6 +564,28 @@ class SubPlot(object):
 
         """
         self.ticks['y'] = ['1e%d' % u for u in logticks]
+
+    def set_xtick_labels(self, labels):
+        """Set tick labels for the x-axis.
+
+        Also set the x-ticks positions to ensure the labels end up on
+        the correct place.
+
+        :param labels: list of labels for the ticks along the axis.
+
+        """
+        self.ticks['xlabels'] = labels
+
+    def set_ytick_labels(self, labels):
+        """Set tick labels for the y-axis.
+
+        Also set the y-ticks positions to ensure the labels end up on
+        the correct place.
+
+        :param labels: list of labels for the ticks along the axis.
+
+        """
+        self.ticks['ylabels'] = labels
 
     def set_xtick_suffix(self, suffix):
         """Set the suffix for the ticks of the x-axis.
@@ -582,7 +605,9 @@ class SubPlot(object):
     def set_ytick_suffix(self, suffix):
         """Set ticks for the y-axis.
 
-        :param ticks: locations for the ticks along the axis.
+        :param suffix: string added after each tick. If the value is
+                       `degree` or `precent` the corresponding symbols
+                       will be added.
 
         """
         if suffix == 'degree':
@@ -727,8 +752,14 @@ class PolarPlot(Plot):
         if not self.use_radians:
             self.set_xtick_suffix('degree')
         else:
-            self.set_xticks([0, 30, 60, 90, 120, 150,
-                             180, 210, 240, 270, 300, 330])
+            self.set_xticks([0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300,
+                             330])
+            self.set_xtick_labels([r'$0$', r'$\frac{1}{6}\pi$',
+                                   r'$\frac{2}{6}\pi$', r'$\frac{1}{2}\pi$',
+                                   r'$\frac{4}{6}\pi$', r'$\frac{5}{6}\pi$',
+                                   r'$\pm\pi$', r'$-\frac{5}{6}\pi$',
+                                   r'$-\frac{4}{6}\pi$', r'$-\frac{1}{2}\pi$',
+                                   r'$-\frac{2}{6}\pi$', r'$-\frac{1}{6}\pi$'])
 
     def plot(self, x, y, **kwargs):
         if self.use_radians:
