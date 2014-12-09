@@ -6,16 +6,21 @@ from artist import Plot
 def main():
     plot = Plot()
 
-    x0 = np.random.uniform(0, 50, 50000)
-    x1 = x0 + 50
-    y = np.random.normal(400, 150, 50000)
+    x = np.random.normal(0, 50, 50000)
+    y = np.random.normal(0, 15, 50000)
 
-    for x, b in [(x0, True), (x1, False)]:
-        n, xbins, ybins = np.histogram2d(x, y, bins=50)
-        plot.histogram2d(n, xbins, ybins, type='reverse_bw', bitmap=b)
+    ranges = ([(-100, 0), (-50, 0)],
+              [(0, 100), (-50, 0)],
+              [(-100, 0), (0, 50)],
+              [(0, 100), (0, 50)])
+    types = ('reverse_bw', 'bw', 'reverse_bw', 'bw')
+    bitmaps = (True, True, False, False)
 
-    plot.save_as_document('histogram2d')
-    plot.save_as_pdf('histogram2d')
+    for r, t, b in zip(ranges, types, bitmaps):
+        n, xbins, ybins = np.histogram2d(x, y, bins=20, range=r)
+        plot.histogram2d(n, xbins, ybins, type=t, bitmap=b)
+
+    plot.save('histogram2d')
 
 
 if __name__ == '__main__':

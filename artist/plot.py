@@ -92,7 +92,6 @@ class BasePlotContainer(object):
         :param dest_path: path of the file.
 
         """
-        self._write_bitmaps(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
@@ -103,23 +102,27 @@ class BasePlotContainer(object):
         :param dest_path: path of the file.
 
         """
-        self._write_bitmaps(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render_as_document())
 
-    def save_as_pdf(self, dest_path):
+    def save_as_pdf(self, dest_path, _build_dir=None):
         """Save the plot as a PDF file.
 
         Save and render the plot using LaTeX to create a PDF file.
 
         :param dest_path: path of the file.
+        :param _build_dir: **WARNING! Do not assign manually!**
+            Directory in which the LaTeX build will happen. This
+            directory will be removed upon completion!
 
         """
         dest_path = self._add_extension('pdf', dest_path)
-        build_dir = tempfile.mkdtemp()
+        if _build_dir is None:
+            build_dir = tempfile.mkdtemp()
+        else:
+            build_dir = _build_dir
         build_path = os.path.join(build_dir, 'document.tex')
-        self._write_bitmaps(os.path.join(build_dir, 'document'))
         with open(build_path, 'w') as f:
             f.write(self.render_as_document())
         pdf_path = self._build_document(build_path)
@@ -129,6 +132,10 @@ class BasePlotContainer(object):
 
     def _build_document(self, path):
         dir_path = os.path.dirname(path)
+
+        cwd = os.getcwd()
+        os.chdir(dir_path)
+
         try:
             subprocess.check_output(['pdflatex', '-halt-on-error',
                                      '-output-directory', dir_path, path],
@@ -139,6 +146,8 @@ class BasePlotContainer(object):
                            line and line[0] == '!']
             errors = '\n'.join(error_lines)
             raise RuntimeError("LaTeX compilation failed:\n" + errors)
+
+        os.chdir(cwd)
 
         pdf_path = path.replace('.tex', '.pdf')
         return pdf_path
@@ -175,15 +184,6 @@ class BasePlotContainer(object):
         else:
             return 'normal', 'normal'
 
-    def _write_bitmaps(self, path):
-        dir, prefix = os.path.split(path)
-        for i, bitmap in enumerate(self.bitmap_list):
-            name = '%s_%d.png' % (prefix, i)
-            bitmap['name'] = name
-            print os.path.join(dir, name)
-            bitmap['image'].save(os.path.join(dir, name))
-
-
 class SubPlot(object):
 
     """Plot data in a data rectangle.
@@ -214,6 +214,36 @@ class SubPlot(object):
                       'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
+
+    def save(self, dest_path):
+        """Write bitmaps then save the includable TeX.
+
+        :param dest_path: path of the file.
+
+        """
+        self._write_bitmaps(dest_path)
+        super(SubPlot, self).save(dest_path)
+
+    def save_as_document(self, dest_path):
+        """Write bitmaps then save the document.
+
+        :param dest_path: path of the file.
+
+        """
+        self._write_bitmaps(dest_path)
+        super(SubPlot, self).save_as_document(dest_path)
+
+    def save_as_pdf(self, dest_path):
+        """Save the plot as a PDF file.
+
+        Save and render the plot using LaTeX to create a PDF file.
+
+        :param dest_path: path of the file.
+
+        """
+        build_dir = tempfile.mkdtemp()
+        self._write_bitmaps(os.path.join(build_dir, 'document'))
+        super(SubPlot, self).save_as_pdf(dest_path, _build_dir=build_dir)
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
              linestyle='solid', use_steps=False, markstyle=None):
@@ -324,7 +354,8 @@ class SubPlot(object):
 
         if bitmap:
             normed_counts = self._normalize_histogram2d(counts, type)
-            self.bitmap_list.append({'image': Image.fromarray(normed_counts.T),
+            img = Image.fromarray(np.flipud(normed_counts.T))
+            self.bitmap_list.append({'image': img,
                                      'xmin': min(x_edges),
                                      'xmax': max(x_edges),
                                      'ymin': min(y_edges),
@@ -710,7 +741,7 @@ class SubPlot(object):
     def _normalize_histogram2d(self, counts, type):
         """Normalize the values of the counts for a 2D histogram
 
-        This normazlized the values of a numpy array to the range 0-255.
+        This normalizes the values of a numpy array to the range 0-255.
 
         :param counts: a NumPy array which is to be rescaled.
         :param type: either 'bw' or 'reverse_bw'.
@@ -722,6 +753,17 @@ class SubPlot(object):
             counts = 255 - counts
 
         return counts.astype(np.uint8)
+
+    def _write_bitmaps(self, path):
+        dir, prefix = os.path.split(path)
+        if prefix == '':
+            prefix = 'figure'
+        for i, bitmap in enumerate(self.bitmap_list):
+            name = '%s_%d.png' % (prefix, i)
+            bitmap['name'] = name
+            img = bitmap['image']
+            large_img = img.resize((img.size[0] * 50, img.size[1] * 50))
+            large_img.save(os.path.join(dir, name))
 
 
 class Plot(SubPlot, BasePlotContainer):
