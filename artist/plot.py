@@ -762,7 +762,10 @@ class SubPlot(object):
             name = '%s_%d.png' % (prefix, i)
             bitmap['name'] = name
             img = bitmap['image']
-            large_img = img.resize((img.size[0] * 50, img.size[1] * 50))
+            # Make the bitmap at least 1000x1000 pixels
+            size0 = int(np.ceil(1000. / img.size[0]) * img.size[0])
+            size1 = int(np.ceil(1000. / img.size[1]) * img.size[1])
+            large_img = img.resize((size0, size1))
             large_img.save(os.path.join(dir, name))
 
 
