@@ -22,7 +22,7 @@ demo_plots.pdf: demo_plots.tex \
 		stopping-power-mpl.pdf stopping-power.tex \
 		shower-front.tex eas-lateral.tex histogram-fit.tex \
 		spectrum.tex sciencepark.tex multiplot.tex polar_histogram.tex \
-		discrete_directions.tex histogram2d.tex
+		discrete_directions.tex histogram2d.tex multi_histogram2d.tex
 	latexmk -pdf demo_plots.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
@@ -52,5 +52,5 @@ polar_histogram.tex: demo_polar_histogram.py
 discrete_directions.tex: demo_discrete_directions.py
 	python $?
 
-histogram2d.tex: demo_histogram2d.py
+histogram2d.tex multi_histogram2d.tex: demo_histogram2d.py
 	python $?

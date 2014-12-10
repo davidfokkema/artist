@@ -1,6 +1,6 @@
 import numpy as np
 
-from artist import Plot
+from artist import Plot, MultiPlot
 
 
 def main():
@@ -21,6 +21,18 @@ def main():
         plot.histogram2d(n, xbins, ybins, type=t, bitmap=b)
 
     plot.save('histogram2d')
+
+
+    plot = MultiPlot(2, 2, width=r'.5\linewidth')
+    subplot_idxs = [(1, 0), (1, 1), (0, 0), (0, 1)]
+    for idx, r, t, b in zip(subplot_idxs, ranges, types, bitmaps):
+        p = plot.get_subplot_at(*idx)
+        n, xbins, ybins = np.histogram2d(x, y, bins=20, range=r)
+        p.histogram2d(n, xbins, ybins, type=t, bitmap=b)
+    plot.show_yticklabels_for_all([(1, 0), (0, 1)])
+    plot.show_xticklabels_for_all([(1, 0), (0, 1)])
+
+    plot.save('multi_histogram2d')
 
 
 if __name__ == '__main__':
