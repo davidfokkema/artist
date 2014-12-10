@@ -75,6 +75,19 @@ class BasePlotContainer(object):
         response = template.render()
         return response
 
+    def save_assets(self, dest_path):
+        """Save plot assets alongside dest_path.
+
+        Some plots may have assets, like bitmap files, which need to be
+        saved alongside the rendered plot file.
+
+        :param dest_path: path of the file.
+
+        The dest_path parameter is only used for the dirname.
+
+        """
+        pass
+
     def render_as_document(self):
         """Render the plot as a stand-alone document.
 
@@ -92,6 +105,7 @@ class BasePlotContainer(object):
         :param dest_path: path of the file.
 
         """
+        self.save_assets(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
@@ -102,27 +116,23 @@ class BasePlotContainer(object):
         :param dest_path: path of the file.
 
         """
+        self.save_assets(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render_as_document())
 
-    def save_as_pdf(self, dest_path, _build_dir=None):
+    def save_as_pdf(self, dest_path):
         """Save the plot as a PDF file.
 
         Save and render the plot using LaTeX to create a PDF file.
 
         :param dest_path: path of the file.
-        :param _build_dir: **WARNING! Do not assign manually!**
-            Directory in which the LaTeX build will happen. This
-            directory will be removed upon completion!
 
         """
         dest_path = self._add_extension('pdf', dest_path)
-        if _build_dir is None:
-            build_dir = tempfile.mkdtemp()
-        else:
-            build_dir = _build_dir
+        build_dir = tempfile.mkdtemp()
         build_path = os.path.join(build_dir, 'document.tex')
+        self.save_assets(build_path)
         with open(build_path, 'w') as f:
             f.write(self.render_as_document())
         pdf_path = self._build_document(build_path)
@@ -184,6 +194,7 @@ class BasePlotContainer(object):
         else:
             return 'normal', 'normal'
 
+
 class SubPlot(object):
 
     """Plot data in a data rectangle.
@@ -215,35 +226,19 @@ class SubPlot(object):
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
 
-    def save(self, dest_path):
-        """Write bitmaps then save the includable TeX.
+
+    def save_assets(self, dest_path):
+        """Save plot assets alongside dest_path.
+
+        Some plots may have assets, like bitmap files, which need to be
+        saved alongside the rendered plot file.
 
         :param dest_path: path of the file.
+
+        The dest_path parameter is only used for the dirname.
 
         """
         self._write_bitmaps(dest_path)
-        super(SubPlot, self).save(dest_path)
-
-    def save_as_document(self, dest_path):
-        """Write bitmaps then save the document.
-
-        :param dest_path: path of the file.
-
-        """
-        self._write_bitmaps(dest_path)
-        super(SubPlot, self).save_as_document(dest_path)
-
-    def save_as_pdf(self, dest_path):
-        """Save the plot as a PDF file.
-
-        Save and render the plot using LaTeX to create a PDF file.
-
-        :param dest_path: path of the file.
-
-        """
-        build_dir = tempfile.mkdtemp()
-        self._write_bitmaps(os.path.join(build_dir, 'document'))
-        super(SubPlot, self).save_as_pdf(dest_path, _build_dir=build_dir)
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
              linestyle='solid', use_steps=False, markstyle=None):
@@ -756,6 +751,8 @@ class SubPlot(object):
 
     def _write_bitmaps(self, path):
         dir, prefix = os.path.split(path)
+        if '.' in prefix:
+            prefix = prefix.split('.')[0]
         if prefix == '':
             prefix = 'figure'
         for i, bitmap in enumerate(self.bitmap_list):
