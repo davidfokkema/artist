@@ -749,14 +749,14 @@ class SubPlot(object):
 
         return counts.astype(np.uint8)
 
-    def _write_bitmaps(self, path):
+    def _write_bitmaps(self, path, suffix=''):
         dir, prefix = os.path.split(path)
         if '.' in prefix:
             prefix = prefix.split('.')[0]
         if prefix == '':
             prefix = 'figure'
         for i, bitmap in enumerate(self.bitmap_list):
-            name = '%s_%d.png' % (prefix, i)
+            name = '%s%s_%d.png' % (prefix, suffix, i)
             bitmap['name'] = name
             img = bitmap['image']
             # Make the bitmap at least 1000x1000 pixels
