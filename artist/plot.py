@@ -227,18 +227,22 @@ class SubPlot(object):
         self.axis_equal = False
 
 
-    def save_assets(self, dest_path):
+    def save_assets(self, dest_path, suffix=''):
         """Save plot assets alongside dest_path.
 
         Some plots may have assets, like bitmap files, which need to be
         saved alongside the rendered plot file.
 
         :param dest_path: path of the file.
+        :param suffix: optional suffix to add to asset names.
 
-        The dest_path parameter is only used for the dirname.
+        The dest_path parameter is only used for the dirname, not the
+        filename. So if :meth:`save` is called with '/foo/myplot.tex', you
+        can call this method with that same path. The assets will then be
+        saved in the /foo directory.
 
         """
-        self._write_bitmaps(dest_path)
+        self._write_bitmaps(dest_path, suffix)
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
              linestyle='solid', use_steps=False, markstyle=None):
@@ -750,6 +754,17 @@ class SubPlot(object):
         return counts.astype(np.uint8)
 
     def _write_bitmaps(self, path, suffix=''):
+        """Write bitmap file assets.
+
+        :param path: path of the plot file.
+        :param suffix: optional suffix to add to asset names.
+
+        The path parameter is only used for the dirname, not the filename.
+        So if :meth:`save` is called with '/foo/myplot.tex', you can call
+        this method with that same path. The assets will then be saved in
+        the /foo directory.
+
+        """
         dir, prefix = os.path.split(path)
         if '.' in prefix:
             prefix = prefix.split('.')[0]

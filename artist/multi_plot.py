@@ -70,7 +70,7 @@ class MultiPlot(BasePlotContainer):
 
         """
         for idx, subplot in enumerate(self.subplots):
-            subplot._write_bitmaps(dest_path, suffix='_%d' % idx)
+            subplot.save_assets(dest_path, suffix='_%d' % idx)
 
     def set_empty(self, row, column):
         """Keep one of the subplots completely empty.
