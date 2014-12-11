@@ -148,7 +148,7 @@ class BasePlotContainer(object):
 
         try:
             subprocess.check_output(['pdflatex', '-halt-on-error',
-                                     '-output-directory', dir_path, path],
+                                     path],
                                     stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
             output_lines = exc.output.split('\n')
