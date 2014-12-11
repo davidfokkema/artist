@@ -145,13 +145,12 @@ class BasePlotContainer(object):
         os.chdir(dir_path)
 
         try:
-            subprocess.check_output(['pdflatex', '-halt-on-error',
-                                     path],
+            subprocess.check_output(['pdflatex', '-halt-on-error', path],
                                     stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
             output_lines = exc.output.split('\n')
-            error_lines = [line for line in output_lines if
-                           line and line[0] == '!']
+            error_lines = [line for line in output_lines
+                           if line and line[0] == '!']
             errors = '\n'.join(error_lines)
             raise RuntimeError("LaTeX compilation failed:\n" + errors)
 
@@ -171,7 +170,7 @@ class BasePlotContainer(object):
         os.rename(output_path, path)
 
     def _add_extension(self, extension, path):
-        if not '.' in path:
+        if '.' not in path:
             return path + '.' + extension
         else:
             return path
@@ -224,7 +223,6 @@ class SubPlot(object):
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
 
-
     def save_assets(self, dest_path, suffix=''):
         """Save plot assets alongside dest_path.
 
@@ -275,8 +273,7 @@ class SubPlot(object):
             # make sure all background clear operations are performed first
             self.plot_series_list.insert(0, plot_series)
 
-    def _create_plot_series_object(self, x, y, xerr=[], yerr=[],
-                                   options=None):
+    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], options=None):
         return {'options': options,
                 'data': list(izip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
