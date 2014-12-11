@@ -75,6 +75,17 @@ class BasePlotContainer(object):
         response = template.render()
         return response
 
+    def save_assets(self, dest_path):
+        """Save plot assets alongside dest_path.
+
+        Some plots may have assets, like bitmap files, which need to be
+        saved alongside the rendered plot file.
+
+        :param dest_path: path of the main output file.
+
+        """
+        pass
+
     def render_as_document(self):
         """Render the plot as a stand-alone document.
 
@@ -92,6 +103,7 @@ class BasePlotContainer(object):
         :param dest_path: path of the file.
 
         """
+        self.save_assets(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
@@ -102,27 +114,23 @@ class BasePlotContainer(object):
         :param dest_path: path of the file.
 
         """
+        self.save_assets(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render_as_document())
 
-    def save_as_pdf(self, dest_path, _build_dir=None):
+    def save_as_pdf(self, dest_path):
         """Save the plot as a PDF file.
 
         Save and render the plot using LaTeX to create a PDF file.
 
         :param dest_path: path of the file.
-        :param _build_dir: **WARNING! Do not assign manually!**
-            Directory in which the LaTeX build will happen. This
-            directory will be removed upon completion!
 
         """
         dest_path = self._add_extension('pdf', dest_path)
-        if _build_dir is None:
-            build_dir = tempfile.mkdtemp()
-        else:
-            build_dir = _build_dir
+        build_dir = tempfile.mkdtemp()
         build_path = os.path.join(build_dir, 'document.tex')
+        self.save_assets(build_path)
         with open(build_path, 'w') as f:
             f.write(self.render_as_document())
         pdf_path = self._build_document(build_path)
@@ -137,13 +145,12 @@ class BasePlotContainer(object):
         os.chdir(dir_path)
 
         try:
-            subprocess.check_output(['pdflatex', '-halt-on-error',
-                                     '-output-directory', dir_path, path],
+            subprocess.check_output(['pdflatex', '-halt-on-error', path],
                                     stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
             output_lines = exc.output.split('\n')
-            error_lines = [line for line in output_lines if
-                           line and line[0] == '!']
+            error_lines = [line for line in output_lines
+                           if line and line[0] == '!']
             errors = '\n'.join(error_lines)
             raise RuntimeError("LaTeX compilation failed:\n" + errors)
 
@@ -163,7 +170,7 @@ class BasePlotContainer(object):
         os.rename(output_path, path)
 
     def _add_extension(self, extension, path):
-        if not '.' in path:
+        if '.' not in path:
             return path + '.' + extension
         else:
             return path
@@ -183,6 +190,7 @@ class BasePlotContainer(object):
             return 'normal', 'log'
         else:
             return 'normal', 'normal'
+
 
 class SubPlot(object):
 
@@ -215,35 +223,17 @@ class SubPlot(object):
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
 
-    def save(self, dest_path):
-        """Write bitmaps then save the includable TeX.
+    def save_assets(self, dest_path, suffix=''):
+        """Save plot assets alongside dest_path.
 
-        :param dest_path: path of the file.
+        Some plots may have assets, like bitmap files, which need to be
+        saved alongside the rendered plot file.
 
-        """
-        self._write_bitmaps(dest_path)
-        super(SubPlot, self).save(dest_path)
-
-    def save_as_document(self, dest_path):
-        """Write bitmaps then save the document.
-
-        :param dest_path: path of the file.
+        :param dest_path: path of the main output file.
+        :param suffix: optional suffix to add to asset names.
 
         """
-        self._write_bitmaps(dest_path)
-        super(SubPlot, self).save_as_document(dest_path)
-
-    def save_as_pdf(self, dest_path):
-        """Save the plot as a PDF file.
-
-        Save and render the plot using LaTeX to create a PDF file.
-
-        :param dest_path: path of the file.
-
-        """
-        build_dir = tempfile.mkdtemp()
-        self._write_bitmaps(os.path.join(build_dir, 'document'))
-        super(SubPlot, self).save_as_pdf(dest_path, _build_dir=build_dir)
+        self._write_bitmaps(dest_path, suffix)
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
              linestyle='solid', use_steps=False, markstyle=None):
@@ -283,8 +273,7 @@ class SubPlot(object):
             # make sure all background clear operations are performed first
             self.plot_series_list.insert(0, plot_series)
 
-    def _create_plot_series_object(self, x, y, xerr=[], yerr=[],
-                                   options=None):
+    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], options=None):
         return {'options': options,
                 'data': list(izip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
@@ -754,12 +743,25 @@ class SubPlot(object):
 
         return counts.astype(np.uint8)
 
-    def _write_bitmaps(self, path):
+    def _write_bitmaps(self, path, suffix=''):
+        """Write bitmap file assets.
+
+        :param path: path of the plot file.
+        :param suffix: optional suffix to add to asset names.
+
+        The path parameter is used for the dirname, and the filename.
+        So if :meth:`save` is called with '/foo/myplot.tex', you can call
+        this method with that same path. The assets will then be saved in
+        the /foo directory, and have a name like 'myplot_0.png'.
+
+        """
         dir, prefix = os.path.split(path)
+        if '.' in prefix:
+            prefix = prefix.split('.')[0]
         if prefix == '':
             prefix = 'figure'
         for i, bitmap in enumerate(self.bitmap_list):
-            name = '%s_%d.png' % (prefix, i)
+            name = '%s%s_%d.png' % (prefix, suffix, i)
             bitmap['name'] = name
             img = bitmap['image']
             # Make the bitmap at least 1000x1000 pixels
