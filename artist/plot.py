@@ -23,6 +23,7 @@ import tempfile
 import shutil
 from itertools import izip_longest
 
+from PIL import Image
 import jinja2
 import numpy as np
 from math import log10
@@ -74,6 +75,17 @@ class BasePlotContainer(object):
         response = template.render()
         return response
 
+    def save_assets(self, dest_path):
+        """Save plot assets alongside dest_path.
+
+        Some plots may have assets, like bitmap files, which need to be
+        saved alongside the rendered plot file.
+
+        :param dest_path: path of the main output file.
+
+        """
+        pass
+
     def render_as_document(self):
         """Render the plot as a stand-alone document.
 
@@ -91,6 +103,7 @@ class BasePlotContainer(object):
         :param dest_path: path of the file.
 
         """
+        self.save_assets(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
@@ -101,6 +114,7 @@ class BasePlotContainer(object):
         :param dest_path: path of the file.
 
         """
+        self.save_assets(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render_as_document())
@@ -116,6 +130,7 @@ class BasePlotContainer(object):
         dest_path = self._add_extension('pdf', dest_path)
         build_dir = tempfile.mkdtemp()
         build_path = os.path.join(build_dir, 'document.tex')
+        self.save_assets(build_path)
         with open(build_path, 'w') as f:
             f.write(self.render_as_document())
         pdf_path = self._build_document(build_path)
@@ -125,16 +140,21 @@ class BasePlotContainer(object):
 
     def _build_document(self, path):
         dir_path = os.path.dirname(path)
+
+        cwd = os.getcwd()
+        os.chdir(dir_path)
+
         try:
-            subprocess.check_output(['pdflatex', '-halt-on-error',
-                                     '-output-directory', dir_path, path],
+            subprocess.check_output(['pdflatex', '-halt-on-error', path],
                                     stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
             output_lines = exc.output.split('\n')
-            error_lines = [line for line in output_lines if
-                           line and line[0] == '!']
+            error_lines = [line for line in output_lines
+                           if line and line[0] == '!']
             errors = '\n'.join(error_lines)
             raise RuntimeError("LaTeX compilation failed:\n" + errors)
+
+        os.chdir(cwd)
 
         pdf_path = path.replace('.tex', '.pdf')
         return pdf_path
@@ -150,7 +170,7 @@ class BasePlotContainer(object):
         os.rename(output_path, path)
 
     def _add_extension(self, extension, path):
-        if not '.' in path:
+        if '.' not in path:
             return path + '.' + extension
         else:
             return path
@@ -187,6 +207,7 @@ class SubPlot(object):
         self.shaded_regions_list = []
         self.plot_series_list = []
         self.histogram2d_list = []
+        self.bitmap_list = []
         self.pin_list = []
         self.horizontal_lines = []
         self.vertical_lines = []
@@ -201,6 +222,18 @@ class SubPlot(object):
                       'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
+
+    def save_assets(self, dest_path, suffix=''):
+        """Save plot assets alongside dest_path.
+
+        Some plots may have assets, like bitmap files, which need to be
+        saved alongside the rendered plot file.
+
+        :param dest_path: path of the main output file.
+        :param suffix: optional suffix to add to asset names.
+
+        """
+        self._write_bitmaps(dest_path, suffix)
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
              linestyle='solid', use_steps=False, markstyle=None):
@@ -242,8 +275,7 @@ class SubPlot(object):
             # make sure all background clear operations are performed first
             self.plot_series_list.insert(0, plot_series)
 
-    def _create_plot_series_object(self, x, y, xerr=[], yerr=[],
-                                   options=None):
+    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], options=None):
         return {'options': options,
                 'data': list(izip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
@@ -277,7 +309,8 @@ class SubPlot(object):
         y = list(counts) + [counts[-1]]
         self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
 
-    def histogram2d(self, counts, x_edges, y_edges, type='bw', style=None):
+    def histogram2d(self, counts, x_edges, y_edges, type='bw', style=None,
+                    bitmap=False):
         """Plot a two-dimensional histogram.
 
         The user needs to supply the histogram.  This method only plots
@@ -294,6 +327,10 @@ class SubPlot(object):
         :param style: optional TikZ styles to apply (e.g. 'red').  Note
             that many color styles are overridden by the 'bw' and
             'reverse_bw' types.
+        :param bitmap: Export the histogram as an image for better
+            performance. This does expect all bins along an axis to have
+            equal width. Can only be combined with type 'bw' and
+            'reverse_bw'.
 
         """
         if counts.shape != (len(x_edges) - 1, len(y_edges) - 1):
@@ -302,20 +339,37 @@ class SubPlot(object):
 
         if type not in ['bw', 'reverse_bw', 'area']:
             raise RuntimeError("Histogram type %s not supported" % type)
+        if type == 'area' and bitmap:
+            raise RuntimeError("Histogram type %s not supported for bitmap "
+                               "output" % type)
 
-        x_centers = (x_edges[:-1] + x_edges[1:]) / 2
-        y_centers = (y_edges[:-1] + y_edges[1:]) / 2
+        if bitmap:
+            normed_counts = self._normalize_histogram2d(counts, type)
+            img = Image.fromarray(np.flipud(normed_counts.T))
+            self.bitmap_list.append({'image': img,
+                                     'xmin': min(x_edges),
+                                     'xmax': max(x_edges),
+                                     'ymin': min(y_edges),
+                                     'ymax': max(y_edges)})
+        else:
+            x_centers = (x_edges[:-1] + x_edges[1:]) / 2
+            y_centers = (y_edges[:-1] + y_edges[1:]) / 2
 
-        self.histogram2d_list.append({'x_edges': x_edges,
-                                      'y_edges': y_edges,
-                                      'x_centers': x_centers,
-                                      'y_centers': y_centers,
-                                      'counts': counts,
-                                      'max': counts.max(),
-                                      'type': type,
-                                      'style': style})
-        self.set_xlimits(min(x_edges), max(x_edges))
-        self.set_ylimits(min(y_edges), max(y_edges))
+            self.histogram2d_list.append({'x_edges': x_edges,
+                                          'y_edges': y_edges,
+                                          'x_centers': x_centers,
+                                          'y_centers': y_centers,
+                                          'counts': counts,
+                                          'max': counts.max(),
+                                          'type': type,
+                                          'style': style})
+        # Set limits unless lower/higher limits are already set.
+        xmin = min(x for x in (min(x_edges), self.limits['xmin'])
+                   if x is not None)
+        ymin = min(y for y in (min(y_edges), self.limits['ymin'])
+                   if y is not None)
+        self.set_xlimits(xmin, max(max(x_edges), self.limits['xmax']))
+        self.set_ylimits(ymin, max(max(y_edges), self.limits['ymax']))
 
     def scatter(self, x, y, mark='o', markstyle=None):
         """Plot a series of points.
@@ -676,6 +730,49 @@ class SubPlot(object):
                 xs = relative_position * (x1 - x0) + x0
             ys = np.interp(xs, x, y)
             return xs, ys
+
+    def _normalize_histogram2d(self, counts, type):
+        """Normalize the values of the counts for a 2D histogram
+
+        This normalizes the values of a numpy array to the range 0-255.
+
+        :param counts: a NumPy array which is to be rescaled.
+        :param type: either 'bw' or 'reverse_bw'.
+
+        """
+        counts = 255 * (counts - counts.min()) / (counts.max() - counts.min())
+
+        if type == 'reverse_bw':
+            counts = 255 - counts
+
+        return counts.astype(np.uint8)
+
+    def _write_bitmaps(self, path, suffix=''):
+        """Write bitmap file assets.
+
+        :param path: path of the plot file.
+        :param suffix: optional suffix to add to asset names.
+
+        The path parameter is used for the dirname, and the filename.
+        So if :meth:`save` is called with '/foo/myplot.tex', you can call
+        this method with that same path. The assets will then be saved in
+        the /foo directory, and have a name like 'myplot_0.png'.
+
+        """
+        dir, prefix = os.path.split(path)
+        if '.' in prefix:
+            prefix = prefix.split('.')[0]
+        if prefix == '':
+            prefix = 'figure'
+        for i, bitmap in enumerate(self.bitmap_list):
+            name = '%s%s_%d.png' % (prefix, suffix, i)
+            bitmap['name'] = name
+            img = bitmap['image']
+            # Make the bitmap at least 1000x1000 pixels
+            size0 = int(np.ceil(1000. / img.size[0]) * img.size[0])
+            size1 = int(np.ceil(1000. / img.size[1]) * img.size[1])
+            large_img = img.resize((size0, size1))
+            large_img.save(os.path.join(dir, name))
 
 
 class Plot(SubPlot, BasePlotContainer):

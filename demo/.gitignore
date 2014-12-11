@@ -1,3 +1,7 @@
+# Bitmap
+*.png
+
+# TeX
 *.tex
 *.aux
 *.log

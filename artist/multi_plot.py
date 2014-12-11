@@ -58,6 +58,18 @@ class MultiPlot(BasePlotContainer):
                 self.subplots.append(SubPlotContainer(i, j, self.xmode,
                                                       self.ymode))
 
+    def save_assets(self, dest_path):
+        """Save plot assets alongside dest_path.
+
+        Some plots may have assets, like bitmap files, which need to be
+        saved alongside the rendered plot file.
+
+        :param dest_path: path of the main output file.
+
+        """
+        for idx, subplot in enumerate(self.subplots):
+            subplot.save_assets(dest_path, suffix='_%d' % idx)
+
     def set_empty(self, row, column):
         """Keep one of the subplots completely empty.
 
