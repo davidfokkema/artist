@@ -81,9 +81,7 @@ class BasePlotContainer(object):
         Some plots may have assets, like bitmap files, which need to be
         saved alongside the rendered plot file.
 
-        :param dest_path: path of the file.
-
-        The dest_path parameter is only used for the dirname.
+        :param dest_path: path of the main output file.
 
         """
         pass
@@ -233,13 +231,8 @@ class SubPlot(object):
         Some plots may have assets, like bitmap files, which need to be
         saved alongside the rendered plot file.
 
-        :param dest_path: path of the file.
+        :param dest_path: path of the main output file.
         :param suffix: optional suffix to add to asset names.
-
-        The dest_path parameter is only used for the dirname, not the
-        filename. So if :meth:`save` is called with '/foo/myplot.tex', you
-        can call this method with that same path. The assets will then be
-        saved in the /foo directory.
 
         """
         self._write_bitmaps(dest_path, suffix)
@@ -759,10 +752,10 @@ class SubPlot(object):
         :param path: path of the plot file.
         :param suffix: optional suffix to add to asset names.
 
-        The path parameter is only used for the dirname, not the filename.
+        The path parameter is used for the dirname, and the filename.
         So if :meth:`save` is called with '/foo/myplot.tex', you can call
         this method with that same path. The assets will then be saved in
-        the /foo directory.
+        the /foo directory, and have a name like 'myplot_0.png'.
 
         """
         dir, prefix = os.path.split(path)

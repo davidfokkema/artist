@@ -64,9 +64,7 @@ class MultiPlot(BasePlotContainer):
         Some plots may have assets, like bitmap files, which need to be
         saved alongside the rendered plot file.
 
-        :param dest_path: path of the file.
-
-        The dest_path parameter is only used for the dirname.
+        :param dest_path: path of the main output file.
 
         """
         for idx, subplot in enumerate(self.subplots):
