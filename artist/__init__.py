@@ -40,10 +40,7 @@ Contents
 The following modules are included:
 
 :mod:`~artist.plot`
-    contains the Plot class for creating plots.
-
-:mod:`~artist.polar_plot`
-    contains the PolarPlot class for creating polar axis plots.
+    contains the Plot and PolarPlot classes for creating plots.
 
 :mod:`~artist.multi_plot`
     contains the MultiPlot class for creating plots comprised of multiple
