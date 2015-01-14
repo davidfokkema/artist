@@ -153,8 +153,8 @@ class BasePlotContainer(object):
                            if line and line[0] == '!']
             errors = '\n'.join(error_lines)
             raise RuntimeError("LaTeX compilation failed:\n" + errors)
-
-        os.chdir(cwd)
+        finally:
+            os.chdir(cwd)
 
         pdf_path = path.replace('.tex', '.pdf')
         return pdf_path

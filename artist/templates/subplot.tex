@@ -54,7 +54,6 @@
                      { {{ bitmap.name }}};
 {% endfor %}
 
-
 {% for region in plot.shaded_regions_list %}
     \addplot[draw=none, fill={{ region.color }}] coordinates {
     {%- for x, y in region.data %}
