@@ -152,7 +152,8 @@ class BasePlotContainer(object):
             error_lines = [line for line in output_lines
                            if line and line[0] == '!']
             errors = '\n'.join(error_lines)
-            raise RuntimeError("LaTeX compilation failed:\n" + errors)
+            raise RuntimeError("LaTeX compilation failed:\n" + errors +
+                               "\nTemp build dir: " + dir_path)
         finally:
             os.chdir(cwd)
 
