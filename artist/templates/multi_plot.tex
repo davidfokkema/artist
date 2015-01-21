@@ -19,131 +19,131 @@
 %
 \begin{sansmath}
 \begin{tikzpicture}[font=\sffamily]
-\node[inner sep=0pt] (plot) {
-    \begin{tikzpicture}[
-            inner sep=.3333em,
-            font=\sffamily,
-            every pin/.style={inner sep=2pt, font={\sffamily\smaller}},
-            every label/.style={inner sep=2pt, font={\sffamily\smaller}},
-            every pin edge/.style={<-, >=stealth', shorten <=2pt},
-            pin distance=2.5ex,
-        ]
-        \begin{groupplot}[
-                xmode={{ xmode }},
-                ymode={{ ymode }},
-                width=\defaultwidth,
-                {%- if height %}
-                height=\defaultheight,
-                {%- endif %}
-                %
-                xmin={ {{ limits.xmin }} },
-                xmax={ {{ limits.xmax }} },
-                ymin={ {{ limits.ymin }} },
-                ymax={ {{ limits.ymax }} },
-                %
-                group style={rows={{ rows }},columns={{ columns }},
-                             horizontal sep=4pt, vertical sep=4pt},
-                %
-                tick align=outside,
-                max space between ticks=40,
-                every tick/.style={},
-                axis on top,
-                %
-                xtick=\empty, ytick=\empty,
-                scaled ticks=false,
+    \node[inner sep=0pt] (plot) {
+        \begin{tikzpicture}[
+                inner sep=.3333em,
+                font=\sffamily,
+                every pin/.style={inner sep=2pt, font={\sffamily\smaller}},
+                every label/.style={inner sep=2pt, font={\sffamily\smaller}},
+                every pin edge/.style={<-, >=stealth', shorten <=2pt},
+                pin distance=2.5ex,
             ]
-            {% for subplot in subplots %}
-                {% set plot = subplot %}
-                \nextgroupplot[
-                {%- if subplot.empty %}
-                    group/empty plot
-                {%- else %}
-                    % Default: empty ticks all round the border of the
-                    % multiplot
-                    {%- if ticks.x is not none and subplot.ticks.x is not none %}
-                        {%- if rows == 1 %}
-                            xtick={ {{ ticks.x | join(', ') }} },
-                            xtick pos=both,
-                            xticklabel=\empty,
-                        {%- elif subplot.row == 0 %}
-                            xtick={ {{ ticks.x | join(', ') }} },
-                            % 'right' means 'top'
-                            xtick pos=right,
-                            xticklabel=\empty,
-                        {%- elif subplot.row == rows - 1 %}
-                            xtick={ {{ ticks.x | join(', ') }} },
-                            % 'left' means 'bottom'
-                            xtick pos=left,
-                            xticklabel=\empty,
-                        {%- endif %}
+            \begin{groupplot}[
+                    xmode={{ xmode }},
+                    ymode={{ ymode }},
+                    width=\defaultwidth,
+                    {%- if height %}
+                    height=\defaultheight,
                     {%- endif %}
-                    {%- if ticks.y is not none and subplot.ticks.y is not none %}
-                        {%- if columns == 1 %}
-                            ytick={ {{ ticks.y | join(', ') }} },
-                            ytick pos=both,
-                            yticklabel=\empty,
-                        {%- elif subplot.column == 0 %}
-                            ytick={ {{ ticks.y | join(', ') }} },
-                            ytick pos=left,
-                            yticklabel=\empty,
-                        {%- elif subplot.column == columns - 1 %}
-                            ytick={ {{ ticks.y | join(', ') }} },
-                            ytick pos=right,
-                            yticklabel=\empty,
-                        {%- endif %}
-                    {%- endif %}
-                    {%- if subplot.ticks.x %}
-                        xtick={ {{ subplot.ticks.x | join(', ') }} },
-                    {%- endif %}
-                    {%- if subplot.ticks.y %}
-                        ytick={ {{ subplot.ticks.y | join(', ') }} },
-                    {%- endif %}
-                    {%- if subplot.show_xticklabel %}
-                        xticklabel={},
-                    {%- endif %}
-                    {%- if subplot.show_yticklabel %}
-                        yticklabel={},
-                    {%- endif %}
-                    {%- if subplot.xticklabel_pos %}
-                        xticklabel pos={{ subplot.xticklabel_pos }},
-                    {%- endif %}
-                    {%- if subplot.yticklabel_pos %}
-                        yticklabel pos={{ subplot.yticklabel_pos }},
-                    {%- endif %}
-                    axis equal={{ plot.axis_equal | lower }},
                     %
-                    title={ {{ plot.title }} },
-                    xlabel={ {{ plot.xlabel }} },
-                    ylabel={ {{ plot.ylabel }} },
-                    {%- if subplot.limits.xmin is not none %}
-                        xmin={ {{ subplot.limits.xmin }} },
-                    {%- endif %}
-                    {%- if subplot.limits.xmax is not none %}
-                        xmax={ {{ subplot.limits.xmax }} },
-                    {%- endif %}
-                    {%- if subplot.limits.ymin is not none %}
-                        ymin={ {{ subplot.limits.ymin }} },
-                    {%- endif %}
-                    {%- if subplot.limits.ymax is not none %}
-                        ymax={ {{ subplot.limits.ymax }} },
-                    {%- endif %}
-                {%- endif %}
+                    xmin={ {{ limits.xmin }} },
+                    xmax={ {{ limits.xmax }} },
+                    ymin={ {{ limits.ymin }} },
+                    ymax={ {{ limits.ymax }} },
+                    %
+                    group style={rows={{ rows }},columns={{ columns }},
+                                 horizontal sep=4pt, vertical sep=4pt},
+                    %
+                    tick align=outside,
+                    max space between ticks=40,
+                    every tick/.style={},
+                    axis on top,
+                    %
+                    xtick=\empty, ytick=\empty,
+                    scaled ticks=false,
                 ]
+                {% for subplot in subplots %}
+                    {% set plot = subplot %}
+                    \nextgroupplot[
+                    {%- if subplot.empty %}
+                        group/empty plot
+                    {%- else %}
+                        % Default: empty ticks all round the border of the
+                        % multiplot
+                        {%- if ticks.x is not none and subplot.ticks.x is not none %}
+                            {%- if rows == 1 %}
+                                xtick={ {{ ticks.x | join(', ') }} },
+                                xtick pos=both,
+                                xticklabel=\empty,
+                            {%- elif subplot.row == 0 %}
+                                xtick={ {{ ticks.x | join(', ') }} },
+                                % 'right' means 'top'
+                                xtick pos=right,
+                                xticklabel=\empty,
+                            {%- elif subplot.row == rows - 1 %}
+                                xtick={ {{ ticks.x | join(', ') }} },
+                                % 'left' means 'bottom'
+                                xtick pos=left,
+                                xticklabel=\empty,
+                            {%- endif %}
+                        {%- endif %}
+                        {%- if ticks.y is not none and subplot.ticks.y is not none %}
+                            {%- if columns == 1 %}
+                                ytick={ {{ ticks.y | join(', ') }} },
+                                ytick pos=both,
+                                yticklabel=\empty,
+                            {%- elif subplot.column == 0 %}
+                                ytick={ {{ ticks.y | join(', ') }} },
+                                ytick pos=left,
+                                yticklabel=\empty,
+                            {%- elif subplot.column == columns - 1 %}
+                                ytick={ {{ ticks.y | join(', ') }} },
+                                ytick pos=right,
+                                yticklabel=\empty,
+                            {%- endif %}
+                        {%- endif %}
+                        {%- if subplot.ticks.x %}
+                            xtick={ {{ subplot.ticks.x | join(', ') }} },
+                        {%- endif %}
+                        {%- if subplot.ticks.y %}
+                            ytick={ {{ subplot.ticks.y | join(', ') }} },
+                        {%- endif %}
+                        {%- if subplot.show_xticklabel %}
+                            xticklabel={},
+                        {%- endif %}
+                        {%- if subplot.show_yticklabel %}
+                            yticklabel={},
+                        {%- endif %}
+                        {%- if subplot.xticklabel_pos %}
+                            xticklabel pos={{ subplot.xticklabel_pos }},
+                        {%- endif %}
+                        {%- if subplot.yticklabel_pos %}
+                            yticklabel pos={{ subplot.yticklabel_pos }},
+                        {%- endif %}
+                        axis equal={{ plot.axis_equal | lower }},
+                        %
+                        title={ {{ plot.title }} },
+                        xlabel={ {{ plot.xlabel }} },
+                        ylabel={ {{ plot.ylabel }} },
+                        {%- if subplot.limits.xmin is not none %}
+                            xmin={ {{ subplot.limits.xmin }} },
+                        {%- endif %}
+                        {%- if subplot.limits.xmax is not none %}
+                            xmax={ {{ subplot.limits.xmax }} },
+                        {%- endif %}
+                        {%- if subplot.limits.ymin is not none %}
+                            ymin={ {{ subplot.limits.ymin }} },
+                        {%- endif %}
+                        {%- if subplot.limits.ymax is not none %}
+                            ymax={ {{ subplot.limits.ymax }} },
+                        {%- endif %}
+                    {%- endif %}
+                    ]
 
-                {% if not plot.histogram2d_list and not plot.shaded_regions_list and not plot.plot_series_list %}
-                    % Force something to plot (invisibly).  Otherwise, the
-                    % axis will be reset and have a default range *and*
-                    % labels.  PGFPLOTS does not allow empty plots.
-                    \addplot[] coordinates {(1, 1)};
-                {% endif %}
+                    {% if not plot.histogram2d_list and not plot.shaded_regions_list and not plot.plot_series_list %}
+                        % Force something to plot (invisibly).  Otherwise, the
+                        % axis will be reset and have a default range *and*
+                        % labels.  PGFPLOTS does not allow empty plots.
+                        \addplot[] coordinates {(1, 1)};
+                    {% endif %}
 
-                {% include 'subplot.tex' %}
+                    {% include 'subplot.tex' %}
 
-            {% endfor %}
-        \end{groupplot}
+                {% endfor %}
+            \end{groupplot}
         \end{tikzpicture}
     };
     \node[below] at (plot.south) { {{ xlabel }} };
     \node[above, rotate=90] at (plot.west) { {{ ylabel }} };
-    \end{tikzpicture}
+\end{tikzpicture}
 \end{sansmath}
