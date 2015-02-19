@@ -85,6 +85,20 @@
     };
 {% endfor %}
 
+{% for table in plot.plot_table_list %}
+    % Draw table plot
+    \addplot[scatter, scatter src=\thisrow{c},
+             visualization depends on={\thisrow{s} \as \s},
+             scatter/@pre marker code/.append style={/tikz/mark size=\s},
+             {{ table.options }}] 
+        table {
+            x y c s
+        {%- for x, y, c, s in table.data %}
+            {{ x }} {{ y }} {{ c }} {{ s }}
+        {%- endfor %}
+        };
+{% endfor %}
+
 {% for line in plot.horizontal_lines %}
     \draw[{{ line.options }}]
         ({rel axis cs:0, 0} |- {axis cs:0, {{ line.value }} }) --

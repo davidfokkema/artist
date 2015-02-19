@@ -207,6 +207,7 @@ class SubPlot(object):
     def __init__(self):
         self.shaded_regions_list = []
         self.plot_series_list = []
+        self.plot_table_list = []
         self.histogram2d_list = []
         self.bitmap_list = []
         self.pin_list = []
@@ -223,6 +224,8 @@ class SubPlot(object):
                       'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
+        self.colorbar = False
+        self.colormap = None
 
     def save_assets(self, dest_path, suffix=''):
         """Save plot assets alongside dest_path.
@@ -395,6 +398,32 @@ class SubPlot(object):
 
         """
         self.plot(x, y, mark=mark, linestyle=None, markstyle=markstyle)
+
+    def scatter_table(self, x, y, c, s, mark='*'):
+        """Add a data series to the plot.
+
+        :param x: array containing x-values.
+        :param y: array containing y-values.
+        :param c: array containing values for the color of the mark.
+        :param s: array containing values for the size of the mark.
+        :param mark: the symbol used to mark the data point.  May be None,
+            or any plot mark accepted by TikZ (e.g. *, x, +, o, square,
+            triangle).
+
+        The dimensions of x, y, c and s should be equal. The c values will
+        be mapped to a colormap.
+
+        """
+        # clear the background of the marks
+        #self._clear_plot_mark_background(x, y, mark, markstyle)
+        # draw the plot series over the background
+        options = self._parse_plot_options(mark)
+        plot_series = self._create_plot_tables_object(x, y, c, s, options)
+        self.plot_table_list.append(plot_series)
+
+    def _create_plot_tables_object(self, x, y, c, s, options=None):
+        return {'options': options,
+                'data': list(izip_longest(x, y, c, s))}
 
     def set_title(self, text):
         """Set a title text."""
@@ -679,6 +708,20 @@ class SubPlot(object):
 
         self.axis_equal = True
 
+    def set_colorbar(self, label=''):
+        """Show the colorbar."""
+
+        self.colorbar = {'label': label}
+
+    def set_colormap(self, name):
+        """Choose a colormap for :meth:`scatter_table`.
+
+        :param name: name of the colormap to use. (e.g. hot, cool, blackwhite,
+                     greenyellow). If None a coolwarm colormap is used.
+
+        """
+        self.colormap = name
+
     def _parse_plot_options(self, mark=None, linestyle=None,
                             use_steps=False, markstyle=None):
         options = []
@@ -826,6 +869,8 @@ class Plot(SubPlot, BasePlotContainer):
             limits=self.limits,
             ticks=self.ticks,
             axis_equal=self.axis_equal,
+            colorbar=self.colorbar,
+            colormap=self.colormap,
             plot=self,
             plot_template=self.template)
         return response
