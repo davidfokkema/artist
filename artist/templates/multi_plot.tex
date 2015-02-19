@@ -12,9 +12,9 @@
     {\def\defaultwidth{ {{ width }} }}
 %
 {%- if height %}
-\pgfkeysifdefined{/artist/height}
-    {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
-    {\def\defaultheight{ {{ height }} }}
+    \pgfkeysifdefined{/artist/height}
+        {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+        {\def\defaultheight{ {{ height }} }}
 {%- endif %}
 %
 \begin{sansmath}
@@ -33,7 +33,7 @@
                     ymode={{ ymode }},
                     width=\defaultwidth,
                     {%- if height %}
-                    height=\defaultheight,
+                        height=\defaultheight,
                     {%- endif %}
                     %
                     xmin={ {{ limits.xmin }} },

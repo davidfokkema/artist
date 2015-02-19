@@ -12,9 +12,9 @@
     {\def\defaultwidth{ {{ width }} }}
 %
 {%- if height %}
-\pgfkeysifdefined{/artist/height}
-    {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
-    {\def\defaultheight{ {{ height }} }}
+    \pgfkeysifdefined{/artist/height}
+        {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+        {\def\defaultheight{ {{ height }} }}
 {%- endif %}
 %
 \begin{sansmath}
@@ -48,16 +48,16 @@
             xtick={ {{ ticks.x | join(', ') }} },
             ytick={ {{ ticks.y | join(', ') }} },
             {%- if ticks.xlabels %}
-            xticklabels={ {{ ticks.xlabels | join(', ') }} },
+                xticklabels={ {{ ticks.xlabels | join(', ') }} },
             {%- endif %}
             {%- if ticks.ylabels %}
-            yticklabels={ {{ ticks.ylabels | join(', ') }} },
+                yticklabels={ {{ ticks.ylabels | join(', ') }} },
             {%- endif %}
             {%- if ticks.xsuffix %}
-            xticklabel=$\pgfmathprintnumber{\tick}{{ ticks.xsuffix }}$,
+                xticklabel=$\pgfmathprintnumber{\tick}{{ ticks.xsuffix }}$,
             {%- endif %}
             {%- if ticks.ysuffix %}
-            yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
+                yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
             {%- endif %}
             %
             tick align=outside,
