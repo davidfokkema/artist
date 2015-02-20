@@ -220,7 +220,8 @@ class SubPlot(object):
         self.label = None
         self.limits = {'xmin': None, 'xmax': None,
                        'ymin': None, 'ymax': None,
-                       'mmin': None, 'mmax': None}
+                       'mmin': None, 'mmax': None,
+                       'smin': None, 'smax': None}
         self.ticks = {'x': [], 'y': [],
                       'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
@@ -424,7 +425,9 @@ class SubPlot(object):
 
     def _create_plot_tables_object(self, x, y, c, s, options=None):
         return {'options': options,
-                'data': list(izip_longest(x, y, c, s))}
+                'data': list(izip_longest(x, y, c, s)),
+                'smin': min(s),
+                'smax': max(s)}
 
     def set_title(self, text):
         """Set a title text."""
@@ -625,6 +628,18 @@ class SubPlot(object):
         """
         self.limits['mmin'] = min
         self.limits['mmax'] = max
+
+    def set_slimits(self, min, max):
+        """Set limits for the size of points in :meth:`scatter_table`.
+
+        If both are None, the size will be the given values.
+
+        :param min: point size for the lowest value.
+        :param max: point size for the highest value.
+
+        """
+        self.limits['smin'] = min
+        self.limits['smax'] = max
 
     def set_xticks(self, ticks):
         """Set ticks for the x-axis.

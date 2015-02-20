@@ -20,8 +20,6 @@ def main():
 
     # Scale mips to fit the graph
     n = [35.0, 51.9, 35.8, 78.9]
-    scale = 5.0
-    n_scaled = [ni / scale for ni in n]
 
     # Make times relative to first detection
     t = [15., 17.5, 20., 27.5]
@@ -30,11 +28,13 @@ def main():
     plot = Plot()
     plot.scatter([0], [0], mark='triangle')
     plot.add_pin_at_xy(0, 0, 'Station 503', use_arrow=False, location='below')
-    plot.scatter_table(x, y, dt, n_scaled)
+    plot.scatter_table(x, y, dt, n)
 
     plot.set_colorbar('$\Delta$t [ns]')
     plot.set_axis_equal()
     plot.set_mlimits(max=16.)
+    plot.set_slimits(min=5, max=20)
+
     plot.set_xlabel('x [m]')
     plot.set_ylabel('y [m]')
 
@@ -49,8 +49,6 @@ def main():
     # Event GPS timestamp: 1371498167.016412100
     # MIPS
     n508 = [5.6, 16.7, 36.6, 9.0]
-    scale = 5.0
-    n508_scaled = [ni / scale for ni in n508]
     # Arrival Times
     t508 = [15., 22.5, 22.5, 30.]
     dt508 = [ti - min(t508) for ti in t508]
@@ -60,17 +58,18 @@ def main():
     plot.set_ylimits_for_all(min=-15, max=10)
     plot.set_colormap('blackwhite')
     plot.set_mlimits_for_all(max=16.)
+    plot.set_slimits_for_all(min=5., max=10.)
 
     p = plot.get_subplot_at(0, 0)
     p.scatter([0], [0], mark='triangle')
     p.add_pin_at_xy(0, 0, 'Station 503', use_arrow=False, location='below')
-    p.scatter_table(x, y, dt, n_scaled)
+    p.scatter_table(x, y, dt, n)
     p.set_axis_equal()
 
     p = plot.get_subplot_at(0, 1)
     p.scatter([0], [0], mark='triangle')
     p.add_pin_at_xy(0, 0, 'Station 508', use_arrow=False, location='below')
-    p.scatter_table(x508, y508, dt508, n508_scaled)
+    p.scatter_table(x508, y508, dt508, n508)
     p.set_axis_equal()
 
     plot.show_yticklabels_for_all([(0, 0)])

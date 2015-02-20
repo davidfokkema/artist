@@ -86,15 +86,28 @@
 {% endfor %}
 
 {% for table in plot.plot_table_list %}
+    {%- if limits.smin is not none and limits.smax is not none %}
+        {%- set scale = (limits.smax - limits.smin) / (table.smax - table.smin) %}
+    {%- else %}
+        {%- set scale = 1 %}
+    {%- endif %}
+    % {{ scale }}
+    % {{ limits }}
+    % {{ table }}
     % Draw table plot
     \addplot[scatter, scatter src=\thisrow{c},
              visualization depends on={\thisrow{s} \as \s},
              scatter/@pre marker code/.append style={/tikz/mark size=\s},
-             {{ table.options }}] 
+             {{ table.options }}]
         table {
             x y c s
         {%- for x, y, c, s in table.data %}
-            {{ x }} {{ y }} {{ c }} {{ s }}
+            {%- if limits.smin is not none and limits.smax is not none %}
+                {%- set s_scaled = ((s - table.smin) * scale) + limits.smin %}
+                {{ x }} {{ y }} {{ c }} {{ s_scaled }}
+            {%- else %}
+                {{ x }} {{ y }} {{ c }} {{ s }}
+            {%- endif %}
         {%- endfor %}
         };
 {% endfor %}

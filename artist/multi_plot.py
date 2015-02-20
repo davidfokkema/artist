@@ -49,7 +49,9 @@ class MultiPlot(BasePlotContainer):
         self.xlabel = None
         self.ylabel = None
         self.limits = {'xmin': None, 'xmax': None,
-                       'ymin': None, 'ymax': None}
+                       'ymin': None, 'ymax': None,
+                       'mmin': None, 'mmax': None,
+                       'smin': None, 'smax': None}
         self.ticks = {'x': [], 'y': []}
         self.colormap = None
 
@@ -243,7 +245,6 @@ class MultiPlot(BasePlotContainer):
         :param max: maximum axis value
 
         """
-
         if row_column_list is None:
             self.limits['ymin'] = min
             self.limits['ymax'] = max
@@ -273,13 +274,41 @@ class MultiPlot(BasePlotContainer):
         :param max: value for end of the colormap.
 
         """
-
         if row_column_list is None:
             self.limits['mmin'] = min
             self.limits['mmax'] = max
         else:
             for row, column in row_column_list:
                 self.set_mlimits(row, column, min, max)
+
+    def set_slimits(self, row, column, min, max):
+        """Set limits for the point meta (colormap).
+
+        :param min: value for start of the colormap.
+        :param max: value for end of the colormap.
+
+        """
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_slimits(min, max)
+
+    def set_slimits_for_all(self, row_column_list=None, min=None, max=None):
+        """Set y-axis limits of specified subplots.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param min: value for start of the colormap.
+        :param max: value for end of the colormap.
+
+        """
+        if min is None or max is None:
+            raise Exception('Both min and max are required.')
+        if row_column_list is None:
+            self.limits['smin'] = min
+            self.limits['smax'] = max
+        else:
+            for row, column in row_column_list:
+                self.set_slimits(row, column, min, max)
 
     def set_xticks(self, row, column, ticks):
         """Manually specify the x-axis tick values.
