@@ -17,14 +17,16 @@ distclean: clean
 	rm -f polar_histogram.tex
 	rm -f discrete_directions.tex
 	rm -f histogram2d.tex
+	rm -f multi_histogram2d.tex
 	rm -f event_display.tex
+	rm -f multi_event_display.tex
 
 demo_plots.pdf: demo_plots.tex \
 		stopping-power-mpl.pdf stopping-power.tex \
 		shower-front.tex eas-lateral.tex histogram-fit.tex \
 		spectrum.tex sciencepark.tex multiplot.tex polar_histogram.tex \
 		discrete_directions.tex histogram2d.tex multi_histogram2d.tex \
-		event_display.tex
+		event_display.tex multi_event_display.tex
 	latexmk -pdf demo_plots.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
@@ -57,5 +59,5 @@ discrete_directions.tex: demo_discrete_directions.py
 histogram2d.tex multi_histogram2d.tex: demo_histogram2d.py
 	python $?
 
-event_display.tex: demo_event_display.py
+event_display.tex multi_event_display.tex: demo_event_display.py
 	python $?
