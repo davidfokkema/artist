@@ -71,6 +71,8 @@
                     ytick pos=right,
                     ylabel={{ colorbar.label }}},
             {%- endif %}
+            point meta min={ {{ limits.mmin }} },
+            point meta max={ {{ limits.mmax }} },
             {%- if colormap %}
                 colormap/{{ colormap }},
             {%- else %}

@@ -251,6 +251,36 @@ class MultiPlot(BasePlotContainer):
             for row, column in row_column_list:
                 self.set_ylimits(row, column, min, max)
 
+    def set_mlimits(self, row, column, min=None, max=None):
+        """Set limits for the point meta (colormap).
+
+        Point meta values outside this range will be clipped.
+
+        :param min: value for start of the colormap.
+        :param max: value for end of the colormap.
+
+        """
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_mlimits(min, max)
+
+    def set_mlimits_for_all(self, row_column_list=None, min=None, max=None):
+        """Set y-axis limits of specified subplots.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param min: value for start of the colormap.
+        :param max: value for end of the colormap.
+
+        """
+
+        if row_column_list is None:
+            self.limits['mmin'] = min
+            self.limits['mmax'] = max
+        else:
+            for row, column in row_column_list:
+                self.set_mlimits(row, column, min, max)
+
     def set_xticks(self, row, column, ticks):
         """Manually specify the x-axis tick values.
 

@@ -219,7 +219,8 @@ class SubPlot(object):
         self.ylabel = None
         self.label = None
         self.limits = {'xmin': None, 'xmax': None,
-                       'ymin': None, 'ymax': None}
+                       'ymin': None, 'ymax': None,
+                       'mmin': None, 'mmax': None}
         self.ticks = {'x': [], 'y': [],
                       'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
@@ -610,6 +611,20 @@ class SubPlot(object):
         """
         self.limits['ymin'] = min
         self.limits['ymax'] = max
+
+    def set_mlimits(self, min=None, max=None):
+        """Set limits for the point meta (colormap).
+
+        Point meta values outside this range will be clipped.
+
+        :param min: value corresponding to the start of the colormap.
+            If None, it will be calculated.
+        :param max: value corresponding to the end of the colormap.
+            If None, it will be calculated.
+
+        """
+        self.limits['mmin'] = min
+        self.limits['mmax'] = max
 
     def set_xticks(self, ticks):
         """Set ticks for the x-axis.

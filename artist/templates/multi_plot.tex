@@ -51,6 +51,8 @@
                     %
                     xtick=\empty, ytick=\empty,
                     scaled ticks=false,
+                    point meta min={ {{ limits.mmin }} },
+                    point meta max={ {{ limits.mmax }} },
                     {%- if colormap %}
                         colormap/{{ colormap }},
                     {%- else %}
@@ -140,6 +142,12 @@
                         {%- endif %}
                         {%- if subplot.limits.ymax is not none %}
                             ymax={ {{ subplot.limits.ymax }} },
+                        {%- endif %}
+                        {%- if subplot.limits.mmin is not none %}
+                            point meta min={ {{ subplot.limits.mmin }} },
+                        {%- endif %}
+                        {%- if subplot.limits.mmax is not none %}
+                            point meta max={ {{ subplot.limits.mmax }} },
                         {%- endif %}
                     {%- endif %}
                     ]
