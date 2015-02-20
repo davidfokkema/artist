@@ -51,6 +51,7 @@ class MultiPlot(BasePlotContainer):
         self.limits = {'xmin': None, 'xmax': None,
                        'ymin': None, 'ymax': None}
         self.ticks = {'x': [], 'y': []}
+        self.colormap = None
 
         self.subplots = []
         for i in range(rows):
@@ -395,6 +396,7 @@ class MultiPlot(BasePlotContainer):
                                    width=self.width, height=self.height,
                                    xlabel=self.xlabel, ylabel=self.ylabel,
                                    limits=self.limits, ticks=self.ticks,
+                                   colormap=self.colormap,
                                    subplots=self.subplots,
                                    plot_template=self.template)
         return response
@@ -434,6 +436,15 @@ class MultiPlot(BasePlotContainer):
         """
         subplot = self.get_subplot_at(row, column)
         subplot.set_ylabel(text)
+
+    def set_colormap(self, name):
+        """Choose a colormap for all subplots.
+
+        :param name: name of the colormap to use. (e.g. hot, cool, blackwhite,
+                     greenyellow). If None a coolwarm colormap is used.
+
+        """
+        self.colormap = name
 
 
 class SubPlotContainer(SubPlot):
