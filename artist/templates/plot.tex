@@ -66,7 +66,10 @@
             axis on top,
             {%- if colorbar %}
                 colorbar,
-                colorbar style={ylabel={{ colorbar.label }}},
+                colorbar style={
+                    tick align=outside,
+                    ytick pos=right,
+                    ylabel={{ colorbar.label }}},
             {%- endif %}
             {%- if colormap %}
                 colormap/{{ colormap }},
