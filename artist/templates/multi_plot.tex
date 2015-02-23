@@ -74,6 +74,19 @@
                         {%- if loop.last and colorbar %}
                             colorbar {% if colorbar.horizontal %}horizontal{% endif %},
                             colorbar style={
+                                {%- if colorbar.horizontal %}
+                                    width={{ columns }} * \pgfkeysvalueof{/pgfplots/parent axis width} +
+                                          ({{ columns }} - 1) * \pgfkeysvalueof{/pgfplots/group/horizontal sep},
+                                    xshift=-({{ columns }} - 1) *
+                                           (\pgfkeysvalueof{/pgfplots/parent axis width} +
+                                            \pgfkeysvalueof{/pgfplots/group/horizontal sep}),
+                                {%- else %}
+                                    height={{ rows }} * \pgfkeysvalueof{/pgfplots/parent axis height} +
+                                           ({{ rows }} - 1) * \pgfkeysvalueof{/pgfplots/group/vertical sep},
+                                    yshift=({{ rows }} - 1) *
+                                           (\pgfkeysvalueof{/pgfplots/parent axis height} +
+                                            \pgfkeysvalueof{/pgfplots/group/vertical sep}),
+                                {%- endif %}
                                 tick align=outside,
                                 xtick pos=left,
                                 ytick pos=right,
