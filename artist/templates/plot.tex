@@ -12,9 +12,9 @@
     {\def\defaultwidth{ {{ width }} }}
 %
 {%- if height %}
-\pgfkeysifdefined{/artist/height}
-    {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
-    {\def\defaultheight{ {{ height }} }}
+    \pgfkeysifdefined{/artist/height}
+        {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+        {\def\defaultheight{ {{ height }} }}
 {%- endif %}
 %
 \begin{sansmath}
@@ -31,7 +31,7 @@
             ymode={{ ymode }},
             width=\defaultwidth,
             {%- if height %}
-            height=\defaultheight,
+                height=\defaultheight,
             {%- endif %}
             axis equal={{ axis_equal | lower }},
             %
@@ -48,22 +48,51 @@
             xtick={ {{ ticks.x | join(', ') }} },
             ytick={ {{ ticks.y | join(', ') }} },
             {%- if ticks.xlabels %}
-            xticklabels={ {{ ticks.xlabels | join(', ') }} },
+                xticklabels={ {{ ticks.xlabels | join(', ') }} },
             {%- endif %}
             {%- if ticks.ylabels %}
-            yticklabels={ {{ ticks.ylabels | join(', ') }} },
+                yticklabels={ {{ ticks.ylabels | join(', ') }} },
             {%- endif %}
             {%- if ticks.xsuffix %}
-            xticklabel=$\pgfmathprintnumber{\tick}{{ ticks.xsuffix }}$,
+                xticklabel=$\pgfmathprintnumber{\tick}{{ ticks.xsuffix }}$,
             {%- endif %}
             {%- if ticks.ysuffix %}
-            yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
+                yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
             {%- endif %}
             %
             tick align=outside,
             max space between ticks=40,
             every tick/.style={},
             axis on top,
+            {%- if colorbar %}
+                colorbar {% if colorbar.horizontal %}horizontal{% endif %},
+                colorbar style={
+                    tick align=outside,
+                    xtick pos=left,
+                    ytick pos=right,
+                    {%- if colorbar.horizontal %}
+                        xlabel={{ colorbar.label }},
+                    {%- else %}
+                        ylabel={{ colorbar.label }},
+                    {%- endif %}
+                    },
+            {%- endif %}
+            point meta min={ {{ limits.mmin }} },
+            point meta max={ {{ limits.mmax }} },
+            {%- if colormap %}
+                colormap/{{ colormap }},
+            {%- else %}
+                colormap={coolwarm}{
+                    rgb255(0cm)=( 59, 76,192);
+                    rgb255(1cm)=( 98,130,234);
+                    rgb255(2cm)=(141,176,254);
+                    rgb255(3cm)=(184,208,249);
+                    rgb255(4cm)=(221,221,221);
+                    rgb255(5cm)=(245,196,173);
+                    rgb255(6cm)=(244,154,123);
+                    rgb255(7cm)=(222, 96, 77);
+                    rgb255(8cm)=(180,  4, 38)},
+            {%- endif %}
         ]
 
         {% include 'subplot.tex' %}

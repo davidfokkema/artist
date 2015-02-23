@@ -11,11 +11,14 @@ Contents
 
 """
 
-import jinja2
 import tempfile
 import os
 import subprocess
 import shutil
+from math import sqrt
+import warnings
+
+import jinja2
 
 from plot import BasePlotContainer, SubPlot
 
@@ -49,8 +52,12 @@ class MultiPlot(BasePlotContainer):
         self.xlabel = None
         self.ylabel = None
         self.limits = {'xmin': None, 'xmax': None,
-                       'ymin': None, 'ymax': None}
+                       'ymin': None, 'ymax': None,
+                       'mmin': None, 'mmax': None,
+                       'smin': None, 'smax': None}
         self.ticks = {'x': [], 'y': []}
+        self.colorbar = None
+        self.colormap = None
 
         self.subplots = []
         for i in range(rows):
@@ -73,7 +80,7 @@ class MultiPlot(BasePlotContainer):
     def set_empty(self, row, column):
         """Keep one of the subplots completely empty.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
 
         """
         subplot = self.get_subplot_at(row, column)
@@ -93,7 +100,7 @@ class MultiPlot(BasePlotContainer):
     def set_title(self, row, column, text):
         """Set a title text.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param text: title text.
 
         """
@@ -104,7 +111,7 @@ class MultiPlot(BasePlotContainer):
                   style=None):
         """Set a label for the subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param text: the label text.
         :param location: the location of the label inside the plot.  May
             be one of 'center', 'upper right', 'lower right', 'upper
@@ -118,7 +125,7 @@ class MultiPlot(BasePlotContainer):
     def show_xticklabels(self, row, column):
         """Show the x-axis tick labels for a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
 
         """
         subplot = self.get_subplot_at(row, column)
@@ -142,7 +149,7 @@ class MultiPlot(BasePlotContainer):
     def show_yticklabels(self, row, column):
         """Show the y-axis tick labels for a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
 
         """
         subplot = self.get_subplot_at(row, column)
@@ -170,7 +177,7 @@ class MultiPlot(BasePlotContainer):
         row.  This can be used to e.g. alternatively draw the tick labels
         on the bottom or the top of the subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param position: 'top' or 'bottom' to specify the position of the
             tick labels.
 
@@ -185,7 +192,7 @@ class MultiPlot(BasePlotContainer):
         column.  This can be used to e.g. alternatively draw the tick
         labels on the left or the right of the subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param position: 'left' or 'right' to specify the position of the
             tick labels.
 
@@ -196,7 +203,7 @@ class MultiPlot(BasePlotContainer):
     def set_xlimits(self, row, column, min=None, max=None):
         """Set x-axis limits of a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param min: minimal axis value
         :param max: maximum axis value
 
@@ -224,7 +231,7 @@ class MultiPlot(BasePlotContainer):
     def set_ylimits(self, row, column, min=None, max=None):
         """Set y-axis limits of a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param min: minimal axis value
         :param max: maximum axis value
 
@@ -242,7 +249,6 @@ class MultiPlot(BasePlotContainer):
         :param max: maximum axis value
 
         """
-
         if row_column_list is None:
             self.limits['ymin'] = min
             self.limits['ymax'] = max
@@ -250,10 +256,68 @@ class MultiPlot(BasePlotContainer):
             for row, column in row_column_list:
                 self.set_ylimits(row, column, min, max)
 
+    def set_mlimits(self, row, column, min=None, max=None):
+        """Set limits for the point meta (colormap).
+
+        Point meta values outside this range will be clipped.
+
+        :param min: value for start of the colormap.
+        :param max: value for end of the colormap.
+
+        """
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_mlimits(min, max)
+
+    def set_mlimits_for_all(self, row_column_list=None, min=None, max=None):
+        """Set limits for point meta (colormap) for specified subplots.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param min: value for start of the colormap.
+        :param max: value for end of the colormap.
+
+        """
+        if row_column_list is None:
+            self.limits['mmin'] = min
+            self.limits['mmax'] = max
+        else:
+            for row, column in row_column_list:
+                self.set_mlimits(row, column, min, max)
+
+    def set_slimits(self, row, column, min, max):
+        """Set limits for the point sizes.
+
+        :param min: point size for the lowest value.
+        :param max: point size for the highest value.
+
+        """
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_slimits(min, max)
+
+    def set_slimits_for_all(self, row_column_list=None, min=None, max=None):
+        """Set point size limits of specified subplots.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param min: point size for the lowest value.
+        :param max: point size for the highest value.
+
+        """
+        if min is None or max is None:
+            raise Exception('Both min and max are required.')
+        if row_column_list is None:
+            self.limits['smin'] = sqrt(min)
+            self.limits['smax'] = sqrt(max)
+        else:
+            for row, column in row_column_list:
+                self.set_slimits(row, column, min, max)
+
     def set_xticks(self, row, column, ticks):
         """Manually specify the x-axis tick values.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param ticks: list of tick values.
 
         """
@@ -278,7 +342,7 @@ class MultiPlot(BasePlotContainer):
     def set_logxticks(self, row, column, logticks):
         """Manually specify the x-axis log tick values.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param logticks: logarithm of the locations for the ticks along the
             axis.
 
@@ -311,7 +375,7 @@ class MultiPlot(BasePlotContainer):
     def set_yticks(self, row, column, ticks):
         """Manually specify the y-axis tick values.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param ticks: list of tick values.
 
         """
@@ -336,7 +400,7 @@ class MultiPlot(BasePlotContainer):
     def set_logyticks(self, row, column, logticks):
         """Manually specify the y-axis log tick values.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param logticks: logarithm of the locations for the ticks along the
             axis.
 
@@ -369,7 +433,7 @@ class MultiPlot(BasePlotContainer):
     def get_subplot_at(self, row, column):
         """Return the subplot at row, column position.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
 
         """
         idx = row * self.columns + column
@@ -395,6 +459,8 @@ class MultiPlot(BasePlotContainer):
                                    width=self.width, height=self.height,
                                    xlabel=self.xlabel, ylabel=self.ylabel,
                                    limits=self.limits, ticks=self.ticks,
+                                   colorbar=self.colorbar,
+                                   colormap=self.colormap,
                                    subplots=self.subplots,
                                    plot_template=self.template)
         return response
@@ -418,7 +484,7 @@ class MultiPlot(BasePlotContainer):
     def set_subplot_xlabel(self, row, column, text):
         """Set a label for the x-axis of a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param text: text of the label.
 
         """
@@ -428,12 +494,57 @@ class MultiPlot(BasePlotContainer):
     def set_subplot_ylabel(self, row, column, text):
         """Set a label for the y-axis of a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param text: text of the label.
 
         """
         subplot = self.get_subplot_at(row, column)
         subplot.set_ylabel(text)
+
+    def set_scalebar_for_all(self, row_column_list=None,
+                             location='lower right'):
+        """Show marker area scale for subplots.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :param location: the location of the label inside the plot.  May
+            be one of 'center', 'upper right', 'lower right', 'upper
+            left', 'lower left'.
+
+        """
+        if row_column_list is None:
+            for subplot in self.subplots:
+                subplot.set_scalebar(location)
+        else:
+            for row, column in row_column_list:
+                subplot = self.get_subplot_at(row, column)
+                subplot.set_scalebar(location)
+
+    def set_colorbar(self, label='', horizontal=False):
+        """Show the colorbar, it will be attached to the last plot.
+
+        Not for the histogram2d, only for the scatter_table.
+        Global mlimits should be set for this to properly reflect the
+        colormap of each subplot.
+
+        :param label: axis label for the colorbar.
+        :param horizontal: boolean, if True the colobar will be horizontal.
+
+        """
+        if self.limits['mmin'] is None or self.limits['mmax'] is None:
+            warnings.warn('Set (only) global point meta limits to ensure the '
+                          'colorbar is correct for all subplots.')
+        self.colorbar = {'label': label,
+                         'horizontal': horizontal}
+
+    def set_colormap(self, name):
+        """Choose a colormap for all subplots.
+
+        :param name: name of the colormap to use. (e.g. hot, cool, blackwhite,
+                     greenyellow). If None a coolwarm colormap is used.
+
+        """
+        self.colormap = name
 
 
 class SubPlotContainer(SubPlot):

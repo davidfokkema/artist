@@ -29,19 +29,19 @@
 
             {%- if weight > 0 %}
                 {%- if histogram.type == 'area' %}
-                \draw[{{ histogram.style }},
-                      scale around={ {{ count / histogram.max }}:
-                                    (axis cs: {{ x }}, {{ y }})}]
-                    (axis cs:{{ x0 }}, {{ y0 }})
-                    rectangle (axis cs:{{ x1 }}, {{ y1 }});
+                    \draw[{{ histogram.style }},
+                          scale around={ {{ count / histogram.max }}:
+                                        (axis cs: {{ x }}, {{ y }})}]
+                        (axis cs:{{ x0 }}, {{ y0 }})
+                        rectangle (axis cs:{{ x1 }}, {{ y1 }});
                 {%- elif histogram.type in ['bw', 'reverse_bw'] %}
-                \path[{{ histogram.style }},fill,
-                    {%- if 'reverse' in histogram.type %}
-                        {%- set weight = 100 - weight %}
-                    {%- endif %}
-                      black!{{ 100 - weight }}]
-                    (axis cs:{{ x0 }}, {{ y0 }})
-                    rectangle (axis cs:{{ x1 }}, {{ y1 }});
+                    \path[{{ histogram.style }},fill,
+                        {%- if 'reverse' in histogram.type %}
+                            {%- set weight = 100 - weight %}
+                        {%- endif %}
+                          black!{{ 100 - weight }}]
+                        (axis cs:{{ x0 }}, {{ y0 }})
+                        rectangle (axis cs:{{ x1 }}, {{ y1 }});
                 {%- endif %}
             {%- endif %}
         {%- endfor %}
@@ -54,50 +54,74 @@
                      { {{ bitmap.name }}};
 {% endfor %}
 
-{% for region in plot.shaded_regions_list %}
+{%- for region in plot.shaded_regions_list %}
     \addplot[draw=none, fill={{ region.color }}] coordinates {
-    {%- for x, y in region.data %}
-        ({{ x }}, {{ y }})
-    {%- endfor %}
-        } -- cycle;
-{% endfor %}
+        {%- for x, y in region.data %}
+            ({{ x }}, {{ y }})
+        {%- endfor %}
+            } -- cycle;
+{% endfor -%}
 
-{% for series in plot.plot_series_list %}
+{%- for series in plot.plot_series_list %}
     {% if series.show_xerr %}
-    % Draw x-error bars
-    {%- for x, y, xerr, yerr in series.data %}
-    \draw (axis cs:{{ x - xerr }}, {{ y }}) --
-          (axis cs:{{ x + xerr }}, {{ y }});
-    {%- endfor %}
+        % Draw x-error bars
+        {%- for x, y, xerr, yerr in series.data %}
+            \draw (axis cs:{{ x - xerr }}, {{ y }}) --
+                  (axis cs:{{ x + xerr }}, {{ y }});
+        {%- endfor %}
     {%- endif %}
     {%- if series.show_yerr %}
-    % Draw y-error bars
-    {%- for x, y, xerr, yerr in series.data %}
-    \draw (axis cs:{{ x }}, {{ y - yerr }}) --
-          (axis cs:{{ x }}, {{ y + yerr }});
-    {%- endfor %}
+        % Draw y-error bars
+        {%- for x, y, xerr, yerr in series.data %}
+            \draw (axis cs:{{ x }}, {{ y - yerr }}) --
+                  (axis cs:{{ x }}, {{ y + yerr }});
+        {%- endfor %}
     {% endif %}
     % Draw series plot
     \addplot[{{ series.options }}] coordinates {
-    {%- for x, y, xerr, yerr in series.data %}
-        ({{ x }}, {{ y }})
-    {%- endfor %}
+        {%- for x, y, xerr, yerr in series.data %}
+            ({{ x }}, {{ y }})
+        {%- endfor %}
     };
-{% endfor %}
+{% endfor -%}
 
-{% for line in plot.horizontal_lines %}
+{%- for table in plot.plot_table_list %}
+    {%- if limits.smin is not none and limits.smax is not none %}
+        {%- set scale = (limits.smax - limits.smin) / (table.smax - table.smin) %}
+    {%- else %}
+        {%- set scale = 1 %}
+    {%- endif %}
+    % Draw table plot
+    \addplot[scatter, scatter src=\thisrow{c},
+             visualization depends on={\thisrow{s} \as \s},
+             scatter/@pre marker code/.append style={/tikz/mark size=\s},
+             {{ table.options }}]
+        table {
+            x y c s
+        {%- for x, y, c, s in table.data %}
+            {%- if limits.smin is not none and limits.smax is not none %}
+                {%- set s_scaled = ((s - table.smin) * scale) + limits.smin %}
+                {{ x }} {{ y }} {{ c }} {{ s_scaled }}pt
+            {%- else %}
+                {{ x }} {{ y }} {{ c }} {{ s }}pt
+            {%- endif %}
+        {%- endfor %}
+        };
+{% endfor -%}
+
+{%- for line in plot.horizontal_lines %}
     \draw[{{ line.options }}]
         ({rel axis cs:0, 0} |- {axis cs:0, {{ line.value }} }) --
         ({rel axis cs:1, 1} |- {axis cs:0, {{ line.value }} });
-{% endfor %}
+{% endfor -%}
 
-{% for line in plot.vertical_lines %}
+{%- for line in plot.vertical_lines %}
     \draw[{{ line.options }}]
         ({rel axis cs:0, 0} -| {axis cs:{{ line.value }}, 0 }) --
         ({rel axis cs:1, 1} -| {axis cs:{{ line.value }}, 0 });
-{% endfor %}
+{% endfor -%}
 
-{% for pin in plot.pin_list %}
+{%- for pin in plot.pin_list %}
     {%- if pin.use_arrow %}
         {%- set pin_option = 'pin' %}
     {%- else %}
@@ -106,15 +130,44 @@
     \node[coordinate,{{ pin.options }},
           {{ pin_option }}={ {{ pin.location }}:{ {{ pin.text }} }}]
         at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
-{% endfor %}
+{% endfor -%}
 
-{% if plot.label %}
+{%- if plot.label %}
     \node[{{ plot.label.style }},
     {%- if plot.label.node_location != 'center' %}
           {{ plot.label.node_location }}=2pt
     {%- endif %}
         ]
-        at (rel axis cs:{{ plot.label.x }},
-            {{ plot.label.y }})
+        at (rel axis cs:{{ plot.label.x }},{{ plot.label.y }})
         { {{ plot.label.text }} };
-{% endif %}
+{%- endif %}
+
+{%- if plot.scalebar %}
+    {%- set table = plot.plot_table_list[0] %}
+    {%- set min_size_value = (table.smin * table.smin)|round|int %}
+    {%- set max_size_value = (table.smax * table.smax)|round|int %}
+    {%- if limits.smin is not none and limits.smax is not none %}
+        {%- set scale = (limits.smax - limits.smin) / (table.smax - table.smin) %}
+        {%- set smin = ((min_size_value ** 0.5 - table.smin) * scale) + limits.smin %}
+        {%- set smax = ((max_size_value ** 0.5 - table.smin) * scale) + limits.smin %}
+    {%- else %}
+        {%- set smin = min_size_value ** 0.5 %}
+        {%- set smax = max_size_value ** 0.5 %}
+    {%- endif %}
+
+    \node[
+        {%- if plot.scalebar.node_location != 'center' %}
+            {{ plot.scalebar.node_location }}=0pt
+        {%- endif %}
+        ]
+        at (rel axis cs:{{ plot.scalebar.x }}, {{ plot.scalebar.y }}) {
+            \begin{tikzpicture}[gray]
+                {%- if smin != 0 %}
+                    \draw[xshift=-{{ 1.5 * smin }}pt] (0,0) circle ({{ smin }}pt)
+                        node[yshift=-{{ smin }}pt,anchor=north] { \small{ {{ min_size_value }} } };
+                {%- endif %}
+                \draw[xshift={{ 1.5 * smax }}pt] (0,0) circle ({{ smax }}pt)
+                    node[anchor=north,yshift=-{{ smax }}pt] { \small{ {{ max_size_value }} } };
+            \end{tikzpicture}
+        };
+{%- endif %}

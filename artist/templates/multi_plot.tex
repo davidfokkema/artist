@@ -12,9 +12,9 @@
     {\def\defaultwidth{ {{ width }} }}
 %
 {%- if height %}
-\pgfkeysifdefined{/artist/height}
-    {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
-    {\def\defaultheight{ {{ height }} }}
+    \pgfkeysifdefined{/artist/height}
+        {\pgfkeysgetvalue{/artist/height}{\defaultheight}}
+        {\def\defaultheight{ {{ height }} }}
 {%- endif %}
 %
 \begin{sansmath}
@@ -33,7 +33,7 @@
                     ymode={{ ymode }},
                     width=\defaultwidth,
                     {%- if height %}
-                    height=\defaultheight,
+                        height=\defaultheight,
                     {%- endif %}
                     %
                     xmin={ {{ limits.xmin }} },
@@ -51,10 +51,52 @@
                     %
                     xtick=\empty, ytick=\empty,
                     scaled ticks=false,
+                    point meta min={ {{ limits.mmin }} },
+                    point meta max={ {{ limits.mmax }} },
+                    {%- if colormap %}
+                        colormap/{{ colormap }},
+                    {%- else %}
+                        colormap={coolwarm}{
+                            rgb255(0cm)=( 59, 76,192);
+                            rgb255(1cm)=( 98,130,234);
+                            rgb255(2cm)=(141,176,254);
+                            rgb255(3cm)=(184,208,249);
+                            rgb255(4cm)=(221,221,221);
+                            rgb255(5cm)=(245,196,173);
+                            rgb255(6cm)=(244,154,123);
+                            rgb255(7cm)=(222, 96, 77);
+                            rgb255(8cm)=(180,  4, 38)},
+                    {%- endif %}
                 ]
                 {% for subplot in subplots %}
                     {% set plot = subplot %}
                     \nextgroupplot[
+                        {%- if loop.last and colorbar %}
+                            colorbar {% if colorbar.horizontal %}horizontal{% endif %},
+                            colorbar style={
+                                {%- if colorbar.horizontal %}
+                                    width={{ columns }} * \pgfkeysvalueof{/pgfplots/parent axis width} +
+                                          ({{ columns }} - 1) * \pgfkeysvalueof{/pgfplots/group/horizontal sep},
+                                    xshift=-({{ columns }} - 1) *
+                                           (\pgfkeysvalueof{/pgfplots/parent axis width} +
+                                            \pgfkeysvalueof{/pgfplots/group/horizontal sep}),
+                                {%- else %}
+                                    height={{ rows }} * \pgfkeysvalueof{/pgfplots/parent axis height} +
+                                           ({{ rows }} - 1) * \pgfkeysvalueof{/pgfplots/group/vertical sep},
+                                    yshift=({{ rows }} - 1) *
+                                           (\pgfkeysvalueof{/pgfplots/parent axis height} +
+                                            \pgfkeysvalueof{/pgfplots/group/vertical sep}),
+                                {%- endif %}
+                                tick align=outside,
+                                xtick pos=left,
+                                ytick pos=right,
+                                {%- if colorbar.horizontal %}
+                                    xlabel={{ colorbar.label }},
+                                {%- else %}
+                                    ylabel={{ colorbar.label }},
+                                {%- endif %}
+                                },
+                        {%- endif %}
                     {%- if subplot.empty %}
                         group/empty plot
                     {%- else %}
@@ -126,6 +168,12 @@
                         {%- endif %}
                         {%- if subplot.limits.ymax is not none %}
                             ymax={ {{ subplot.limits.ymax }} },
+                        {%- endif %}
+                        {%- if subplot.limits.mmin is not none %}
+                            point meta min={ {{ subplot.limits.mmin }} },
+                        {%- endif %}
+                        {%- if subplot.limits.mmax is not none %}
+                            point meta max={ {{ subplot.limits.mmax }} },
                         {%- endif %}
                     {%- endif %}
                     ]

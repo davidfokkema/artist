@@ -22,11 +22,11 @@ import os
 import tempfile
 import shutil
 from itertools import izip_longest
+from math import log10, sqrt
 
 from PIL import Image
 import jinja2
 import numpy as np
-from math import log10
 
 
 RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
@@ -207,6 +207,7 @@ class SubPlot(object):
     def __init__(self):
         self.shaded_regions_list = []
         self.plot_series_list = []
+        self.plot_table_list = []
         self.histogram2d_list = []
         self.bitmap_list = []
         self.pin_list = []
@@ -218,11 +219,16 @@ class SubPlot(object):
         self.ylabel = None
         self.label = None
         self.limits = {'xmin': None, 'xmax': None,
-                       'ymin': None, 'ymax': None}
+                       'ymin': None, 'ymax': None,
+                       'mmin': None, 'mmax': None,
+                       'smin': None, 'smax': None}
         self.ticks = {'x': [], 'y': [],
                       'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
+        self.scalebar = None
+        self.colorbar = False
+        self.colormap = None
 
     def save_assets(self, dest_path, suffix=''):
         """Save plot assets alongside dest_path.
@@ -395,6 +401,35 @@ class SubPlot(object):
 
         """
         self.plot(x, y, mark=mark, linestyle=None, markstyle=markstyle)
+
+    def scatter_table(self, x, y, c, s, mark='*'):
+        """Add a data series to the plot.
+
+        :param x: array containing x-values.
+        :param y: array containing y-values.
+        :param c: array containing values for the color of the mark.
+        :param s: array containing values for the size of the mark.
+        :param mark: the symbol used to mark the data point.  May be None,
+            or any plot mark accepted by TikZ (e.g. *, x, +, o, square,
+            triangle).
+
+        The dimensions of x, y, c and s should be equal. The c values will
+        be mapped to a colormap.
+
+        """
+        # clear the background of the marks
+        #self._clear_plot_mark_background(x, y, mark, markstyle)
+        # draw the plot series over the background
+        options = self._parse_plot_options(mark)
+        s = [sqrt(si) for si in s]
+        plot_series = self._create_plot_tables_object(x, y, c, s, options)
+        self.plot_table_list.append(plot_series)
+
+    def _create_plot_tables_object(self, x, y, c, s, options=None):
+        return {'options': options,
+                'data': list(izip_longest(x, y, c, s)),
+                'smin': min(s),
+                'smax': max(s)}
 
     def set_title(self, text):
         """Set a title text."""
@@ -582,6 +617,32 @@ class SubPlot(object):
         self.limits['ymin'] = min
         self.limits['ymax'] = max
 
+    def set_mlimits(self, min=None, max=None):
+        """Set limits for the point meta (colormap).
+
+        Point meta values outside this range will be clipped.
+
+        :param min: value corresponding to the start of the colormap.
+            If None, it will be calculated.
+        :param max: value corresponding to the end of the colormap.
+            If None, it will be calculated.
+
+        """
+        self.limits['mmin'] = min
+        self.limits['mmax'] = max
+
+    def set_slimits(self, min, max):
+        """Set limits for the size of points in :meth:`scatter_table`.
+
+        If both are None, the size will be the given values.
+
+        :param min: point size for the lowest value.
+        :param max: point size for the highest value.
+
+        """
+        self.limits['smin'] = sqrt(min)
+        self.limits['smax'] = sqrt(max)
+
     def set_xticks(self, ticks):
         """Set ticks for the x-axis.
 
@@ -678,6 +739,41 @@ class SubPlot(object):
         """Scale the axes so the unit vectors have equal length."""
 
         self.axis_equal = True
+
+    def set_scalebar(self, location='lower right'):
+        """Show marker area scale
+
+        :param location: the location of the label inside the plot.  May
+            be one of 'center', 'upper right', 'lower right', 'upper
+            left', 'lower left'.
+
+        """
+        if location in RELATIVE_NODE_LOCATIONS:
+            scalebar = RELATIVE_NODE_LOCATIONS[location].copy()
+            self.scalebar = scalebar
+        else:
+            raise RuntimeError("Unknown scalebar location: %s" % location)
+
+    def set_colorbar(self, label='', horizontal=False):
+        """Show the colorbar.
+
+        Not for the histogram2d, only for the scatter_table.
+
+        :param label: axis label for the colorbar.
+        :param horizontal: boolean, if True the colobar will be horizontal.
+
+        """
+        self.colorbar = {'label': label,
+                         'horizontal': horizontal}
+
+    def set_colormap(self, name):
+        """Choose a colormap for :meth:`scatter_table`.
+
+        :param name: name of the colormap to use. (e.g. hot, cool, blackwhite,
+                     greenyellow). If None a coolwarm colormap is used.
+
+        """
+        self.colormap = name
 
     def _parse_plot_options(self, mark=None, linestyle=None,
                             use_steps=False, markstyle=None):
@@ -826,6 +922,9 @@ class Plot(SubPlot, BasePlotContainer):
             limits=self.limits,
             ticks=self.ticks,
             axis_equal=self.axis_equal,
+            scalebar=self.scalebar,
+            colorbar=self.colorbar,
+            colormap=self.colormap,
             plot=self,
             plot_template=self.template)
         return response
