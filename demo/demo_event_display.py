@@ -33,7 +33,7 @@ def main():
     plot.set_colorbar('$\Delta$t [ns]')
     plot.set_axis_equal()
     plot.set_mlimits(max=16.)
-    plot.set_slimits(min=5, max=20)
+    plot.set_slimits(min=10., max=100.)
 
     plot.set_xlabel('x [m]')
     plot.set_ylabel('y [m]')
@@ -58,7 +58,7 @@ def main():
     plot.set_ylimits_for_all(min=-15, max=10)
     plot.set_colormap('blackwhite')
     plot.set_mlimits_for_all(max=16.)
-    plot.set_slimits_for_all(min=5., max=10.)
+    plot.set_slimits_for_all(min=10., max=50.)
 
     p = plot.get_subplot_at(0, 0)
     p.scatter([0], [0], mark='triangle')

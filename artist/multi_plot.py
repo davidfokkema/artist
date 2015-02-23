@@ -11,11 +11,13 @@ Contents
 
 """
 
-import jinja2
 import tempfile
 import os
 import subprocess
 import shutil
+from math import sqrt
+
+import jinja2
 
 from plot import BasePlotContainer, SubPlot
 
@@ -304,8 +306,8 @@ class MultiPlot(BasePlotContainer):
         if min is None or max is None:
             raise Exception('Both min and max are required.')
         if row_column_list is None:
-            self.limits['smin'] = min
-            self.limits['smax'] = max
+            self.limits['smin'] = sqrt(min)
+            self.limits['smax'] = sqrt(max)
         else:
             for row, column in row_column_list:
                 self.set_slimits(row, column, min, max)

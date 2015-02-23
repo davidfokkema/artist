@@ -22,11 +22,11 @@ import os
 import tempfile
 import shutil
 from itertools import izip_longest
+from math import log10, sqrt
 
 from PIL import Image
 import jinja2
 import numpy as np
-from math import log10
 
 
 RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
@@ -420,6 +420,7 @@ class SubPlot(object):
         #self._clear_plot_mark_background(x, y, mark, markstyle)
         # draw the plot series over the background
         options = self._parse_plot_options(mark)
+        s = [sqrt(si) for si in s]
         plot_series = self._create_plot_tables_object(x, y, c, s, options)
         self.plot_table_list.append(plot_series)
 
@@ -638,8 +639,8 @@ class SubPlot(object):
         :param max: point size for the highest value.
 
         """
-        self.limits['smin'] = min
-        self.limits['smax'] = max
+        self.limits['smin'] = sqrt(min)
+        self.limits['smax'] = sqrt(max)
 
     def set_xticks(self, ticks):
         """Set ticks for the x-axis.
