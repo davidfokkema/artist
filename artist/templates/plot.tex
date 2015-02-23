@@ -65,11 +65,17 @@
             every tick/.style={},
             axis on top,
             {%- if colorbar %}
-                colorbar,
+                colorbar {% if colorbar.horizontal %}horizontal{% endif %},
                 colorbar style={
                     tick align=outside,
+                    xtick pos=left,
                     ytick pos=right,
-                    ylabel={{ colorbar.label }}},
+                    {%- if colorbar.horizontal %}
+                        xlabel={{ colorbar.label }},
+                    {%- else %}
+                        ylabel={{ colorbar.label }},
+                    {%- endif %}
+                    },
             {%- endif %}
             point meta min={ {{ limits.mmin }} },
             point meta max={ {{ limits.mmax }} },

@@ -754,10 +754,15 @@ class SubPlot(object):
         else:
             raise RuntimeError("Unknown scalebar location: %s" % location)
 
-    def set_colorbar(self, label=''):
-        """Show the colorbar."""
+    def set_colorbar(self, label='', horizontal=False):
+        """Show the colorbar.
 
-        self.colorbar = {'label': label}
+        :param label: axis label for the colorbar.
+        :param horizontal: boolean, if True the colobar will be horizontal.
+
+        """
+        self.colorbar = {'label': label,
+                         'horizontal': horizontal}
 
     def set_colormap(self, name):
         """Choose a colormap for :meth:`scatter_table`.
