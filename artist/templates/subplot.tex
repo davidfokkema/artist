@@ -163,9 +163,11 @@
         at (rel axis cs:{{ plot.scalebar.x }}, {{ plot.scalebar.y }}) {
             \begin{tikzpicture}[gray]
                 {%- if smin != 0 %}
-                    \draw[xshift=-{{ 1.5 * smin }}pt] (0,0) circle ({{ smin }}pt) node[yshift=-{{ smin }}pt,anchor=north] { \small{ {{ min_size_value }} } }; \\
+                    \draw[xshift=-{{ 1.5 * smin }}pt] (0,0) circle ({{ smin }}pt)
+                        node[yshift=-{{ smin }}pt,anchor=north] { \small{ {{ min_size_value }} } };
                 {%- endif %}
-                \draw[xshift={{ 1.5 * smax }}pt] (0,0) circle ({{ smax }}pt) node[anchor=north,yshift=-{{ smax }}pt] { \small{ {{ max_size_value }} } };
+                \draw[xshift={{ 1.5 * smax }}pt] (0,0) circle ({{ smax }}pt)
+                    node[anchor=north,yshift=-{{ smax }}pt] { \small{ {{ max_size_value }} } };
             \end{tikzpicture}
         };
 {%- endif %}
