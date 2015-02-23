@@ -142,3 +142,31 @@
             {{ plot.label.y }})
         { {{ plot.label.text }} };
 {% endif %}
+
+{%- if plot.scalebar %}
+    {%- set table = plot.plot_table_list[0] %}
+    {%- set min_size_value = (table.smin * table.smin)|round|int %}
+    {%- set max_size_value = (table.smax * table.smax)|round|int %}
+    {%- if limits.smin is not none and limits.smax is not none %}
+        {%- set scale = (limits.smax - limits.smin) / (table.smax - table.smin) %}
+        {%- set smin = ((min_size_value ** 0.5 - table.smin) * scale) + limits.smin %}
+        {%- set smax = ((max_size_value ** 0.5 - table.smin) * scale) + limits.smin %}
+    {%- else %}
+        {%- set smin = min_size_value %}
+        {%- set smax = max_size_value %}
+    {%- endif %}
+
+    \node[
+        {%- if plot.scalebar.node_location != 'center' %}
+            {{ plot.scalebar.node_location }}=0pt
+        {%- endif %}
+        ]
+        at (rel axis cs:{{ plot.scalebar.x }}, {{ plot.scalebar.y }}) {
+            \begin{tikzpicture}[gray]
+                {%- if smin != 0 %}
+                    \draw[xshift=-{{ 1.5 * smin }}pt] (0,0) circle ({{ smin }}pt) node[yshift=-{{ smin }}pt,anchor=north] { \small{ {{ min_size_value }} } }; \\
+                {%- endif %}
+                \draw[xshift={{ 1.5 * smax }}pt] (0,0) circle ({{ smax }}pt) node[anchor=north,yshift=-{{ smax }}pt] { \small{ {{ max_size_value }} } };
+            \end{tikzpicture}
+        };
+{%- endif %}

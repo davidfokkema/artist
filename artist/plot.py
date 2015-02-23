@@ -226,6 +226,7 @@ class SubPlot(object):
                       'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
         self.axis_equal = False
+        self.scalebar = None
         self.colorbar = False
         self.colormap = None
 
@@ -739,6 +740,20 @@ class SubPlot(object):
 
         self.axis_equal = True
 
+    def set_scalebar(self, location='upper right'):
+        """Show marker area scale
+
+        :param location: the location of the label inside the plot.  May
+            be one of 'center', 'upper right', 'lower right', 'upper
+            left', 'lower left'.
+
+        """
+        if location in RELATIVE_NODE_LOCATIONS:
+            scalebar = RELATIVE_NODE_LOCATIONS[location].copy()
+            self.scalebar = scalebar
+        else:
+            raise RuntimeError("Unknown scalebar location: %s" % location)
+
     def set_colorbar(self, label=''):
         """Show the colorbar."""
 
@@ -900,6 +915,7 @@ class Plot(SubPlot, BasePlotContainer):
             limits=self.limits,
             ticks=self.ticks,
             axis_equal=self.axis_equal,
+            scalebar=self.scalebar,
             colorbar=self.colorbar,
             colormap=self.colormap,
             plot=self,

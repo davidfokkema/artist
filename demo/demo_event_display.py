@@ -30,6 +30,7 @@ def main():
     plot.add_pin_at_xy(0, 0, 'Station 503', use_arrow=False, location='below')
     plot.scatter_table(x, y, dt, n)
 
+    plot.set_scalebar(location="lower right")
     plot.set_colorbar('$\Delta$t [ns]')
     plot.set_axis_equal()
     plot.set_mlimits(max=16.)
