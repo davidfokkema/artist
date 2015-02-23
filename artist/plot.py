@@ -757,6 +757,8 @@ class SubPlot(object):
     def set_colorbar(self, label='', horizontal=False):
         """Show the colorbar.
 
+        Not for the histogram2d, only for the scatter_table.
+
         :param label: axis label for the colorbar.
         :param horizontal: boolean, if True the colobar will be horizontal.
 

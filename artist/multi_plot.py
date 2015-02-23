@@ -523,6 +523,10 @@ class MultiPlot(BasePlotContainer):
     def set_colorbar(self, label='', horizontal=False):
         """Show the colorbar, it will be attached to the last plot.
 
+        Not for the histogram2d, only for the scatter_table.
+        Global mlimits should be set for this to properly reflect the
+        colormap of each subplot.
+
         :param label: axis label for the colorbar.
         :param horizontal: boolean, if True the colobar will be horizontal.
 
