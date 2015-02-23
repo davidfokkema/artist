@@ -57,8 +57,10 @@ def main():
     plot = MultiPlot(1, 2, width=r'.5\linewidth')
     plot.set_xlimits_for_all(min=-10, max=15)
     plot.set_ylimits_for_all(min=-15, max=10)
+    plot.set_mlimits_for_all(min=0., max=16.)
+    plot.set_colorbar('$\Delta$t [ns]', False)
     plot.set_colormap('blackwhite')
-    plot.set_mlimits_for_all(max=16.)
+    plot.set_scalebar_for_all(location="upper right")
 
     p = plot.get_subplot_at(0, 0)
     p.scatter([0], [0], mark='triangle')
@@ -74,8 +76,6 @@ def main():
 
     plot.show_yticklabels_for_all([(0, 0)])
     plot.show_xticklabels_for_all([(0, 0), (0, 1)])
-
-    plot.set_scalebar_for_all(location="upper right")
 
     plot.set_xlabel('x [m]')
     plot.set_ylabel('y [m]')

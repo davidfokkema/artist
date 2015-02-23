@@ -71,6 +71,19 @@
                 {% for subplot in subplots %}
                     {% set plot = subplot %}
                     \nextgroupplot[
+                        {%- if loop.last and colorbar %}
+                            colorbar {% if colorbar.horizontal %}horizontal{% endif %},
+                            colorbar style={
+                                tick align=outside,
+                                xtick pos=left,
+                                ytick pos=right,
+                                {%- if colorbar.horizontal %}
+                                    xlabel={{ colorbar.label }},
+                                {%- else %}
+                                    ylabel={{ colorbar.label }},
+                                {%- endif %}
+                                },
+                        {%- endif %}
                     {%- if subplot.empty %}
                         group/empty plot
                     {%- else %}

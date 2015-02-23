@@ -16,6 +16,7 @@ import os
 import subprocess
 import shutil
 from math import sqrt
+import warnings
 
 import jinja2
 
@@ -55,6 +56,7 @@ class MultiPlot(BasePlotContainer):
                        'mmin': None, 'mmax': None,
                        'smin': None, 'smax': None}
         self.ticks = {'x': [], 'y': []}
+        self.colorbar = None
         self.colormap = None
 
         self.subplots = []
@@ -312,25 +314,6 @@ class MultiPlot(BasePlotContainer):
             for row, column in row_column_list:
                 self.set_slimits(row, column, min, max)
 
-    def set_scalebar_for_all(self, row_column_list=None,
-                             location='lower right'):
-        """Show marker area scale for subplots.
-
-        :param row_column_list: a list containing (row, column) tuples to
-            specify the subplots, or None to indicate *all* subplots.
-        :param location: the location of the label inside the plot.  May
-            be one of 'center', 'upper right', 'lower right', 'upper
-            left', 'lower left'.
-
-        """
-        if row_column_list is None:
-            for subplot in self.subplots:
-                subplot.set_scalebar(location)
-        else:
-            for row, column in row_column_list:
-                subplot = self.get_subplot_at(row, column)
-                subplot.set_scalebar(location)
-
     def set_xticks(self, row, column, ticks):
         """Manually specify the x-axis tick values.
 
@@ -476,6 +459,7 @@ class MultiPlot(BasePlotContainer):
                                    width=self.width, height=self.height,
                                    xlabel=self.xlabel, ylabel=self.ylabel,
                                    limits=self.limits, ticks=self.ticks,
+                                   colorbar=self.colorbar,
                                    colormap=self.colormap,
                                    subplots=self.subplots,
                                    plot_template=self.template)
@@ -516,6 +500,38 @@ class MultiPlot(BasePlotContainer):
         """
         subplot = self.get_subplot_at(row, column)
         subplot.set_ylabel(text)
+
+    def set_scalebar_for_all(self, row_column_list=None,
+                             location='lower right'):
+        """Show marker area scale for subplots.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :param location: the location of the label inside the plot.  May
+            be one of 'center', 'upper right', 'lower right', 'upper
+            left', 'lower left'.
+
+        """
+        if row_column_list is None:
+            for subplot in self.subplots:
+                subplot.set_scalebar(location)
+        else:
+            for row, column in row_column_list:
+                subplot = self.get_subplot_at(row, column)
+                subplot.set_scalebar(location)
+
+    def set_colorbar(self, label='', horizontal=False):
+        """Show the colorbar, it will be attached to the last plot.
+
+        :param label: axis label for the colorbar.
+        :param horizontal: boolean, if True the colobar will be horizontal.
+
+        """
+        if self.limits['mmin'] is None or self.limits['mmax'] is None:
+            warnings.warn('Set (only) global point meta limits to ensure the '
+                          'colorbar is correct for all subplots.')
+        self.colorbar = {'label': label,
+                         'horizontal': horizontal}
 
     def set_colormap(self, name):
         """Choose a colormap for all subplots.
