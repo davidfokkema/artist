@@ -151,8 +151,8 @@
         {%- set smin = ((min_size_value ** 0.5 - table.smin) * scale) + limits.smin %}
         {%- set smax = ((max_size_value ** 0.5 - table.smin) * scale) + limits.smin %}
     {%- else %}
-        {%- set smin = min_size_value %}
-        {%- set smax = max_size_value %}
+        {%- set smin = min_size_value ** 0.5 %}
+        {%- set smax = max_size_value ** 0.5 %}
     {%- endif %}
 
     \node[
