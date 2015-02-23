@@ -54,15 +54,15 @@
                      { {{ bitmap.name }}};
 {% endfor %}
 
-{% for region in plot.shaded_regions_list %}
+{%- for region in plot.shaded_regions_list %}
     \addplot[draw=none, fill={{ region.color }}] coordinates {
         {%- for x, y in region.data %}
             ({{ x }}, {{ y }})
         {%- endfor %}
             } -- cycle;
-{% endfor %}
+{% endfor -%}
 
-{% for series in plot.plot_series_list %}
+{%- for series in plot.plot_series_list %}
     {% if series.show_xerr %}
         % Draw x-error bars
         {%- for x, y, xerr, yerr in series.data %}
@@ -83,9 +83,9 @@
             ({{ x }}, {{ y }})
         {%- endfor %}
     };
-{% endfor %}
+{% endfor -%}
 
-{% for table in plot.plot_table_list %}
+{%- for table in plot.plot_table_list %}
     {%- if limits.smin is not none and limits.smax is not none %}
         {%- set scale = (limits.smax - limits.smin) / (table.smax - table.smin) %}
     {%- else %}
@@ -107,21 +107,21 @@
             {%- endif %}
         {%- endfor %}
         };
-{% endfor %}
+{% endfor -%}
 
-{% for line in plot.horizontal_lines %}
+{%- for line in plot.horizontal_lines %}
     \draw[{{ line.options }}]
         ({rel axis cs:0, 0} |- {axis cs:0, {{ line.value }} }) --
         ({rel axis cs:1, 1} |- {axis cs:0, {{ line.value }} });
-{% endfor %}
+{% endfor -%}
 
-{% for line in plot.vertical_lines %}
+{%- for line in plot.vertical_lines %}
     \draw[{{ line.options }}]
         ({rel axis cs:0, 0} -| {axis cs:{{ line.value }}, 0 }) --
         ({rel axis cs:1, 1} -| {axis cs:{{ line.value }}, 0 });
-{% endfor %}
+{% endfor -%}
 
-{% for pin in plot.pin_list %}
+{%- for pin in plot.pin_list %}
     {%- if pin.use_arrow %}
         {%- set pin_option = 'pin' %}
     {%- else %}
@@ -130,18 +130,17 @@
     \node[coordinate,{{ pin.options }},
           {{ pin_option }}={ {{ pin.location }}:{ {{ pin.text }} }}]
         at (axis cs:{{ pin.x }}, {{ pin.y }}) {};
-{% endfor %}
+{% endfor -%}
 
-{% if plot.label %}
+{%- if plot.label %}
     \node[{{ plot.label.style }},
     {%- if plot.label.node_location != 'center' %}
           {{ plot.label.node_location }}=2pt
     {%- endif %}
         ]
-        at (rel axis cs:{{ plot.label.x }},
-            {{ plot.label.y }})
+        at (rel axis cs:{{ plot.label.x }},{{ plot.label.y }})
         { {{ plot.label.text }} };
-{% endif %}
+{%- endif %}
 
 {%- if plot.scalebar %}
     {%- set table = plot.plot_table_list[0] %}
