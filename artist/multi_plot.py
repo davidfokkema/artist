@@ -80,7 +80,7 @@ class MultiPlot(BasePlotContainer):
     def set_empty(self, row, column):
         """Keep one of the subplots completely empty.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
 
         """
         subplot = self.get_subplot_at(row, column)
@@ -100,7 +100,7 @@ class MultiPlot(BasePlotContainer):
     def set_title(self, row, column, text):
         """Set a title text.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param text: title text.
 
         """
@@ -111,7 +111,7 @@ class MultiPlot(BasePlotContainer):
                   style=None):
         """Set a label for the subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param text: the label text.
         :param location: the location of the label inside the plot.  May
             be one of 'center', 'upper right', 'lower right', 'upper
@@ -125,7 +125,7 @@ class MultiPlot(BasePlotContainer):
     def show_xticklabels(self, row, column):
         """Show the x-axis tick labels for a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
 
         """
         subplot = self.get_subplot_at(row, column)
@@ -149,7 +149,7 @@ class MultiPlot(BasePlotContainer):
     def show_yticklabels(self, row, column):
         """Show the y-axis tick labels for a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
 
         """
         subplot = self.get_subplot_at(row, column)
@@ -177,7 +177,7 @@ class MultiPlot(BasePlotContainer):
         row.  This can be used to e.g. alternatively draw the tick labels
         on the bottom or the top of the subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param position: 'top' or 'bottom' to specify the position of the
             tick labels.
 
@@ -192,7 +192,7 @@ class MultiPlot(BasePlotContainer):
         column.  This can be used to e.g. alternatively draw the tick
         labels on the left or the right of the subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param position: 'left' or 'right' to specify the position of the
             tick labels.
 
@@ -203,7 +203,7 @@ class MultiPlot(BasePlotContainer):
     def set_xlimits(self, row, column, min=None, max=None):
         """Set x-axis limits of a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param min: minimal axis value
         :param max: maximum axis value
 
@@ -231,7 +231,7 @@ class MultiPlot(BasePlotContainer):
     def set_ylimits(self, row, column, min=None, max=None):
         """Set y-axis limits of a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param min: minimal axis value
         :param max: maximum axis value
 
@@ -317,7 +317,7 @@ class MultiPlot(BasePlotContainer):
     def set_xticks(self, row, column, ticks):
         """Manually specify the x-axis tick values.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param ticks: list of tick values.
 
         """
@@ -342,7 +342,7 @@ class MultiPlot(BasePlotContainer):
     def set_logxticks(self, row, column, logticks):
         """Manually specify the x-axis log tick values.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param logticks: logarithm of the locations for the ticks along the
             axis.
 
@@ -375,7 +375,7 @@ class MultiPlot(BasePlotContainer):
     def set_yticks(self, row, column, ticks):
         """Manually specify the y-axis tick values.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param ticks: list of tick values.
 
         """
@@ -400,7 +400,7 @@ class MultiPlot(BasePlotContainer):
     def set_logyticks(self, row, column, logticks):
         """Manually specify the y-axis log tick values.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param logticks: logarithm of the locations for the ticks along the
             axis.
 
@@ -433,7 +433,7 @@ class MultiPlot(BasePlotContainer):
     def get_subplot_at(self, row, column):
         """Return the subplot at row, column position.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
 
         """
         idx = row * self.columns + column
@@ -484,7 +484,7 @@ class MultiPlot(BasePlotContainer):
     def set_subplot_xlabel(self, row, column, text):
         """Set a label for the x-axis of a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param text: text of the label.
 
         """
@@ -494,7 +494,7 @@ class MultiPlot(BasePlotContainer):
     def set_subplot_ylabel(self, row, column, text):
         """Set a label for the y-axis of a subplot.
 
-        :param row, column: specify the subplot.
+        :param row,column: specify the subplot.
         :param text: text of the label.
 
         """
