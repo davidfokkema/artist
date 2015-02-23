@@ -265,7 +265,7 @@ class MultiPlot(BasePlotContainer):
         subplot.set_mlimits(min, max)
 
     def set_mlimits_for_all(self, row_column_list=None, min=None, max=None):
-        """Set y-axis limits of specified subplots.
+        """Set limits for point meta (colormap) for specified subplots.
 
         :param row_column_list: a list containing (row, column) tuples to
             specify the subplots, or None to indicate *all* subplots.
@@ -282,23 +282,23 @@ class MultiPlot(BasePlotContainer):
                 self.set_mlimits(row, column, min, max)
 
     def set_slimits(self, row, column, min, max):
-        """Set limits for the point meta (colormap).
+        """Set limits for the point sizes.
 
-        :param min: value for start of the colormap.
-        :param max: value for end of the colormap.
+        :param min: point size for the lowest value.
+        :param max: point size for the highest value.
 
         """
         subplot = self.get_subplot_at(row, column)
         subplot.set_slimits(min, max)
 
     def set_slimits_for_all(self, row_column_list=None, min=None, max=None):
-        """Set y-axis limits of specified subplots.
+        """Set point size limits of specified subplots.
 
         :param row_column_list: a list containing (row, column) tuples to
             specify the subplots, or None to indicate *all* subplots.
         :type row_column_list: list or None
-        :param min: value for start of the colormap.
-        :param max: value for end of the colormap.
+        :param min: point size for the lowest value.
+        :param max: point size for the highest value.
 
         """
         if min is None or max is None:

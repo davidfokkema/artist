@@ -91,9 +91,6 @@
     {%- else %}
         {%- set scale = 1 %}
     {%- endif %}
-    % {{ scale }}
-    % {{ limits }}
-    % {{ table }}
     % Draw table plot
     \addplot[scatter, scatter src=\thisrow{c},
              visualization depends on={\thisrow{s} \as \s},
