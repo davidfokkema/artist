@@ -101,9 +101,9 @@
         {%- for x, y, c, s in table.data %}
             {%- if limits.smin is not none and limits.smax is not none %}
                 {%- set s_scaled = ((s - table.smin) * scale) + limits.smin %}
-                {{ x }} {{ y }} {{ c }} {{ s_scaled }}
+                {{ x }} {{ y }} {{ c }} {{ s_scaled }}pt
             {%- else %}
-                {{ x }} {{ y }} {{ c }} {{ s }}
+                {{ x }} {{ y }} {{ c }} {{ s }}pt
             {%- endif %}
         {%- endfor %}
         };
