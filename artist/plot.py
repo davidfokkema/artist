@@ -740,7 +740,7 @@ class SubPlot(object):
 
         self.axis_equal = True
 
-    def set_scalebar(self, location='upper right'):
+    def set_scalebar(self, location='lower right'):
         """Show marker area scale
 
         :param location: the location of the label inside the plot.  May

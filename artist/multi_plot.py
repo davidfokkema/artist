@@ -312,6 +312,25 @@ class MultiPlot(BasePlotContainer):
             for row, column in row_column_list:
                 self.set_slimits(row, column, min, max)
 
+    def set_scalebar_for_all(self, row_column_list=None,
+                             location='lower right'):
+        """Show marker area scale for subplots.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :param location: the location of the label inside the plot.  May
+            be one of 'center', 'upper right', 'lower right', 'upper
+            left', 'lower left'.
+
+        """
+        if row_column_list is None:
+            for subplot in self.subplots:
+                subplot.set_scalebar(location)
+        else:
+            for row, column in row_column_list:
+                subplot = self.get_subplot_at(row, column)
+                subplot.set_scalebar(location)
+
     def set_xticks(self, row, column, ticks):
         """Manually specify the x-axis tick values.
 
