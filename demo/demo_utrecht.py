@@ -7,12 +7,13 @@ from artist import Plot
 def main():
     stations = np.genfromtxt('data/cluster-utrecht-stations.txt',
                              names=['x', 'y'])
+    image = Image.open('data/cluster-utrecht-background.png')
 
     graph = Plot(width=r'.7\linewidth', height=r'.5\linewidth')
 
-    image = Image.open('data/cluster-utrecht-background.png')
     graph.scatter(stations['x'], stations['y'])
     graph.draw_image(image, 0, 0, image.size[0], image.size[1])
+
     graph.set_axis_equal()
 
     nw = ['%.4f' % i for i in (52.10650519075632, 5.053710938)]
