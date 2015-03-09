@@ -104,7 +104,7 @@ class BasePlotContainer(object):
 
         """
         self.save_assets(dest_path)
-        self.filename = 'externalized-' + os.path.basename(dest_path)
+        self.external_filename = 'externalized-' + os.path.basename(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
@@ -116,7 +116,7 @@ class BasePlotContainer(object):
 
         """
         self.save_assets(dest_path)
-        self.filename = 'externalized-' + os.path.basename(dest_path)
+        self.external_filename = 'externalized-' + os.path.basename(dest_path)
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render_as_document())
@@ -894,7 +894,7 @@ class Plot(SubPlot, BasePlotContainer):
         self.width = width
         self.height = height
         self.xmode, self.ymode = self._get_axis_modes(axis)
-        self.filename = None
+        self.external_filename = None
 
         super(Plot, self).__init__()
 
@@ -928,7 +928,7 @@ class Plot(SubPlot, BasePlotContainer):
             scalebar=self.scalebar,
             colorbar=self.colorbar,
             colormap=self.colormap,
-            filename=self.filename,
+            external_filename=self.external_filename,
             plot=self,
             plot_template=self.template)
         return response

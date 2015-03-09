@@ -461,7 +461,7 @@ class MultiPlot(BasePlotContainer):
                                    limits=self.limits, ticks=self.ticks,
                                    colorbar=self.colorbar,
                                    colormap=self.colormap,
-                                   filename=self.filename,
+                                   external_filename=self.external_filename,
                                    subplots=self.subplots,
                                    plot_template=self.template)
         return response

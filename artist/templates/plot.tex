@@ -8,7 +8,7 @@
 % \usepackage{relsize}
 %
 {%- if filename %}
-    \tikzsetnextfilename{ {{ filename }} }
+    \tikzsetnextfilename{ {{ external_filename }} }
 {%- endif %}
 \pgfkeysifdefined{/artist/width}
     {\pgfkeysgetvalue{/artist/width}{\defaultwidth}}
