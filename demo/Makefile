@@ -13,6 +13,7 @@ distclean: clean
 	rm -f histogram-fit.tex
 	rm -f spectrum.tex
 	rm -f sciencepark.tex
+	rm -f utrecht.tex
 	rm -f multiplot.tex
 	rm -f polar_histogram.tex
 	rm -f discrete_directions.tex
@@ -24,9 +25,9 @@ distclean: clean
 demo_plots.pdf: demo_plots.tex \
 		stopping-power-mpl.pdf stopping-power.tex \
 		shower-front.tex eas-lateral.tex histogram-fit.tex \
-		spectrum.tex sciencepark.tex multiplot.tex polar_histogram.tex \
-		discrete_directions.tex histogram2d.tex multi_histogram2d.tex \
-		event_display.tex multi_event_display.tex
+		spectrum.tex sciencepark.tex utrecht.tex multiplot.tex \
+		polar_histogram.tex discrete_directions.tex histogram2d.tex \
+		multi_histogram2d.tex event_display.tex multi_event_display.tex
 	latexmk -pdf demo_plots.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
@@ -45,6 +46,9 @@ spectrum.tex: demo_spectrum.py
 	python $?
 
 sciencepark.tex: demo_sciencepark.py
+	python $?
+
+utrecht.tex: demo_utrecht.py
 	python $?
 
 multiplot.tex: demo_multiplot.py

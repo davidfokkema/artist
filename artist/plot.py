@@ -551,6 +551,29 @@ class SubPlot(object):
         y = lower + upper
         self.shaded_regions_list.append({'data': zip(x, y), 'color': color})
 
+    def draw_image(self, image, xmin, ymin, xmax, ymax):
+        """Draw an image.
+
+        Do not forget to use :meth:`set_axis_equal` to preserve the
+        aspect ratio of the image.
+
+        :param image: Pillow Image.
+        :param xmin,ymin,xmax,ymax: the x, y image bounds.
+
+        """
+        self.bitmap_list.append({'image': image,
+                                 'xmin': xmin,
+                                 'xmax': xmax,
+                                 'ymin': ymin,
+                                 'ymax': ymax})
+        # Set limits unless lower/higher limits are already set.
+        xmin = min(x for x in (xmin, self.limits['xmin'])
+                   if x is not None)
+        ymin = min(y for y in (ymin, self.limits['ymin'])
+                   if y is not None)
+        self.set_xlimits(xmin, max(xmax, self.limits['xmax']))
+        self.set_ylimits(ymin, max(ymax, self.limits['ymax']))
+
     def draw_horizontal_line(self, yvalue, linestyle=None):
         """Draw a horizontal line.
 
