@@ -11,9 +11,9 @@ will tightly integrate with your main text.  Artist provides an
 easy-to-use and clean Python interface and can compile your plot
 on-the-fly as a stand-alone PDF file.
 
-For instance the `cosmic-ray flux spectrum <demo/demo_spectrum.py>`_:
+For instance the `cosmic-ray flux spectrum <https://github.com/davidfokkema/artist/blob/master/demo/demo_spectrum.py>`_:
 
-.. image:: doc/images/tutorial/spectrum.png
+.. image:: https://raw.githubusercontent.com/davidfokkema/artist/master/doc/images/tutorial/spectrum.png
    :width: 293px
 
 
