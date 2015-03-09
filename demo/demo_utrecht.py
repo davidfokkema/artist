@@ -9,7 +9,7 @@ def main():
                              names=['x', 'y'])
     image = Image.open('data/cluster-utrecht-background.png')
 
-    graph = Plot(width=r'.7\linewidth', height=r'.5\linewidth')
+    graph = Plot(width=r'.75\linewidth', height=r'.5\linewidth')
 
     graph.scatter(stations['x'], stations['y'])
     graph.draw_image(image, 0, 0, image.size[0], image.size[1])

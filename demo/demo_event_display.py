@@ -54,7 +54,7 @@ def main():
     t508 = [15., 22.5, 22.5, 30.]
     dt508 = [ti - min(t508) for ti in t508]
 
-    plot = MultiPlot(1, 2, width=r'.5\linewidth')
+    plot = MultiPlot(1, 2, width=r'.33\linewidth')
     plot.set_xlimits_for_all(min=-10, max=15)
     plot.set_ylimits_for_all(min=-15, max=10)
     plot.set_mlimits_for_all(min=0., max=16.)

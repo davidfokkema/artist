@@ -22,7 +22,7 @@ def main():
 
     plot.save('histogram2d')
 
-    plot = MultiPlot(2, 2, width=r'.5\linewidth')
+    plot = MultiPlot(2, 2, width=r'.4\linewidth')
     subplot_idxs = [(1, 0), (1, 1), (0, 0), (0, 1)]
     for idx, r, t, b in zip(subplot_idxs, ranges, types, bitmaps):
         p = plot.get_subplot_at(*idx)
