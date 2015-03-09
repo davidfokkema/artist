@@ -8,7 +8,7 @@
 % \sisetup{text-sf=\sansmath}
 % \usepackage{relsize}
 %
-{%- if filename %}
+{%- if external_filename %}
     \tikzsetnextfilename{ {{ external_filename }} }
 {%- endif %}
 \pgfkeysifdefined{/artist/width}
