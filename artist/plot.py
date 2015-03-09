@@ -552,6 +552,9 @@ class SubPlot(object):
     def draw_image(self, image, xmin, ymin, xmax, ymax):
         """Draw an image.
 
+        Do not forget to use :meth:`set_axis_equal` to preserve the
+        aspect ratio of the image.
+
         :param image: Pillow Image.
         :param xmin,ymin,xmax,ymax: the x, y image bounds.
 
