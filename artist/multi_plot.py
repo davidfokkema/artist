@@ -58,6 +58,7 @@ class MultiPlot(BasePlotContainer):
         self.ticks = {'x': [], 'y': []}
         self.colorbar = None
         self.colormap = None
+        self.external_filename = None
 
         self.subplots = []
         for i in range(rows):
