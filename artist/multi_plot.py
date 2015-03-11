@@ -20,7 +20,7 @@ import warnings
 
 import jinja2
 
-from plot import BasePlotContainer, SubPlot
+from .plot import BasePlotContainer, SubPlot
 
 
 class MultiPlot(BasePlotContainer):
