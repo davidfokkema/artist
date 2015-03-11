@@ -57,9 +57,9 @@ The following modules are included:
     based on the name of the function creating the plot.
 
 """
-from plot import Plot, PolarPlot
-from multi_plot import MultiPlot
-from recursive_smooth import smooth
+from .plot import Plot, PolarPlot
+from .multi_plot import MultiPlot
+from .recursive_smooth import smooth
 
 # Backwards compatibility
-from plot import Plot as GraphArtist
+from .plot import Plot as GraphArtist
