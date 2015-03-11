@@ -23,7 +23,7 @@ def main():
     # fit normal distribution pdf to data
     f = lambda x, N, mu, sigma: N * scipy.stats.norm.pdf(x, mu, sigma)
     popt, pcov = scipy.optimize.curve_fit(f, x, y)
-    print "Parameters from fit (N, mu, sigma):", popt
+    print("Parameters from fit (N, mu, sigma):", popt)
 
     # make graph
     graph = Plot()
