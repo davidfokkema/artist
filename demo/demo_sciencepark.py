@@ -21,7 +21,7 @@ def main():
     locations[5] = 'above right'
     locations = iter(locations)
     for num, x, y in stations:
-        graph.add_pin_at_xy(x, y, int(num), location=locations.next(),
+        graph.add_pin_at_xy(x, y, int(num), location=next(locations),
                             use_arrow=False, style='gray,label distance=1ex')
 
     x = [stations['x'][u] for u in [0, 2, 5]]
