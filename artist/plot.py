@@ -383,8 +383,14 @@ class SubPlot(object):
                    if x is not None)
         ymin = min(y for y in (min(y_edges), self.limits['ymin'])
                    if y is not None)
-        self.set_xlimits(xmin, max(max(x_edges), self.limits['xmax']))
-        self.set_ylimits(ymin, max(max(y_edges), self.limits['ymax']))
+        xmax = max(x_edges)
+        ymax = max(y_edges)
+        if self.limits['xmax'] is not None:
+            xmax = max(xmax, self.limits['xmax'])
+        if self.limits['ymax'] is not None:
+            ymax = max(ymax, self.limits['ymax'])
+        self.set_xlimits(xmin, xmax)
+        self.set_ylimits(ymin, ymax)
 
     def scatter(self, x, y, mark='o', markstyle=None):
         """Plot a series of points.
@@ -577,8 +583,12 @@ class SubPlot(object):
                    if x is not None)
         ymin = min(y for y in (ymin, self.limits['ymin'])
                    if y is not None)
-        self.set_xlimits(xmin, max(xmax, self.limits['xmax']))
-        self.set_ylimits(ymin, max(ymax, self.limits['ymax']))
+        if self.limits['xmax'] is not None:
+            xmax = max(xmax, self.limits['xmax'])
+        if self.limits['ymax'] is not None:
+            ymax = max(ymax, self.limits['ymax'])
+        self.set_xlimits(xmin, xmax)
+        self.set_ylimits(ymin, ymax)
 
     def draw_horizontal_line(self, yvalue, linestyle=None):
         """Draw a horizontal line.
