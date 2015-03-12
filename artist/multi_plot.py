@@ -11,10 +11,6 @@ Contents
 
 """
 
-import tempfile
-import os
-import subprocess
-import shutil
 from math import sqrt
 import warnings
 

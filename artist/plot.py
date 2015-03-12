@@ -430,7 +430,7 @@ class SubPlot(object):
 
         """
         # clear the background of the marks
-        #self._clear_plot_mark_background(x, y, mark, markstyle)
+        # self._clear_plot_mark_background(x, y, mark, markstyle)
         # draw the plot series over the background
         options = self._parse_plot_options(mark)
         s = [sqrt(si) for si in s]

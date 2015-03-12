@@ -63,3 +63,6 @@ from .recursive_smooth import smooth
 
 # Backwards compatibility
 from .plot import Plot as GraphArtist
+
+
+__all__ = ['Plot', 'PolarPlot', 'MultiPlot', 'smooth', 'GraphArtist']
