@@ -383,12 +383,10 @@ class SubPlot(object):
                    if x is not None)
         ymin = min(y for y in (min(y_edges), self.limits['ymin'])
                    if y is not None)
-        xmax = max(x_edges)
-        ymax = max(y_edges)
-        if self.limits['xmax'] is not None:
-            xmax = max(xmax, self.limits['xmax'])
-        if self.limits['ymax'] is not None:
-            ymax = max(ymax, self.limits['ymax'])
+        xmax = max(x for x in (max(x_edges), self.limits['xmax'])
+                   if x is not None)
+        ymax = max(y for y in (max(y_edges), self.limits['ymax'])
+                   if y is not None)
         self.set_xlimits(xmin, xmax)
         self.set_ylimits(ymin, ymax)
 
@@ -583,10 +581,10 @@ class SubPlot(object):
                    if x is not None)
         ymin = min(y for y in (ymin, self.limits['ymin'])
                    if y is not None)
-        if self.limits['xmax'] is not None:
-            xmax = max(xmax, self.limits['xmax'])
-        if self.limits['ymax'] is not None:
-            ymax = max(ymax, self.limits['ymax'])
+        xmax = max(x for x in (xmax, self.limits['xmax'])
+                   if x is not None)
+        ymax = max(y for y in (ymax, self.limits['ymax'])
+                   if y is not None)
         self.set_xlimits(xmin, xmax)
         self.set_ylimits(ymin, ymax)
 
