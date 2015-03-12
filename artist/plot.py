@@ -489,7 +489,7 @@ class SubPlot(object):
                 "First plot a data series, before using this function")
 
         data = series['data']
-        series_x, series_y = zip(*data)[:2]
+        series_x, series_y = list(zip(*data))[:2]
 
         if x is not None:
             y = np.interp(x, series_x, series_y)
