@@ -21,7 +21,13 @@ import subprocess
 import os
 import tempfile
 import shutil
-from itertools import izip_longest
+try:
+    # Python 2
+    from itertools import izip_longest
+except ImportError:
+    # Python 3
+    from itertools import zip_longest as izip_longest
+
 from math import log10, sqrt
 
 from PIL import Image
@@ -377,8 +383,12 @@ class SubPlot(object):
                    if x is not None)
         ymin = min(y for y in (min(y_edges), self.limits['ymin'])
                    if y is not None)
-        self.set_xlimits(xmin, max(max(x_edges), self.limits['xmax']))
-        self.set_ylimits(ymin, max(max(y_edges), self.limits['ymax']))
+        xmax = max(x for x in (max(x_edges), self.limits['xmax'])
+                   if x is not None)
+        ymax = max(y for y in (max(y_edges), self.limits['ymax'])
+                   if y is not None)
+        self.set_xlimits(xmin, xmax)
+        self.set_ylimits(ymin, ymax)
 
     def scatter(self, x, y, mark='o', markstyle=None):
         """Plot a series of points.
@@ -483,7 +493,7 @@ class SubPlot(object):
                 "First plot a data series, before using this function")
 
         data = series['data']
-        series_x, series_y = zip(*data)[:2]
+        series_x, series_y = list(zip(*data))[:2]
 
         if x is not None:
             y = np.interp(x, series_x, series_y)
@@ -571,8 +581,12 @@ class SubPlot(object):
                    if x is not None)
         ymin = min(y for y in (ymin, self.limits['ymin'])
                    if y is not None)
-        self.set_xlimits(xmin, max(xmax, self.limits['xmax']))
-        self.set_ylimits(ymin, max(ymax, self.limits['ymax']))
+        xmax = max(x for x in (xmax, self.limits['xmax'])
+                   if x is not None)
+        ymax = max(y for y in (ymax, self.limits['ymax'])
+                   if y is not None)
+        self.set_xlimits(xmin, xmax)
+        self.set_ylimits(ymin, ymax)
 
     def draw_horizontal_line(self, yvalue, linestyle=None):
         """Draw a horizontal line.
