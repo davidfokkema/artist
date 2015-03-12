@@ -21,7 +21,13 @@ import subprocess
 import os
 import tempfile
 import shutil
-from itertools import izip_longest
+try:
+    # Python 2
+    from itertools import izip_longest
+except ImportError:
+    # Python 3
+    from itertools import zip_longest as izip_longest
+
 from math import log10, sqrt
 
 from PIL import Image
