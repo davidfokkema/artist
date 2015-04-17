@@ -6,8 +6,7 @@ clean:
 	latexmk -c
 
 distclean: clean
-	rm -f demo_plots.pdf
-	rm -f stopping-power-mpl.pdf stopping-power.tex
+	rm -f stopping-power.tex
 	rm -f shower-front.tex
 	rm -f eas-lateral.tex
 	rm -f histogram-fit.tex
@@ -21,6 +20,8 @@ distclean: clean
 	rm -f multi_histogram2d.tex
 	rm -f event_display.tex
 	rm -f multi_event_display.tex
+	rm -f *.pdf
+	rm -f *.png
 
 demo_plots.pdf: demo_plots.tex \
 		stopping-power-mpl.pdf stopping-power.tex \
