@@ -561,16 +561,29 @@ class SubPlot(object):
         y = lower + upper
         self.shaded_regions_list.append({'data': zip(x, y), 'color': color})
 
-    def draw_image(self, image, xmin, ymin, xmax, ymax):
+    def draw_image(self, image, xmin=0, ymin=0, xmax=None, ymax=None):
         """Draw an image.
 
         Do not forget to use :meth:`set_axis_equal` to preserve the
-        aspect ratio of the image.
+        aspect ratio of the image, or change the aspect ratio of the
+        plot to the aspect ratio of the image.
 
-        :param image: Pillow Image.
+        :param image: Pillow Image object.
         :param xmin,ymin,xmax,ymax: the x, y image bounds.
 
+        Example::
+
+            >>> from PIL import Image
+            >>> image = Image.open('background.png')
+            >>> height_ratio = (.67 * image.size[1]) / image.size[0]
+            >>> plot = artist.Plot(height=r'%.2f\linewidth' % height_ratio)
+            >>> plot.draw_image(image)
+
         """
+        if xmax is None:
+            xmax = xmin + image.size[0]
+        if ymax is None:
+            ymax = ymin + image.size[1]
         self.bitmap_list.append({'image': image,
                                  'xmin': xmin,
                                  'xmax': xmax,
