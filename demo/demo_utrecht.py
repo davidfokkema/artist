@@ -12,7 +12,7 @@ def main():
     graph = Plot(width=r'.75\linewidth', height=r'.5\linewidth')
 
     graph.scatter(stations['x'], stations['y'])
-    graph.draw_image(image, 0, 0, image.size[0], image.size[1])
+    graph.draw_image(image)
 
     graph.set_axis_equal()
 
