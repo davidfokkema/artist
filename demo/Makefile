@@ -34,6 +34,12 @@ demo_plots.pdf: demo_plots.tex \
 		relative_pin.tex relative_pin_log.tex
 	latexmk -pdf demo_plots.tex
 
+test: shower-front.tex eas-lateral.tex \
+		spectrum.tex sciencepark.tex utrecht.tex multiplot.tex \
+		polar_histogram.tex discrete_directions.tex histogram2d.tex \
+		multi_histogram2d.tex event_display.tex multi_event_display.tex \
+		relative_pin.tex relative_pin_log.tex
+
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
 	python $?
 
