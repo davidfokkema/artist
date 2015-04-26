@@ -21,7 +21,7 @@ import subprocess
 import os
 import tempfile
 import shutil
-from math import log10, sqrt, modf
+from math import sqrt, modf
 try:
     # Python 2
     from itertools import izip_longest
@@ -893,8 +893,8 @@ class SubPlot(object):
                             range(len(rel_length)))
             frac, idx = modf(idx)
             idx = int(idx)
-            xs =  x[idx] + (x[idx + 1] - x[idx]) * frac
-            ys =  y[idx] + (y[idx + 1] - y[idx]) * frac
+            xs = x[idx] + (x[idx + 1] - x[idx]) * frac
+            ys = y[idx] + (y[idx + 1] - y[idx]) * frac
         return xs, ys
 
     def _calc_relative_path_lengths(self, x, y):
