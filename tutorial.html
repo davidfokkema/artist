@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial &mdash; Artist 0.12.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.12.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Artist 0.12.0 documentation" href="index.html" />
+    <link rel="next" title="artist" href="modules.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="artist"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Artist 0.12.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>The artist package can be used to create beautiful plots. The output
+will be a TeX file that can be included in a larger document or compiled
+on its own. This page describes the steps needed to create a plot, the
+options that are available, and provides some examples.</p>
+<div class="section" id="basic-plot">
+<h2>Basic plot<a class="headerlink" href="#basic-plot" title="Permalink to this headline">¶</a></h2>
+<p>The bare minimum to create a simple plot are:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">artist</span> <span class="kn">import</span> <span class="n">Plot</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">()</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;simple_plot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This imports the <tt class="xref py py-class docutils literal"><span class="pre">artist.Plot</span></tt> class from artist, then initiates
+a single plot. In this plot multiple lines and marks can be drawn. In
+this case one line is draw from (0, 0) to (1, 1). Finally the
+<tt class="docutils literal"><span class="pre">simple_plot.tex</span></tt> file is created. To directly get viewable output use
+<tt class="docutils literal"><span class="pre">save_as_pdf</span></tt> instead of <tt class="docutils literal"><span class="pre">save</span></tt> to output a <tt class="docutils literal"><span class="pre">.pdf</span></tt> file instead of
+a <tt class="docutils literal"><span class="pre">.tex</span></tt>. The result:</p>
+<a class="reference internal image-reference" href="_images/simple_plot.png"><img alt="_images/simple_plot.png" src="_images/simple_plot.png" style="width: 288px;" /></a>
+</div>
+<div class="section" id="adding-labels">
+<h2>Adding labels<a class="headerlink" href="#adding-labels" title="Permalink to this headline">¶</a></h2>
+<p>Once you have initiated the Plot you can add a title and axis labels.
+Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">artist</span> <span class="kn">import</span> <span class="n">Plot</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">()</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;My beautiful plot&#39;</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">&#39;Quantity [units]&#39;</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;Distance [meters]&#39;</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">add_pin_at_xy</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;Pin text&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;below left&#39;</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s">&#39;Some extra label&#39;</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;labels_plot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This examples adds a title to the plot, axis labels, text connected to a
+data point, and finally a label to the plot. This looks like this:</p>
+<a class="reference internal image-reference" href="_images/labels_plot.png"><img alt="_images/labels_plot.png" src="_images/labels_plot.png" style="width: 308px;" /></a>
+</div>
+<div class="section" id="polar-plot">
+<h2>Polar plot<a class="headerlink" href="#polar-plot" title="Permalink to this headline">¶</a></h2>
+<p>Besides cartesian axes there is also support for polar axes. These are
+initiated by the <tt class="xref py py-class docutils literal"><span class="pre">artist.PolarPlot</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">artist</span> <span class="kn">import</span> <span class="n">PolarPlot</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">PolarPlot</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">91</span><span class="p">))</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;polar_plot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This imports the <tt class="xref py py-class docutils literal"><span class="pre">artist.PolarPlot</span></tt> class from artist. Then a
+histogram is created with bins ranging from 0 to 360. The result:</p>
+<a class="reference internal image-reference" href="_images/polar_plot.png"><img alt="_images/polar_plot.png" src="_images/polar_plot.png" style="width: 301px;" /></a>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#basic-plot">Basic plot</a></li>
+<li><a class="reference internal" href="#adding-labels">Adding labels</a></li>
+<li><a class="reference internal" href="#polar-plot">Polar plot</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="next chapter">artist</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="artist"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">Artist 0.12.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, David Fokkema.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
