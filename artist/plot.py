@@ -363,6 +363,9 @@ class SubPlot(object):
         if type == 'area' and bitmap:
             raise RuntimeError("Histogram type %s not supported for bitmap "
                                "output" % type)
+        if type == 'color' and not bitmap:
+            raise RuntimeError("Histogram type %s not supported for "
+                               "non-bitmapped output" % type)
 
         if bitmap:
             normed_counts = self._normalize_histogram2d(counts, type)
