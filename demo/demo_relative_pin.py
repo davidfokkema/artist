@@ -5,7 +5,6 @@ from artist import Plot
 
 def main():
     plot = Plot(width=r'.5\linewidth', height=r'.5\linewidth')
-
     r = linspace(1, 5, 100)
     phi = linspace(0, 4.5 * pi, 100)
     x = r * cos(phi)
@@ -37,6 +36,36 @@ def main():
     plot.set_xlimits(-8, 8)
     plot.set_ylimits(-8, 8)
     plot.save('relative_pin')
+
+    # With one logarithmic axis
+    plot = Plot(axis='semilogy')
+
+    x = [2, 2, 2]
+    y = [1, 10, 100]
+    plot.plot(x, y)
+    for xi, yi in zip(x, y):
+        plot.add_pin_at_xy(xi, yi, '(%d,%d)' % (xi, yi),
+                           location='below right')
+    plot.add_pin('half', relative_position=.5, use_arrow=True,
+                 location='right')
+
+    x = [4, 5, 6]
+    y = [3, 3, 3]
+    plot.plot(x, y)
+    for xi, yi in zip(x, y):
+        plot.add_pin_at_xy(xi, yi, '(%d,%d)' % (xi, yi), location='below')
+    plot.add_pin('half', relative_position=.5, use_arrow=True,
+                 location='above')
+
+    x = [3, 4, 5]
+    y = [1, 10, 100]
+    plot.plot(x, y)
+    for xi, yi in zip(x, y):
+        plot.add_pin_at_xy(xi, yi, '(%d,%d)' % (xi, yi), location='above left')
+    plot.add_pin('half', relative_position=.5, use_arrow=True,
+                 location='right')
+
+    plot.save('relative_pin_log')
 
 
 if __name__ == "__main__":
