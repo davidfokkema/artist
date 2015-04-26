@@ -34,6 +34,7 @@ from PIL import Image
 import jinja2
 import numpy as np
 
+from .colormap import COOLWARM
 
 RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
                                            'x': 1, 'y': 1},
@@ -352,7 +353,7 @@ class SubPlot(object):
             raise RuntimeError(
                 "The length of x_edges and y_edges should match counts")
 
-        if type not in ['bw', 'reverse_bw', 'area']:
+        if type not in ['bw', 'reverse_bw', 'area', 'coolwarm']:
             raise RuntimeError("Histogram type %s not supported" % type)
         if type == 'area' and bitmap:
             raise RuntimeError("Histogram type %s not supported for bitmap "
@@ -361,6 +362,8 @@ class SubPlot(object):
         if bitmap:
             normed_counts = self._normalize_histogram2d(counts, type)
             img = Image.fromarray(np.flipud(normed_counts.T))
+            if type == 'coolwarm':
+                img.putpalette(COOLWARM)
             self.bitmap_list.append({'image': img,
                                      'xmin': min(x_edges),
                                      'xmax': max(x_edges),
