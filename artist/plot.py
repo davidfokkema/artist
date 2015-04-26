@@ -887,14 +887,24 @@ class SubPlot(object):
         elif relative_position == 1:
             xs, ys = x[max_idx_x], y[max_idx_y]
         else:
+            if self.xmode == 'log':
+                x = np.log10(np.array(x))
+            if self.ymode == 'log':
+                y = np.log10(np.array(y))
             rel_length = [0]
             rel_length.extend(self._calc_relative_path_lengths(x, y))
             idx = np.interp(relative_position, rel_length,
                             range(len(rel_length)))
             frac, idx = modf(idx)
             idx = int(idx)
-            xs = x[idx] + (x[idx + 1] - x[idx]) * frac
-            ys = y[idx] + (y[idx + 1] - y[idx]) * frac
+            if self.xmode == 'log':
+                ys = 10 ** (y[idx] + (y[idx + 1] - y[idx]) * frac)
+            else:
+                xs = x[idx] + (x[idx + 1] - x[idx]) * frac
+            if self.ymode == 'log':
+                ys = 10 ** (y[idx] + (y[idx + 1] - y[idx]) * frac)
+            else:
+                ys = y[idx] + (y[idx + 1] - y[idx]) * frac
         return xs, ys
 
     def _calc_relative_path_lengths(self, x, y):
