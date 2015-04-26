@@ -21,6 +21,7 @@ import subprocess
 import os
 import tempfile
 import shutil
+from math import log10, sqrt, modf
 try:
     # Python 2
     from itertools import izip_longest
@@ -28,7 +29,6 @@ except ImportError:
     # Python 3
     from itertools import zip_longest as izip_longest
 
-from math import log10, sqrt
 
 from PIL import Image
 import jinja2
@@ -865,6 +865,14 @@ class SubPlot(object):
         return options_string
 
     def _calc_position_for_pin(self, x, y, relative_position):
+        """Determine position at fraction of x, y path
+
+        :param x,y: two equal length lists of values describing a path.
+        :param relative_position: value between 0 and 1
+        :returns: the x, y position of the fraction (relative_position)
+                  of the path length.
+
+        """
         try:
             max_idx_x = len(x) - 1
             max_idx_y = len(y) - 1
@@ -874,14 +882,29 @@ class SubPlot(object):
             assert max_idx_x == max_idx_y, \
                 'If x and y are iterables, they must be the same length'
 
-            x0, x1 = x[0], x[-1]
-            if self.xmode == 'log':
-                xs = 10 ** (relative_position * (log10(x1) - log10(x0)) +
-                            log10(x0))
-            else:
-                xs = relative_position * (x1 - x0) + x0
-            ys = np.interp(xs, x, y)
-            return xs, ys
+        if relative_position == 0:
+            xs, ys = x[0], y[0]
+        elif relative_position == 1:
+            xs, ys = x[max_idx_x], y[max_idx_y]
+        else:
+            rel_length = [0]
+            rel_length.extend(self._calc_relative_path_lengths(x, y))
+            idx = np.interp(relative_position, rel_length,
+                            range(len(rel_length)))
+            frac, idx = modf(idx)
+            idx = int(idx)
+            xs =  x[idx] + (x[idx + 1] - x[idx]) * frac
+            ys =  y[idx] + (y[idx + 1] - y[idx]) * frac
+        return xs, ys
+
+    def _calc_relative_path_lengths(self, x, y):
+        """Determine the relative path length at each x,y position"""
+
+        path_lengths = np.sqrt(np.diff(x) ** 2 + np.diff(y) ** 2)
+        total_length = np.sum(path_lengths)
+        cummulative_lengths = np.cumsum(path_lengths)
+        relative_path_lengths = cummulative_lengths / total_length
+        return relative_path_lengths
 
     def _normalize_histogram2d(self, counts, type):
         """Normalize the values of the counts for a 2D histogram
