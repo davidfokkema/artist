@@ -20,6 +20,7 @@ distclean: clean
 	rm -f multi_histogram2d.tex
 	rm -f event_display.tex
 	rm -f multi_event_display.tex
+	rm -f relative_pin.tex
 	rm -f *.pdf
 	rm -f *.png
 
@@ -28,7 +29,8 @@ demo_plots.pdf: demo_plots.tex \
 		shower-front.tex eas-lateral.tex histogram-fit.tex \
 		spectrum.tex sciencepark.tex utrecht.tex multiplot.tex \
 		polar_histogram.tex discrete_directions.tex histogram2d.tex \
-		multi_histogram2d.tex event_display.tex multi_event_display.tex
+		multi_histogram2d.tex event_display.tex multi_event_display.tex \
+		relative_pin.tex
 	latexmk -pdf demo_plots.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
@@ -65,4 +67,7 @@ histogram2d.tex multi_histogram2d.tex: demo_histogram2d.py
 	python $?
 
 event_display.tex multi_event_display.tex: demo_event_display.py
+	python $?
+
+relative_pin.tex: demo_relative_pin.py
 	python $?
