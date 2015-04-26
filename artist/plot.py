@@ -326,7 +326,7 @@ class SubPlot(object):
         self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
 
     def histogram2d(self, counts, x_edges, y_edges, type='bw', style=None,
-                    bitmap=False):
+                    bitmap=False, colormap=None):
         """Plot a two-dimensional histogram.
 
         The user needs to supply the histogram.  This method only plots
@@ -338,8 +338,11 @@ class SubPlot(object):
         :param type: the type of histogram.  Allowed values are 'bw' for
             filled squares with shades from black (minimum value) to white
             (maximum value), 'reverse_bw' for filled squares with the
-            shades reversed and 'area' for squares where the area of the
-            square is a measure of the count in the bin.
+            shades reversed and, 'color' for color mapped histogram
+            which uses the 'coolwarm' colormap by default, but can be
+            overwritten with the colormap keyword, and 'area' for
+            squares where the area of the square is a measure of the
+            count in the bin.
         :param style: optional TikZ styles to apply (e.g. 'red').  Note
             that many color styles are overridden by the 'bw' and
             'reverse_bw' types.
@@ -347,13 +350,15 @@ class SubPlot(object):
             performance. This does expect all bins along an axis to have
             equal width. Can only be combined with type 'bw' and
             'reverse_bw'.
+        :param colormap: A colormap for the 'color' type, as expected by
+            the `Image.putpalette` method.
 
         """
         if counts.shape != (len(x_edges) - 1, len(y_edges) - 1):
             raise RuntimeError(
                 "The length of x_edges and y_edges should match counts")
 
-        if type not in ['bw', 'reverse_bw', 'area', 'coolwarm']:
+        if type not in ['bw', 'reverse_bw', 'area', 'color']:
             raise RuntimeError("Histogram type %s not supported" % type)
         if type == 'area' and bitmap:
             raise RuntimeError("Histogram type %s not supported for bitmap "
@@ -362,8 +367,11 @@ class SubPlot(object):
         if bitmap:
             normed_counts = self._normalize_histogram2d(counts, type)
             img = Image.fromarray(np.flipud(normed_counts.T))
-            if type == 'coolwarm':
-                img.putpalette(COOLWARM)
+            if type == 'color':
+                if colormap is not None:
+                    img.putpalette(colormap)
+                else:
+                    img.putpalette(COOLWARM)
             self.bitmap_list.append({'image': img,
                                      'xmin': min(x_edges),
                                      'xmax': max(x_edges),

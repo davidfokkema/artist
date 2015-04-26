@@ -12,7 +12,7 @@ def main():
               [(0, 100), (-50, 0)],
               [(-100, 0), (0, 50)],
               [(0, 100), (0, 50)])
-    types = ('reverse_bw', 'coolwarm', 'bw', 'area')
+    types = ('reverse_bw', 'color', 'bw', 'area')
     bitmaps = (True, True, False, False)
     subplot_idxs = [(1, 0), (1, 1), (0, 0), (0, 1)]
 
