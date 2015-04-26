@@ -1,8 +1,3 @@
-.. Artist documentation master file, created by
-   sphinx-quickstart on Sun Nov 13 22:06:35 2011.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Artist's documentation!
 ==================================
 
@@ -13,7 +8,10 @@ will tightly integrate with your main text.  Artist provides an
 easy-to-use and clean Python interface and can compile your plot
 on-the-fly as a stand-alone PDF file.
 
-Contents:
+A pdf containing some examples can be downloaded here:
+`Demo plots (pdf) <demo_plots.pdf>`_.
+
+**Contents**:
 
 .. toctree::
    :maxdepth: 2
