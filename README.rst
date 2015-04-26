@@ -8,6 +8,7 @@ Artist makes beautiful plots
 .. image:: http://img.shields.io/travis/davidfokkema/artist/master.png
    :target: https://travis-ci.org/davidfokkema/artist
 
+
 In short
 --------
 
@@ -22,6 +23,8 @@ For instance the `cosmic-ray flux spectrum <https://github.com/davidfokkema/arti
 
 .. image:: https://raw.githubusercontent.com/davidfokkema/artist/master/doc/images/tutorial/spectrum.png
    :width: 293px
+
+See the `documentation <http://davidfokkema.github.io/artist/>`_ for tutorials.
 
 
 Rationale
