@@ -4,7 +4,7 @@ python:
   - "2.7"
   - "3.4"
 
-before-install:
+before_install:
   - mkdir $HOME/.python-eggs
   - chmod og-w $HOME/.python-eggs
 
