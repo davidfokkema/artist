@@ -909,7 +909,7 @@ class SubPlot(object):
             frac, idx = modf(idx)
             idx = int(idx)
             if self.xmode == 'log':
-                xs = 10 ** (y[idx] + (y[idx + 1] - y[idx]) * frac)
+                xs = 10 ** (x[idx] + (x[idx + 1] - x[idx]) * frac)
             else:
                 xs = x[idx] + (x[idx + 1] - x[idx]) * frac
             if self.ymode == 'log':
