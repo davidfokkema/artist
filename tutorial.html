@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tutorial &mdash; Artist 0.15.0 documentation</title>
+    <title>Tutorial &mdash; Artist 0.16.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.15.0',
+        VERSION:     '0.16.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Artist 0.15.0 documentation" href="index.html" />
+    <link rel="top" title="Artist 0.16.1 documentation" href="index.html" />
     <link rel="next" title="artist" href="modules.html" />
     <link rel="prev" title="Introduction" href="introduction.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="introduction.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Artist 0.15.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Artist 0.16.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -112,6 +112,38 @@ initiated by the <tt class="xref py py-class docutils literal"><span class="pre"
 histogram is created with bins ranging from 0 to 360. The result:</p>
 <a class="reference internal image-reference" href="_images/polar_plot.png"><img alt="_images/polar_plot.png" src="_images/polar_plot.png" style="width: 301px;" /></a>
 </div>
+<div class="section" id="demo-plots">
+<h2>Demo plots<a class="headerlink" href="#demo-plots" title="Permalink to this headline">¶</a></h2>
+<p>For further examples of the capabilities of artist, see the
+<a class="reference external" href="demo_plots.pdf">Demo plots (pdf)</a>. The source code for these
+plots can be found on artist&#8217;s
+<a class="reference external" href="https://github.com/davidfokkema/artist">GitHub page</a>.</p>
+</div>
+<div class="section" id="including-a-plot">
+<h2>Including a plot<a class="headerlink" href="#including-a-plot" title="Permalink to this headline">¶</a></h2>
+<p>To include an artist plot in a LaTeX document use the <tt class="docutils literal"><span class="pre">\input</span></tt>
+command. For example:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span>
+    <span class="k">\input</span><span class="nb">{</span>figures/polar<span class="nb">_</span>plot<span class="nb">}</span>
+    <span class="k">\caption</span><span class="nb">{</span>A histogram of random data in a polar coordinates.<span class="nb">}</span>
+<span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}</span>
+</pre></div>
+</div>
+<p>The figure will be compiled when you compile your document. This
+requires that the packages used by artist are added to the preamble of
+your document. Artist uses the Ti<em>k</em>Z, PGFPlots, siunitx, and
+relsize packages, some require additional libraries or options. Include
+the following in the preamble to support artist plots:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\usepackage</span><span class="nb">{</span>tikz<span class="nb">}</span>
+<span class="k">\usetikzlibrary</span><span class="nb">{</span>arrows, pgfplots.groupplots, external<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="nb">{</span>pgfplots<span class="nb">}</span>
+<span class="k">\pgfplotsset</span><span class="nb">{</span>compat=1.3<span class="nb">}</span>
+<span class="k">\usepgfplotslibrary</span><span class="nb">{</span>polar<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="na">[detect-family]</span><span class="nb">{</span>siunitx<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="nb">{</span>relsize<span class="nb">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -126,6 +158,8 @@ histogram is created with bins ranging from 0 to 360. The result:</p>
 <li><a class="reference internal" href="#basic-plot">Basic plot</a></li>
 <li><a class="reference internal" href="#adding-labels">Adding labels</a></li>
 <li><a class="reference internal" href="#polar-plot">Polar plot</a></li>
+<li><a class="reference internal" href="#demo-plots">Demo plots</a></li>
+<li><a class="reference internal" href="#including-a-plot">Including a plot</a></li>
 </ul>
 </li>
 </ul>
@@ -173,7 +207,7 @@ histogram is created with bins ranging from 0 to 360. The result:</p>
         <li class="right" >
           <a href="introduction.html" title="Introduction"
              >previous</a> |</li>
-        <li><a href="index.html">Artist 0.15.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Artist 0.16.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

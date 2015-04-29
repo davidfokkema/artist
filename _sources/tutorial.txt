@@ -70,3 +70,42 @@ histogram is created with bins ranging from 0 to 360. The result:
 
 .. image:: images/tutorial/polar_plot.png
    :width: 301px
+
+
+Demo plots
+----------
+
+For further examples of the capabilities of artist, see the
+`Demo plots (pdf) <demo_plots.pdf>`_. The source code for these
+plots can be found on artist's
+`GitHub page <https://github.com/davidfokkema/artist>`_.
+
+
+Including a plot
+----------------
+
+To include an artist plot in a LaTeX document use the ``\input``
+command. For example:
+
+.. code-block:: latex
+
+   \begin{figure}
+       \input{figures/polar_plot}
+       \caption{A histogram of random data in a polar coordinates.}
+   \end{figure}
+
+The figure will be compiled when you compile your document. This
+requires that the packages used by artist are added to the preamble of
+your document. Artist uses the Ti\ *k*\ Z, PGFPlots, siunitx, and
+relsize packages, some require additional libraries or options. Include
+the following in the preamble to support artist plots:
+
+.. code-block:: latex
+
+   \usepackage{tikz}
+   \usetikzlibrary{arrows, pgfplots.groupplots, external}
+   \usepackage{pgfplots}
+   \pgfplotsset{compat=1.3}
+   \usepgfplotslibrary{polar}
+   \usepackage[detect-family]{siunitx}
+   \usepackage{relsize}
