@@ -260,8 +260,8 @@ class SubPlot(object):
         :param xerr: (optional) array containing errors on the x-values.
         :param yerr: (optional) array containing errors on the y-values.
         :param mark: the symbol used to mark the data point.  May be None,
-            or any plot mark accepted by TikZ (e.g. *, x, +, o, square,
-            triangle).
+            or any plot mark accepted by TikZ (e.g. ``*, x, +, o, square,
+            triangle``).
         :param linestyle: the line style used to connect the data points.
             May be None, or any line style accepted by TikZ (e.g. solid,
             dashed, dotted, thick, or even combinations like
@@ -413,8 +413,8 @@ class SubPlot(object):
         :param x: array containing x-values.
         :param y: array containing y-values.
         :param mark: the symbol used to mark the data points. May be
-            any plot mark accepted by TikZ (e.g. *, x, +, o, square,
-            triangle).
+            any plot mark accepted by TikZ (e.g. ``*, x, +, o, square,
+            triangle``).
         :param markstyle: the style of the plot marks (e.g. 'mark
             size=.75pt')
 
@@ -436,8 +436,8 @@ class SubPlot(object):
         :param c: array containing values for the color of the mark.
         :param s: array containing values for the size of the mark.
         :param mark: the symbol used to mark the data point.  May be None,
-            or any plot mark accepted by TikZ (e.g. *, x, +, o, square,
-            triangle).
+            or any plot mark accepted by TikZ (e.g. ``*, x, +, o, square,
+            triangle``).
 
         The dimensions of x, y, c and s should be equal. The c values will
         be mapped to a colormap.

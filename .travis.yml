@@ -9,9 +9,10 @@ before_install:
   - chmod og-w $HOME/.python-eggs
 
 install:
-  - pip install flake8
+  - pip install flake8 sphinx
   - python setup.py develop
 
 script:
   - flake8 artist
   - make -C demo test
+  - sphinx-build -n doc doc/_build/html
