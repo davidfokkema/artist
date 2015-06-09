@@ -238,6 +238,7 @@ class SubPlot(object):
         self.scalebar = None
         self.colorbar = False
         self.colormap = None
+        self.axis_options = None
 
     def save_assets(self, dest_path, suffix=''):
         """Save plot assets alongside dest_path.
@@ -843,6 +844,11 @@ class SubPlot(object):
         """
         self.colormap = name
 
+    def set_axis_options(self, text):
+        """Set additionnal options as plain text."""
+
+        self.axis_options = text
+
     def _parse_plot_options(self, mark=None, linestyle=None,
                             use_steps=False, markstyle=None):
         options = []
@@ -1028,6 +1034,7 @@ class Plot(SubPlot, BasePlotContainer):
             colorbar=self.colorbar,
             colormap=self.colormap,
             external_filename=self.external_filename,
+            axis_options=self.axis_options,
             plot=self,
             plot_template=self.template)
         return response

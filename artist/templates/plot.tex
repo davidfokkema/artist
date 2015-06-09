@@ -99,6 +99,9 @@
                     rgb255(7cm)=(222, 96, 77);
                     rgb255(8cm)=(180,  4, 38)},
             {%- endif %}
+            {%- if axis_options %}
+                {{ axis_options }}
+            {%- endif %}
         ]
 
         {% include 'subplot.tex' %}
