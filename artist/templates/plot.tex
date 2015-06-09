@@ -63,6 +63,8 @@
             {%- if ticks.ysuffix %}
                 yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
             {%- endif %}
+            xticklabel style={ {{ ticks.xlabel_style }} },
+            yticklabel style={ {{ ticks.ylabel_style }} },
             %
             tick align=outside,
             max space between ticks=40,

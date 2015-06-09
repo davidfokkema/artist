@@ -749,7 +749,7 @@ class SubPlot(object):
         """
         self.ticks['y'] = ['1e%d' % u for u in logticks]
 
-    def set_xtick_labels(self, labels):
+    def set_xtick_labels(self, labels, style=None):
         """Set tick labels for the x-axis.
 
         Also set the x-ticks positions to ensure the labels end up on
@@ -759,8 +759,9 @@ class SubPlot(object):
 
         """
         self.ticks['xlabels'] = labels
+        self.ticks['xlabel_style'] = style
 
-    def set_ytick_labels(self, labels):
+    def set_ytick_labels(self, labels, style=None):
         """Set tick labels for the y-axis.
 
         Also set the y-ticks positions to ensure the labels end up on
@@ -770,6 +771,7 @@ class SubPlot(object):
 
         """
         self.ticks['ylabels'] = labels
+        self.ticks['ylabel_style'] = style
 
     def set_xtick_suffix(self, suffix):
         """Set the suffix for the ticks of the x-axis.
