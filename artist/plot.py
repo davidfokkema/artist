@@ -180,7 +180,8 @@ class BasePlotContainer(object):
         os.rename(output_path, path)
 
     def _add_extension(self, extension, path):
-        if '.' not in path:
+        root, ext = os.path.splitext(path)
+        if not ext:
             return path + '.' + extension
         else:
             return path
