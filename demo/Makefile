@@ -1,3 +1,5 @@
+.PHONY: clean
+
 all: demo
 
 demo: demo_plots.pdf
