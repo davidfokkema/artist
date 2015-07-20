@@ -71,6 +71,9 @@
                             rgb255(7cm)=(222, 96, 77);
                             rgb255(8cm)=(180,  4, 38)},
                     {%- endif %}
+                    {%- if axis_options %}
+                        {{ axis_options }}
+                    {%- endif %}
                 ]
                 {% for subplot in subplots %}
                     {% set plot = subplot %}
@@ -178,6 +181,9 @@
                         {%- endif %}
                         {%- if subplot.limits.mmax is not none %}
                             point meta max={ {{ subplot.limits.mmax }} },
+                        {%- endif %}
+                        {%- if subplot.axis_options %}
+                            {{ subplot.axis_options }}
                         {%- endif %}
                     {%- endif %}
                     ]
