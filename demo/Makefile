@@ -25,6 +25,7 @@ distclean: clean
 	rm -f relative_pin.tex
 	rm -f relative_pin_log.tex
 	rm -f any_option.tex
+	rm -f multi_any_option.tex
 	rm -f *.pdf
 	rm -f *.png
 
@@ -34,14 +35,16 @@ demo_plots.pdf: demo_plots.tex \
 		spectrum.tex sciencepark.tex utrecht.tex multiplot.tex \
 		polar_histogram.tex discrete_directions.tex histogram2d.tex \
 		multi_histogram2d.tex event_display.tex multi_event_display.tex \
-		relative_pin.tex relative_pin_log.tex any_option.tex
+		relative_pin.tex relative_pin_log.tex any_option.tex \
+		multi_any_option.tex
 	latexmk -pdf demo_plots.tex
 
 test: shower-front.tex eas-lateral.tex \
 		spectrum.tex sciencepark.tex utrecht.tex multiplot.tex \
 		polar_histogram.tex discrete_directions.tex histogram2d.tex \
 		multi_histogram2d.tex event_display.tex multi_event_display.tex \
-		relative_pin.tex relative_pin_log.tex any_option.tex
+		relative_pin.tex relative_pin_log.tex any_option.tex \
+		multi_any_option.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
 	python $?
@@ -82,5 +85,5 @@ event_display.tex multi_event_display.tex: demo_event_display.py
 relative_pin.tex relative_pin_log.tex: demo_relative_pin.py
 	python $?
 
-any_option.tex: demo_any_option.py
+any_option.tex multi_any_option.tex: demo_any_option.py
 	python $?
