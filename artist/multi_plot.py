@@ -55,6 +55,7 @@ class MultiPlot(BasePlotContainer):
         self.colorbar = None
         self.colormap = None
         self.external_filename = None
+        self.axis_options = None
 
         self.subplots = []
         for i in range(rows):
@@ -459,6 +460,7 @@ class MultiPlot(BasePlotContainer):
                                    colorbar=self.colorbar,
                                    colormap=self.colormap,
                                    external_filename=self.external_filename,
+                                   axis_options=self.axis_options,
                                    subplots=self.subplots,
                                    plot_template=self.template)
         return response
@@ -543,6 +545,27 @@ class MultiPlot(BasePlotContainer):
 
         """
         self.colormap = name
+
+    def set_axis_options(self, row, column, text):
+        """Set additionnal options as plain text."""
+
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_axis_options(text)
+
+    def set_axis_options_for_all(self, row_column_list=None, text=''):
+        """Set point size limits of specified subplots.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param text: axis options for the given subplots or the overall plot.
+
+        """
+        if row_column_list is None:
+            self.axis_options = text
+        else:
+            for row, column in row_column_list:
+                self.set_axis_options(row, column, text)
 
 
 class SubPlotContainer(SubPlot):

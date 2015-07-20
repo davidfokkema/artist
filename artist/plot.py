@@ -111,7 +111,8 @@ class BasePlotContainer(object):
 
         """
         self.save_assets(dest_path)
-        self.external_filename = 'externalized-' + os.path.basename(dest_path)
+        self.external_filename = 'externalized-%s' % \
+                                 os.path.basename(dest_path).replace(' ', '_')
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
@@ -123,7 +124,8 @@ class BasePlotContainer(object):
 
         """
         self.save_assets(dest_path)
-        self.external_filename = 'externalized-' + os.path.basename(dest_path)
+        self.external_filename = 'externalized-%s' % \
+                                 os.path.basename(dest_path).replace(' ', '_')
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render_as_document())

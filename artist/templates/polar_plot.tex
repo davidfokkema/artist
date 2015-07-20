@@ -9,7 +9,7 @@
 % \usepackage{relsize}
 %
 {%- if external_filename %}
-    \tikzsetnextfilename{ {{ external_filename }} }
+    \tikzsetnextfilename{ {{- external_filename -}} }
 {%- endif %}
 \pgfkeysifdefined{/artist/width}
     {\pgfkeysgetvalue{/artist/width}{\defaultwidth}}
@@ -75,6 +75,8 @@
             {%- if ticks.ysuffix %}
                 yticklabel=$\pgfmathprintnumber{\tick}{{ ticks.ysuffix }}$,
             {%- endif %}
+            xticklabel style={ {{ ticks.xlabel_style }} },
+            yticklabel style={ {{ ticks.ylabel_style }} },
             yticklabel shift={\ytickshift},
             xticklabel shift={0.075cm},
             %
@@ -83,6 +85,9 @@
             max space between ticks=40,
             every tick/.style={},
             axis on top,
+            {%- if axis_options %}
+                {{ axis_options }}
+            {%- endif %}
         ]
 
         % hack to calculate the position for the xlabel
