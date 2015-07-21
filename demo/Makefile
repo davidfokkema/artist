@@ -30,8 +30,7 @@ distclean: clean
 	rm -f *.png
 
 demo_plots.pdf: demo_plots.tex \
-		stopping-power.tex \
-		shower-front.tex eas-lateral.tex histogram-fit.tex \
+		stopping-power.tex shower-front.tex eas-lateral.tex \
 		spectrum.tex sciencepark.tex utrecht.tex multiplot.tex \
 		polar_histogram.tex discrete_directions.tex histogram2d.tex \
 		multi_histogram2d.tex event_display.tex multi_event_display.tex \
