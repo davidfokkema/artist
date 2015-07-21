@@ -9,7 +9,9 @@ before_install:
   - chmod og-w $HOME/.python-eggs
   - sudo add-apt-repository -y ppa:texlive-backports/ppa
   - sudo apt-get update -qq
-  - sudo apt-get install texlive-full
+  - sudo apt-get install texlive-latex-recommended texlive-latex-extra
+  - sudo apt-get install texlive-fonts-recommended texlive-fonts-extra
+  - sudo apt-get install latexmk
 
 install:
   - pip install flake8 sphinx
