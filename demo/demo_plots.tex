@@ -16,6 +16,11 @@
 \usepackage[eulergreek]{sansmath}
 \sisetup{text-sf=\sansmath}
 
+\ifdefined\extrafloats
+    \extrafloats{100}
+\else
+    \usepackage{morefloats}
+\fi
 
 \begin{document}
 
