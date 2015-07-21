@@ -12,6 +12,7 @@ before_install:
   - sudo apt-get install texlive-latex-recommended texlive-latex-extra
   - sudo apt-get install texlive-fonts-recommended texlive-fonts-extra
   - sudo apt-get install latexmk
+  - sudo apt-get install texlive-science
 
 install:
   - pip install flake8 sphinx
