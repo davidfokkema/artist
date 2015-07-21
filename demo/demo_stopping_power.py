@@ -1,19 +1,7 @@
 import numpy as np
 from numpy import sqrt
-import pylab as plt
 
 from artist import Plot
-
-# For TeX rendering
-plt.rcParams['font.serif'] = 'Computer Modern'
-plt.rcParams['font.sans-serif'] = 'Computer Modern'
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['figure.figsize'] = [4 * x for x in (1, 2. / 3)]
-plt.rcParams['figure.subplot.left'] = 0.175
-plt.rcParams['figure.subplot.bottom'] = 0.175
-plt.rcParams['font.size'] = 10
-plt.rcParams['legend.fontsize'] = 'small'
-plt.rcParams['text.usetex'] = True
 
 
 def main():
@@ -29,15 +17,6 @@ def main():
     mu_mass = 105.658367
     mu_beta_gamma = mu_p / mu_mass
     mu_loss = mu_data[:, 1]
-
-    # Matplotlib
-    plt.figure()
-    plt.loglog(e_beta_gamma, e_loss, label="e")
-    plt.loglog(mu_beta_gamma, mu_loss, label=r"$\mu$")
-    plt.xlabel(r'$\beta\gamma$')
-    plt.ylabel('Stopping Power [MeV cm$^2$ g$^{-1}$]')
-    plt.legend()
-    plt.savefig('stopping-power-mpl.pdf')
 
     # Artist
     plot = Plot(axis='loglog')
