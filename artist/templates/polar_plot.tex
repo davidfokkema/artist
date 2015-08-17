@@ -50,14 +50,11 @@
             title={ {{ title }} },
             %
             xlabel={ {{ xlabel }} },
-            ylabel={ {{ ylabel }} },
+            %ylabel={ {{ ylabel }} },
             xlabel style={
                 at={(axis cs:45,\pgfkeysvalueof{/pgfplots/ymax}*1.3)},
                 anchor=center,
                 rotate=-45,},
-            ylabel style={
-                at={(axis cs:-90,\pgfkeysvalueof{/pgfplots/ymax}*1.38)},
-                anchor=west,},
             %
             xmin={ {{ limits.xmin }} },
             xmax={ {{ limits.xmax }} },
@@ -93,9 +90,14 @@
             {%- endif %}
         ]
 
+        % hack to calculate the position for the xlabel		
+        \coordinate (ylabel) at (axis cs:-90,\pgfkeysvalueof{/pgfplots/ymax}*1.38);		
+
         {% include 'subplot.tex' %}
 
     \end{polaraxis}
+
+    \node[anchor=west] at (ylabel) { {{ ylabel }} };
 
 \end{tikzpicture}
 \end{sansmath}
