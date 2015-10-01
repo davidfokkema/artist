@@ -408,7 +408,7 @@ class SubPlot(object):
         self.set_xlimits(xmin, xmax)
         self.set_ylimits(ymin, ymax)
 
-    def scatter(self, x, y, mark='o', markstyle=None):
+    def scatter(self, x, y, xerr=[], yerr=[], mark='o', markstyle=None):
         """Plot a series of points.
 
         Plot a series of points (marks) that are not connected by a
@@ -416,6 +416,8 @@ class SubPlot(object):
 
         :param x: array containing x-values.
         :param y: array containing y-values.
+        :param xerr: array containing errors on the x-values.
+        :param yerr: array containing errors on the y-values.
         :param mark: the symbol used to mark the data points. May be
             any plot mark accepted by TikZ (e.g. ``*, x, +, o, square,
             triangle``).
@@ -430,7 +432,8 @@ class SubPlot(object):
             >>> plot.scatter(x, y, mark='*')
 
         """
-        self.plot(x, y, mark=mark, linestyle=None, markstyle=markstyle)
+        self.plot(x, y, xerr=xerr, yerr=yerr, mark=mark, linestyle=None,
+                  markstyle=markstyle)
 
     def scatter_table(self, x, y, c, s, mark='*'):
         """Add a data series to the plot.
