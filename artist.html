@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="shortcut icon" href="_static/favicon.png"/>
     <link rel="top" title="Artist 0.16.1 documentation" href="index.html" />
     <link rel="up" title="artist" href="modules.html" />
     <link rel="prev" title="artist" href="modules.html" /> 
@@ -51,11 +51,9 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="artist-package">
-<h1>artist Package<a class="headerlink" href="#artist-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">artist</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-artist.__init__"></span><p>Artist makes beautiful plots.</p>
+  <div class="section" id="module-artist.__init__">
+<span id="artist-package"></span><h1>artist Package<a class="headerlink" href="#module-artist.__init__" title="Permalink to this headline">¶</a></h1>
+<p>Artist makes beautiful plots.</p>
 <p>Artist is a 2D plotting library for Python.  It&#8217;s main focus is the
 output.  Artist creates a LaTeX file which can be included in your paper
 or thesis.  The code needs TikZ and PGFPlots to compile and your plots
@@ -63,7 +61,7 @@ will tightly integrate with your main text.  Artist provides an
 easy-to-use and clean Python interface and can compile your plot
 on-the-fly as a stand-alone PDF file.</p>
 <div class="section" id="rationale">
-<h3>Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h3>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h2>
 <p>Artist enables you to visualize the results of your data analysis.  The
 quality of your plots should reflect the quality of your analysis.  With
 most software, this is hardly possible and the term &#8216;publication quality&#8217;
@@ -83,25 +81,832 @@ possible by means of a simple method which renders the plot as a PDF.</p>
 <p>The style of the plots is based on the work of William S. Cleveland.</p>
 </div>
 <div class="section" id="contents">
-<h3>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h3>
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <p>The following modules are included:</p>
 <dl class="docutils">
 <dt><a class="reference internal" href="#module-artist.plot" title="artist.plot"><tt class="xref py py-mod docutils literal"><span class="pre">plot</span></tt></a></dt>
-<dd>contains the Plot and PolarPlot classes for creating plots.</dd>
+<dd>contains the <a class="reference internal" href="#artist.plot.Plot" title="artist.plot.Plot"><tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt></a> and
+<a class="reference internal" href="#artist.plot.PolarPlot" title="artist.plot.PolarPlot"><tt class="xref py py-class docutils literal"><span class="pre">PolarPlot</span></tt></a> classes for creating plots.</dd>
 <dt><a class="reference internal" href="#module-artist.multi_plot" title="artist.multi_plot"><tt class="xref py py-mod docutils literal"><span class="pre">multi_plot</span></tt></a></dt>
-<dd>contains the MultiPlot class for creating plots comprised of multiple
-subplots.</dd>
+<dd>contains the <a class="reference internal" href="#artist.multi_plot.MultiPlot" title="artist.multi_plot.MultiPlot"><tt class="xref py py-class docutils literal"><span class="pre">MultiPlot</span></tt></a> class for
+creating plots comprised of multiple subplots.</dd>
 <dt><a class="reference internal" href="#module-artist.simple_smooth" title="artist.simple_smooth"><tt class="xref py py-mod docutils literal"><span class="pre">simple_smooth</span></tt></a></dt>
 <dd>contains a very basic smoothing algorithm.</dd>
 <dt><a class="reference internal" href="#module-artist.recursive_smooth" title="artist.recursive_smooth"><tt class="xref py py-mod docutils literal"><span class="pre">recursive_smooth</span></tt></a></dt>
-<dd>contains a more sophisticated recursive smoothing algorithm.</dd>
+<dd>contains a more sophisticated recursive
+<a class="reference internal" href="#artist.recursive_smooth.smooth" title="artist.recursive_smooth.smooth"><tt class="xref py py-func docutils literal"><span class="pre">smooth()</span></tt></a> algorithm.</dd>
 <dt><a class="reference internal" href="#module-artist.utils" title="artist.utils"><tt class="xref py py-mod docutils literal"><span class="pre">utils</span></tt></a></dt>
 <dd>contains utility functions for e.g. automagic naming of output files
 based on the name of the function creating the plot.</dd>
+<dt><a class="reference internal" href="#module-artist.colormap" title="artist.colormap"><tt class="xref py py-mod docutils literal"><span class="pre">colormap</span></tt></a></dt>
+<dd>contains the default colormap for colored 2D histograms.</dd>
+</dl>
+</div>
+<div class="section" id="module-artist.plot">
+<span id="plot-module"></span><h2><a class="reference internal" href="#module-artist.plot" title="artist.plot"><tt class="xref py py-mod docutils literal"><span class="pre">plot</span></tt></a> Module<a class="headerlink" href="#module-artist.plot" title="Permalink to this headline">¶</a></h2>
+<p>Create a plot.</p>
+<div class="section" id="id1">
+<h3>Contents<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><a class="reference internal" href="#artist.plot.BasePlotContainer" title="artist.plot.BasePlotContainer"><tt class="xref py py-class docutils literal"><span class="pre">BasePlotContainer</span></tt></a></dt>
+<dd>Base class for standalone plots.</dd>
+<dt><a class="reference internal" href="#artist.plot.SubPlot" title="artist.plot.SubPlot"><tt class="xref py py-class docutils literal"><span class="pre">SubPlot</span></tt></a></dt>
+<dd>Plot data in a data rectangle.</dd>
+<dt><a class="reference internal" href="#artist.plot.Plot" title="artist.plot.Plot"><tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt></a></dt>
+<dd>Create a plot containing a single subplot.</dd>
+<dt><a class="reference internal" href="#artist.plot.PolarPlot" title="artist.plot.PolarPlot"><tt class="xref py py-class docutils literal"><span class="pre">PolarPlot</span></tt></a></dt>
+<dd>Create a plot containing a single polar subplot.</dd>
 </dl>
 <dl class="class">
-<dt id="artist.__init__.Plot">
-<em class="property">class </em><tt class="descclassname">artist.__init__.</tt><tt class="descname">Plot</tt><big>(</big><em>axis=''</em>, <em>width='.67\linewidth'</em>, <em>height=None</em><big>)</big><a class="headerlink" href="#artist.__init__.Plot" title="Permalink to this definition">¶</a></dt>
+<dt id="artist.plot.BasePlotContainer">
+<em class="property">class </em><tt class="descclassname">artist.plot.</tt><tt class="descname">BasePlotContainer</tt><a class="headerlink" href="#artist.plot.BasePlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base class for stand-alone plots.</p>
+<p>This class provides methods for rendering the plot.  To provide
+methods for plotting and annotating, subclass this base class.</p>
+<dl class="attribute">
+<dt id="artist.plot.BasePlotContainer.template">
+<tt class="descname">template</tt><em class="property"> = None</em><a class="headerlink" href="#artist.plot.BasePlotContainer.template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="artist.plot.BasePlotContainer.document_template">
+<tt class="descname">document_template</tt><em class="property"> = None</em><a class="headerlink" href="#artist.plot.BasePlotContainer.document_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.BasePlotContainer.render">
+<tt class="descname">render</tt><big>(</big><em>template=None</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the plot using a template.</p>
+<p>Once the plot is complete, it needs to be rendered.  Artist uses
+the Jinja2 templating engine.  The default template results in a
+LaTeX file which can be included in your document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string or None.</em>) &#8211; a user-supplied template or None.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
+</tr>
+</tbody>
+</table>
+<p>This is a very minimal implementation.  Override this method to
+include variables in the template.render call.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.BasePlotContainer.save_assets">
+<tt class="descname">save_assets</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.save_assets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save plot assets alongside dest_path.</p>
+<p>Some plots may have assets, like bitmap files, which need to be
+saved alongside the rendered plot file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the main output file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.BasePlotContainer.render_as_document">
+<tt class="descname">render_as_document</tt><big>(</big><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.render_as_document" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the plot as a stand-alone document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.BasePlotContainer.save">
+<tt class="descname">save</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the plot as a includable LaTeX file.</p>
+<p>The output file can be included (using input) in your LaTeX
+document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.BasePlotContainer.save_as_document">
+<tt class="descname">save_as_document</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.save_as_document" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the plot as a stand-alone LaTeX file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.BasePlotContainer.save_as_pdf">
+<tt class="descname">save_as_pdf</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.save_as_pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the plot as a PDF file.</p>
+<p>Save and render the plot using LaTeX to create a PDF file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="artist.plot.SubPlot">
+<em class="property">class </em><tt class="descclassname">artist.plot.</tt><tt class="descname">SubPlot</tt><a class="headerlink" href="#artist.plot.SubPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Plot data in a data rectangle.</p>
+<p>Provides methods to plot or histogram data, shade regions, add labels,
+pins and titles.  This class is not meant to be used directly.
+Instead, use the Plot class for single plots, or the MultiPlot class
+for plots containing multiple subplots.</p>
+<dl class="method">
+<dt id="artist.plot.SubPlot.save_assets">
+<tt class="descname">save_assets</tt><big>(</big><em>dest_path</em>, <em>suffix=''</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.save_assets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save plot assets alongside dest_path.</p>
+<p>Some plots may have assets, like bitmap files, which need to be
+saved alongside the rendered plot file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dest_path</strong> &#8211; path of the main output file.</li>
+<li><strong>suffix</strong> &#8211; optional suffix to add to asset names.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.plot">
+<tt class="descname">plot</tt><big>(</big><em>x</em>, <em>y</em>, <em>xerr=</em>, <span class="optional">[</span><span class="optional">]</span><em>yerr=</em>, <span class="optional">[</span><span class="optional">]</span><em>mark='o'</em>, <em>linestyle='solid'</em>, <em>use_steps=False</em>, <em>markstyle=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a data series to the plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> &#8211; array containing x-values.</li>
+<li><strong>y</strong> &#8211; array containing y-values.</li>
+<li><strong>xerr</strong> &#8211; (optional) array containing errors on the x-values.</li>
+<li><strong>yerr</strong> &#8211; (optional) array containing errors on the y-values.</li>
+<li><strong>mark</strong> &#8211; the symbol used to mark the data point.  May be None,
+or any plot mark accepted by TikZ (e.g. <tt class="docutils literal"><span class="pre">*,</span> <span class="pre">x,</span> <span class="pre">+,</span> <span class="pre">o,</span> <span class="pre">square,</span>
+<span class="pre">triangle</span></tt>).</li>
+<li><strong>linestyle</strong> &#8211; the line style used to connect the data points.
+May be None, or any line style accepted by TikZ (e.g. solid,
+dashed, dotted, thick, or even combinations like
+&#8220;red,thick,dashed&#8221;).</li>
+<li><strong>use_steps</strong> &#8211; if True, draw a stepped plot.</li>
+<li><strong>markstyle</strong> &#8211; the style of the plot marks (e.g. &#8216;mark
+size=.75pt&#8217;)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The dimensions of x, y, xerr and yerr should be equal.  However,
+xerr and yerr may be empty lists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.histogram">
+<tt class="descname">histogram</tt><big>(</big><em>counts</em>, <em>bin_edges</em>, <em>linestyle='solid'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a histogram.</p>
+<p>The user needs to supply the histogram.  This method only plots
+the results.  You can use NumPy&#8217;s histogram function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>counts</strong> &#8211; array containing the count values.</li>
+<li><strong>bin_edges</strong> &#8211; array containing the bin edges.</li>
+<li><strong>linestyle</strong> &#8211; the line style used to connect the data points.
+May be None, or any line style accepted by TikZ (e.g. solid,
+dashed, dotted, thick, or even combinations like
+&#8220;red,thick,dashed&#8221;).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.histogram2d">
+<tt class="descname">histogram2d</tt><big>(</big><em>counts</em>, <em>x_edges</em>, <em>y_edges</em>, <em>type='bw'</em>, <em>style=None</em>, <em>bitmap=False</em>, <em>colormap=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.histogram2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a two-dimensional histogram.</p>
+<p>The user needs to supply the histogram.  This method only plots
+the results.  You can use NumPy&#8217;s histogram2d function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>counts</strong> &#8211; array containing the count values.</li>
+<li><strong>x_edges</strong> &#8211; array containing the x-axis bin edges.</li>
+<li><strong>y_edges</strong> &#8211; array containing the y-axis bin edges.</li>
+<li><strong>type</strong> &#8211; the type of histogram.  Allowed values are &#8216;bw&#8217; for
+filled squares with shades from black (minimum value) to white
+(maximum value), &#8216;reverse_bw&#8217; for filled squares with the
+shades reversed and, &#8216;color&#8217; for color mapped histogram
+which uses the &#8216;coolwarm&#8217; colormap by default, but can be
+overwritten with the colormap keyword, and &#8216;area&#8217; for
+squares where the area of the square is a measure of the
+count in the bin.</li>
+<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).  Note
+that many color styles are overridden by the &#8216;bw&#8217; and
+&#8216;reverse_bw&#8217; types.</li>
+<li><strong>bitmap</strong> &#8211; Export the histogram as an image for better
+performance. This does expect all bins along an axis to have
+equal width. Can only be combined with type &#8216;bw&#8217; and
+&#8216;reverse_bw&#8217;.</li>
+<li><strong>colormap</strong> &#8211; A colormap for the &#8216;color&#8217; type, as expected by
+the <cite>Image.putpalette</cite> method.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.scatter">
+<tt class="descname">scatter</tt><big>(</big><em>x</em>, <em>y</em>, <em>xerr=</em>, <span class="optional">[</span><span class="optional">]</span><em>yerr=</em>, <span class="optional">[</span><span class="optional">]</span><em>mark='o'</em>, <em>markstyle=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a series of points.</p>
+<p>Plot a series of points (marks) that are not connected by a
+line. Shortcut for plot with linestyle=None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> &#8211; array containing x-values.</li>
+<li><strong>y</strong> &#8211; array containing y-values.</li>
+<li><strong>xerr</strong> &#8211; array containing errors on the x-values.</li>
+<li><strong>yerr</strong> &#8211; array containing errors on the y-values.</li>
+<li><strong>mark</strong> &#8211; the symbol used to mark the data points. May be
+any plot mark accepted by TikZ (e.g. <tt class="docutils literal"><span class="pre">*,</span> <span class="pre">x,</span> <span class="pre">+,</span> <span class="pre">o,</span> <span class="pre">square,</span>
+<span class="pre">triangle</span></tt>).</li>
+<li><strong>markstyle</strong> &#8211; the style of the plot marks (e.g. &#8216;mark
+size=.75pt&#8217;)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mark</span><span class="o">=</span><span class="s">&#39;*&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.scatter_table">
+<tt class="descname">scatter_table</tt><big>(</big><em>x</em>, <em>y</em>, <em>c</em>, <em>s</em>, <em>mark='*'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.scatter_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a data series to the plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> &#8211; array containing x-values.</li>
+<li><strong>y</strong> &#8211; array containing y-values.</li>
+<li><strong>c</strong> &#8211; array containing values for the color of the mark.</li>
+<li><strong>s</strong> &#8211; array containing values for the size of the mark.</li>
+<li><strong>mark</strong> &#8211; the symbol used to mark the data point.  May be None,
+or any plot mark accepted by TikZ (e.g. <tt class="docutils literal"><span class="pre">*,</span> <span class="pre">x,</span> <span class="pre">+,</span> <span class="pre">o,</span> <span class="pre">square,</span>
+<span class="pre">triangle</span></tt>).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The dimensions of x, y, c and s should be equal. The c values will
+be mapped to a colormap.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_title">
+<tt class="descname">set_title</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a title text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_label">
+<tt class="descname">set_label</tt><big>(</big><em>text</em>, <em>location='upper right'</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a label for the plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>text</strong> &#8211; the label text.</li>
+<li><strong>location</strong> &#8211; the location of the label inside the plot.  May
+be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
+left&#8217;, &#8216;lower left&#8217;.</li>
+<li><strong>style</strong> &#8211; any TikZ style to style the text.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.add_pin">
+<tt class="descname">add_pin</tt><big>(</big><em>text</em>, <em>location='left'</em>, <em>x=None</em>, <em>use_arrow=False</em>, <em>relative_position=None</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.add_pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add pin to most recent data series.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>text</strong> &#8211; the text of the pin label.</li>
+<li><strong>location</strong> (<em>string</em>) &#8211; the location of the pin relative to the data
+point.  Any location accepted by TikZ is allowed.</li>
+<li><strong>x</strong> &#8211; the x location of the data point (in the most recent
+data series) at which to place the label.  This is
+interpolated between the actual data points.  If None, only
+the relative_position parameter is used.</li>
+<li><strong>use_arrow</strong> (<em>boolean</em>) &#8211; specifies whether to draw an arrow between the
+data point and the pin label text.</li>
+<li><strong>relative_position</strong> &#8211; location of the data point as a relative
+number between 0 and 1.</li>
+<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.add_pin_at_xy">
+<tt class="descname">add_pin_at_xy</tt><big>(</big><em>x</em>, <em>y</em>, <em>text</em>, <em>location='above right'</em>, <em>relative_position=0.9</em>, <em>use_arrow=True</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.add_pin_at_xy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add pin at x, y location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> &#8211; array, list or float, specifying the location of the
+pin.</li>
+<li><strong>y</strong> &#8211; array, list or float, specifying the location of the
+pin.</li>
+<li><strong>text</strong> &#8211; the text of the pin label.</li>
+<li><strong>location</strong> &#8211; the location of the pin relative to the data
+point.  Any location accepted by TikZ is allowed.</li>
+<li><strong>relative_position</strong> &#8211; location of the data point as a relative
+number between 0 and 1.</li>
+<li><strong>use_arrow</strong> (<em>boolean</em>) &#8211; specifies whether to draw an arrow between the
+data point and the pin label text.</li>
+<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If x, y are arrays or lists, relative position is used to pick a
+point from the arrays.  A relative position of 0.0 will be the
+first point from the series, while 1.0 will be the last point.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.shade_region">
+<tt class="descname">shade_region</tt><big>(</big><em>x</em>, <em>lower</em>, <em>upper</em>, <em>color='lightgray'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.shade_region" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shade a region between upper and lower bounds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> &#8211; array containing x-values</li>
+<li><strong>lower</strong> &#8211; array containing y-values of lower bounds</li>
+<li><strong>upper</strong> &#8211; array containing y-values of upper bounds</li>
+<li><strong>color</strong> &#8211; TikZ style to color the region</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.draw_image">
+<tt class="descname">draw_image</tt><big>(</big><em>image</em>, <em>xmin=0</em>, <em>ymin=0</em>, <em>xmax=None</em>, <em>ymax=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.draw_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw an image.</p>
+<p>Do not forget to use <a class="reference internal" href="#artist.plot.SubPlot.set_axis_equal" title="artist.plot.SubPlot.set_axis_equal"><tt class="xref py py-meth docutils literal"><span class="pre">set_axis_equal()</span></tt></a> to preserve the
+aspect ratio of the image, or change the aspect ratio of the
+plot to the aspect ratio of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>image</strong> &#8211; Pillow Image object.</li>
+<li><strong>xmin,ymin,xmax,ymax</strong> &#8211; the x, y image bounds.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;background.png&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">height_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="o">.</span><span class="mi">67</span> <span class="o">*</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="s">r&#39;</span><span class="si">%.2f</span><span class="s">\linewidth&#39;</span> <span class="o">%</span> <span class="n">height_ratio</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">draw_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.draw_horizontal_line">
+<tt class="descname">draw_horizontal_line</tt><big>(</big><em>yvalue</em>, <em>linestyle=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.draw_horizontal_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a horizontal line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>yvalue</strong> &#8211; y-value of the line</li>
+<li><strong>linestyle</strong> &#8211; TikZ linestyle (e.g. dashed, solid, red)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.draw_vertical_line">
+<tt class="descname">draw_vertical_line</tt><big>(</big><em>xvalue</em>, <em>linestyle=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.draw_vertical_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a vertical line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>xvalue</strong> &#8211; x-value of the line</li>
+<li><strong>linestyle</strong> &#8211; TikZ linestyle (e.g. dashed, solid, red)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_axis_background">
+<tt class="descname">set_axis_background</tt><big>(</big><em>color='white'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_axis_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a fill color for the axis background.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> &#8211; TikZ style to color the axis background.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_xlabel">
+<tt class="descname">set_xlabel</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xlabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a label for the x-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_ylabel">
+<tt class="descname">set_ylabel</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_ylabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a label for the y-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_xlimits">
+<tt class="descname">set_xlimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xlimits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set limits for the x-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>min</strong> &#8211; minimum value to be displayed.  If None, it will be
+calculated.</li>
+<li><strong>max</strong> &#8211; maximum value to be displayed.  If None, it will be
+calculated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_ylimits">
+<tt class="descname">set_ylimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_ylimits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set limits for the y-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>min</strong> &#8211; minimum value to be displayed.  If None, it will be
+calculated.</li>
+<li><strong>max</strong> &#8211; maximum value to be displayed.  If None, it will be
+calculated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_mlimits">
+<tt class="descname">set_mlimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_mlimits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set limits for the point meta (colormap).</p>
+<p>Point meta values outside this range will be clipped.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>min</strong> &#8211; value corresponding to the start of the colormap.
+If None, it will be calculated.</li>
+<li><strong>max</strong> &#8211; value corresponding to the end of the colormap.
+If None, it will be calculated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_slimits">
+<tt class="descname">set_slimits</tt><big>(</big><em>min</em>, <em>max</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_slimits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set limits for the size of points in <a class="reference internal" href="#artist.plot.SubPlot.scatter_table" title="artist.plot.SubPlot.scatter_table"><tt class="xref py py-meth docutils literal"><span class="pre">scatter_table()</span></tt></a>.</p>
+<p>If both are None, the size will be the given values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>min</strong> &#8211; point size for the lowest value.</li>
+<li><strong>max</strong> &#8211; point size for the highest value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_xticks">
+<tt class="descname">set_xticks</tt><big>(</big><em>ticks</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set ticks for the x-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ticks</strong> &#8211; locations for the ticks along the axis.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_yticks">
+<tt class="descname">set_yticks</tt><big>(</big><em>ticks</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_yticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set ticks for the y-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ticks</strong> &#8211; locations for the ticks along the axis.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_logxticks">
+<tt class="descname">set_logxticks</tt><big>(</big><em>logticks</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_logxticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set ticks for the logarithmic x-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along
+the axis.</td>
+</tr>
+</tbody>
+</table>
+<p>For example, if you specify [1, 2, 3], ticks will be placed at 10,
+100 and 1000.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_logyticks">
+<tt class="descname">set_logyticks</tt><big>(</big><em>logticks</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_logyticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set ticks for the logarithmic y-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along
+the axis.</td>
+</tr>
+</tbody>
+</table>
+<p>For example, if you specify [1, 2, 3], ticks will be placed at 10,
+100 and 1000.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_xtick_labels">
+<tt class="descname">set_xtick_labels</tt><big>(</big><em>labels</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xtick_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tick labels for the x-axis.</p>
+<p>Also set the x-ticks positions to ensure the labels end up on
+the correct place.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels</strong> &#8211; list of labels for the ticks along the axis.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_ytick_labels">
+<tt class="descname">set_ytick_labels</tt><big>(</big><em>labels</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_ytick_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tick labels for the y-axis.</p>
+<p>Also set the y-ticks positions to ensure the labels end up on
+the correct place.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels</strong> &#8211; list of labels for the ticks along the axis.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_xtick_suffix">
+<tt class="descname">set_xtick_suffix</tt><big>(</big><em>suffix</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xtick_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the suffix for the ticks of the x-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suffix</strong> &#8211; string added after each tick. If the value is
+<cite>degree</cite> or <cite>precent</cite> the corresponding symbols
+will be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_ytick_suffix">
+<tt class="descname">set_ytick_suffix</tt><big>(</big><em>suffix</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_ytick_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set ticks for the y-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suffix</strong> &#8211; string added after each tick. If the value is
+<cite>degree</cite> or <cite>precent</cite> the corresponding symbols
+will be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_axis_equal">
+<tt class="descname">set_axis_equal</tt><big>(</big><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_axis_equal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale the axes so the unit vectors have equal length.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_scalebar">
+<tt class="descname">set_scalebar</tt><big>(</big><em>location='lower right'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_scalebar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show marker area scale</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>location</strong> &#8211; the location of the label inside the plot.  May
+be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
+left&#8217;, &#8216;lower left&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_colorbar">
+<tt class="descname">set_colorbar</tt><big>(</big><em>label=''</em>, <em>horizontal=False</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_colorbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the colorbar.</p>
+<p>Not for the histogram2d, only for the scatter_table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>label</strong> &#8211; axis label for the colorbar.</li>
+<li><strong>horizontal</strong> &#8211; boolean, if True the colobar will be horizontal.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_colormap">
+<tt class="descname">set_colormap</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose a colormap for <a class="reference internal" href="#artist.plot.SubPlot.scatter_table" title="artist.plot.SubPlot.scatter_table"><tt class="xref py py-meth docutils literal"><span class="pre">scatter_table()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; name of the colormap to use. (e.g. hot, cool, blackwhite,
+greenyellow). If None a coolwarm colormap is used.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.SubPlot.set_axis_options">
+<tt class="descname">set_axis_options</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_axis_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set additionnal options as plain text.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="artist.plot.Plot">
+<em class="property">class </em><tt class="descclassname">artist.plot.</tt><tt class="descname">Plot</tt><big>(</big><em>axis=''</em>, <em>width='.67\linewidth'</em>, <em>height=None</em><big>)</big><a class="headerlink" href="#artist.plot.Plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#artist.plot.SubPlot" title="artist.plot.SubPlot"><tt class="xref py py-class docutils literal"><span class="pre">artist.plot.SubPlot</span></tt></a>, <a class="reference internal" href="#artist.plot.BasePlotContainer" title="artist.plot.BasePlotContainer"><tt class="xref py py-class docutils literal"><span class="pre">artist.plot.BasePlotContainer</span></tt></a></p>
 <p>Create a plot containing a single subplot.</p>
 <p>This class creates a 2D plot.  Its various methods add data,
@@ -109,8 +914,8 @@ annotations and options which is stored in class variables.  Finally,
 the plot can be rendered using the Jinja2 templating engine resulting
 in a LaTeX or PDF file.</p>
 <dl class="method">
-<dt id="artist.__init__.Plot.render">
-<tt class="descname">render</tt><big>(</big><em>template=None</em><big>)</big><a class="headerlink" href="#artist.__init__.Plot.render" title="Permalink to this definition">¶</a></dt>
+<dt id="artist.plot.Plot.render">
+<tt class="descname">render</tt><big>(</big><em>template=None</em><big>)</big><a class="headerlink" href="#artist.plot.Plot.render" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render the plot using a template.</p>
 <p>Once the plot is complete, it needs to be rendered.  Artist uses
 the Jinja2 templating engine.  The default template results in a
@@ -130,8 +935,8 @@ LaTeX file which can be included in your document.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="artist.__init__.PolarPlot">
-<em class="property">class </em><tt class="descclassname">artist.__init__.</tt><tt class="descname">PolarPlot</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#artist.__init__.PolarPlot" title="Permalink to this definition">¶</a></dt>
+<dt id="artist.plot.PolarPlot">
+<em class="property">class </em><tt class="descclassname">artist.plot.</tt><tt class="descname">PolarPlot</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#artist.plot.PolarPlot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#artist.plot.Plot" title="artist.plot.Plot"><tt class="xref py py-class docutils literal"><span class="pre">artist.plot.Plot</span></tt></a></p>
 <p>Create a plot containing a single polar subplot.</p>
 <p>Same as the Plot but uses polar axes. The x values are the phi
@@ -147,8 +952,13 @@ values and x axis labels are radians.</td>
 </tbody>
 </table>
 <dl class="method">
-<dt id="artist.__init__.PolarPlot.histogram">
-<tt class="descname">histogram</tt><big>(</big><em>counts</em>, <em>bin_edges</em>, <em>linestyle='solid'</em><big>)</big><a class="headerlink" href="#artist.__init__.PolarPlot.histogram" title="Permalink to this definition">¶</a></dt>
+<dt id="artist.plot.PolarPlot.plot">
+<tt class="descname">plot</tt><big>(</big><em>x</em>, <em>y</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#artist.plot.PolarPlot.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="artist.plot.PolarPlot.histogram">
+<tt class="descname">histogram</tt><big>(</big><em>counts</em>, <em>bin_edges</em>, <em>linestyle='solid'</em><big>)</big><a class="headerlink" href="#artist.plot.PolarPlot.histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a polar histogram.</p>
 <p>The user needs to supply the histogram.  This method only plots
 the results.  You can use NumPy&#8217;s histogram function.</p>
@@ -178,723 +988,17 @@ dashed, dotted, thick, or even combinations like
 </dd></dl>
 
 <dl class="method">
-<dt id="artist.__init__.PolarPlot.plot">
-<tt class="descname">plot</tt><big>(</big><em>x</em>, <em>y</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#artist.__init__.PolarPlot.plot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.PolarPlot.set_xlimits">
-<tt class="descname">set_xlimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.__init__.PolarPlot.set_xlimits" title="Permalink to this definition">¶</a></dt>
+<dt id="artist.plot.PolarPlot.set_xlimits">
+<tt class="descname">set_xlimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.plot.PolarPlot.set_xlimits" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do not allow setting x limits, it messes with the axes.</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="artist.__init__.MultiPlot">
-<em class="property">class </em><tt class="descclassname">artist.__init__.</tt><tt class="descname">MultiPlot</tt><big>(</big><em>rows</em>, <em>columns</em>, <em>axis=''</em>, <em>width='.67\linewidth'</em>, <em>height=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#artist.plot.BasePlotContainer" title="artist.plot.BasePlotContainer"><tt class="xref py py-class docutils literal"><span class="pre">artist.plot.BasePlotContainer</span></tt></a></p>
-<p>Create a plot containing multiple subplots.</p>
-<p>This class creates a 2D plot containing multiple subplots.  The number
-of rows and columns can be specified and some of the subplot
-rectangles can remain empty (nothing is drawn, not even an axis
-rectangle).  Its various methods add data, annotations and options
-which is stored in class variables.  Finally, the plot can be rendered
-using the Jinja2 templating engine resulting in a LaTeX or PDF file.</p>
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.get_subplot_at">
-<tt class="descname">get_subplot_at</tt><big>(</big><em>row</em>, <em>column</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.get_subplot_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the subplot at row, column position.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row,column</strong> &#8211; specify the subplot.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.render">
-<tt class="descname">render</tt><big>(</big><em>template=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.render" title="Permalink to this definition">¶</a></dt>
-<dd><p>Render the plot using a template.</p>
-<p>Once the plot is complete, it needs to be rendered.  Artist uses
-the Jinja2 templating engine.  The default template results in a
-LaTeX file which can be included in your document.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string or None.</em>) &#8211; a user-supplied template or None.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.save_assets">
-<tt class="descname">save_assets</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.save_assets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save plot assets alongside dest_path.</p>
-<p>Some plots may have assets, like bitmap files, which need to be
-saved alongside the rendered plot file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the main output file.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_colorbar">
-<tt class="descname">set_colorbar</tt><big>(</big><em>label=''</em>, <em>horizontal=False</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_colorbar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show the colorbar, it will be attached to the last plot.</p>
-<p>Not for the histogram2d, only for the scatter_table.
-Global mlimits should be set for this to properly reflect the
-colormap of each subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>label</strong> &#8211; axis label for the colorbar.</li>
-<li><strong>horizontal</strong> &#8211; boolean, if True the colobar will be horizontal.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_colormap">
-<tt class="descname">set_colormap</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_colormap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose a colormap for all subplots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; name of the colormap to use. (e.g. hot, cool, blackwhite,
-greenyellow). If None a coolwarm colormap is used.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_empty">
-<tt class="descname">set_empty</tt><big>(</big><em>row</em>, <em>column</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_empty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Keep one of the subplots completely empty.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row,column</strong> &#8211; specify the subplot.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_empty_for_all">
-<tt class="descname">set_empty_for_all</tt><big>(</big><em>row_column_list</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_empty_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Keep all specified subplots completely empty.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_label">
-<tt class="descname">set_label</tt><big>(</big><em>row</em>, <em>column</em>, <em>text</em>, <em>location='upper right'</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_label" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a label for the subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>text</strong> &#8211; the label text.</li>
-<li><strong>location</strong> &#8211; the location of the label inside the plot.  May
-be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
-left&#8217;, &#8216;lower left&#8217;.</li>
-<li><strong>style</strong> &#8211; any TikZ style to style the text.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_logxticks">
-<tt class="descname">set_logxticks</tt><big>(</big><em>row</em>, <em>column</em>, <em>logticks</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_logxticks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually specify the x-axis log tick values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along the
-axis.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>For example, if you specify [1, 2, 3], ticks will be placed at 10,
-100 and 1000.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_logxticks_for_all">
-<tt class="descname">set_logxticks_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>logticks=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_logxticks_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually specify the x-axis log tick values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along the
-axis.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>For example, if you specify [1, 2, 3], ticks will be placed at 10,
-100 and 1000.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_logyticks">
-<tt class="descname">set_logyticks</tt><big>(</big><em>row</em>, <em>column</em>, <em>logticks</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_logyticks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually specify the y-axis log tick values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along the
-axis.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>For example, if you specify [1, 2, 3], ticks will be placed at 10,
-100 and 1000.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_logyticks_for_all">
-<tt class="descname">set_logyticks_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>logticks=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_logyticks_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually specify the y-axis log tick values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along the
-axis.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>For example, if you specify [1, 2, 3], ticks will be placed at 10,
-100 and 1000.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_mlimits">
-<tt class="descname">set_mlimits</tt><big>(</big><em>row</em>, <em>column</em>, <em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_mlimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set limits for the point meta (colormap).</p>
-<p>Point meta values outside this range will be clipped.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; value for start of the colormap.</li>
-<li><strong>max</strong> &#8211; value for end of the colormap.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_mlimits_for_all">
-<tt class="descname">set_mlimits_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_mlimits_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set limits for point meta (colormap) for specified subplots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>min</strong> &#8211; value for start of the colormap.</li>
-<li><strong>max</strong> &#8211; value for end of the colormap.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_scalebar_for_all">
-<tt class="descname">set_scalebar_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>location='lower right'</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_scalebar_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show marker area scale for subplots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>location</strong> &#8211; the location of the label inside the plot.  May
-be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
-left&#8217;, &#8216;lower left&#8217;.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_slimits">
-<tt class="descname">set_slimits</tt><big>(</big><em>row</em>, <em>column</em>, <em>min</em>, <em>max</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_slimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set limits for the point sizes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; point size for the lowest value.</li>
-<li><strong>max</strong> &#8211; point size for the highest value.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_slimits_for_all">
-<tt class="descname">set_slimits_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_slimits_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set point size limits of specified subplots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>min</strong> &#8211; point size for the lowest value.</li>
-<li><strong>max</strong> &#8211; point size for the highest value.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_subplot_xlabel">
-<tt class="descname">set_subplot_xlabel</tt><big>(</big><em>row</em>, <em>column</em>, <em>text</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_subplot_xlabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a label for the x-axis of a subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>text</strong> &#8211; text of the label.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_subplot_ylabel">
-<tt class="descname">set_subplot_ylabel</tt><big>(</big><em>row</em>, <em>column</em>, <em>text</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_subplot_ylabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a label for the y-axis of a subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>text</strong> &#8211; text of the label.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_title">
-<tt class="descname">set_title</tt><big>(</big><em>row</em>, <em>column</em>, <em>text</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_title" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a title text.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>text</strong> &#8211; title text.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_xlabel">
-<tt class="descname">set_xlabel</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_xlabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a label for the x-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_xlimits">
-<tt class="descname">set_xlimits</tt><big>(</big><em>row</em>, <em>column</em>, <em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_xlimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set x-axis limits of a subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>min</strong> &#8211; minimal axis value</li>
-<li><strong>max</strong> &#8211; maximum axis value</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_xlimits_for_all">
-<tt class="descname">set_xlimits_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_xlimits_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set x-axis limits of specified subplots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>min</strong> &#8211; minimal axis value</li>
-<li><strong>max</strong> &#8211; maximum axis value</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_xticklabels_position">
-<tt class="descname">set_xticklabels_position</tt><big>(</big><em>row</em>, <em>column</em>, <em>position</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_xticklabels_position" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specify the position of the axis tick labels.</p>
-<p>This is generally only useful for multiplots containing only one
-row.  This can be used to e.g. alternatively draw the tick labels
-on the bottom or the top of the subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>position</strong> &#8211; &#8216;top&#8217; or &#8216;bottom&#8217; to specify the position of the
-tick labels.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_xticks">
-<tt class="descname">set_xticks</tt><big>(</big><em>row</em>, <em>column</em>, <em>ticks</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_xticks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually specify the x-axis tick values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>ticks</strong> &#8211; list of tick values.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_xticks_for_all">
-<tt class="descname">set_xticks_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>ticks=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_xticks_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually specify the x-axis tick values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>ticks</strong> &#8211; list of tick values.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_ylabel">
-<tt class="descname">set_ylabel</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_ylabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a label for the y-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_ylimits">
-<tt class="descname">set_ylimits</tt><big>(</big><em>row</em>, <em>column</em>, <em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_ylimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set y-axis limits of a subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>min</strong> &#8211; minimal axis value</li>
-<li><strong>max</strong> &#8211; maximum axis value</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_ylimits_for_all">
-<tt class="descname">set_ylimits_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_ylimits_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set y-axis limits of specified subplots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>min</strong> &#8211; minimal axis value</li>
-<li><strong>max</strong> &#8211; maximum axis value</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_yticklabels_position">
-<tt class="descname">set_yticklabels_position</tt><big>(</big><em>row</em>, <em>column</em>, <em>position</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_yticklabels_position" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specify the position of the axis tick labels.</p>
-<p>This is generally only useful for multiplots containing only one
-column.  This can be used to e.g. alternatively draw the tick
-labels on the left or the right of the subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>position</strong> &#8211; &#8216;left&#8217; or &#8216;right&#8217; to specify the position of the
-tick labels.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_yticks">
-<tt class="descname">set_yticks</tt><big>(</big><em>row</em>, <em>column</em>, <em>ticks</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_yticks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually specify the y-axis tick values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>ticks</strong> &#8211; list of tick values.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.set_yticks_for_all">
-<tt class="descname">set_yticks_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>ticks=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.set_yticks_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually specify the y-axis tick values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>ticks</strong> &#8211; list of tick values.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.show_xticklabels">
-<tt class="descname">show_xticklabels</tt><big>(</big><em>row</em>, <em>column</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.show_xticklabels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show the x-axis tick labels for a subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row,column</strong> &#8211; specify the subplot.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.show_xticklabels_for_all">
-<tt class="descname">show_xticklabels_for_all</tt><big>(</big><em>row_column_list=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.show_xticklabels_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show the x-axis tick labels for all specified subplots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.show_yticklabels">
-<tt class="descname">show_yticklabels</tt><big>(</big><em>row</em>, <em>column</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.show_yticklabels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show the y-axis tick labels for a subplot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row,column</strong> &#8211; specify the subplot.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.__init__.MultiPlot.show_yticklabels_for_all">
-<tt class="descname">show_yticklabels_for_all</tt><big>(</big><em>row_column_list=None</em><big>)</big><a class="headerlink" href="#artist.__init__.MultiPlot.show_yticklabels_for_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show the y-axis tick labels for all specified subplots.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
-specify the subplots, or None to indicate <em>all</em> subplots.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="artist.__init__.smooth">
-<tt class="descclassname">artist.__init__.</tt><tt class="descname">smooth</tt><big>(</big><em>x</em>, <em>y</em>, <em>degree=1</em>, <em>logx=False</em>, <em>logy=False</em><big>)</big><a class="headerlink" href="#artist.__init__.smooth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Smooth y-values and return new x, y pair.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>y</strong> (<em>x,</em>) &#8211; data values</li>
-<li><strong>degree</strong> &#8211; degree of smoothing</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Smooth data by using a recursive linear interpolation technique.  For
-degree = 0, return the original values.  For degree = 1, generate a
-evenly spaced sequence of x-values, with the length equal to the
-original length.  The y-values are linearly interpolated for these
-x-values.  For degree &gt;= 2, calls itself with degree - 1, then
-calculates new x-values by taking the averages of the returned
-x-values, and calculates new y-values by linear interpolation.  The
-return values are thus reduced in length by one sample.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="artist.__init__.GraphArtist">
-<tt class="descclassname">artist.__init__.</tt><tt class="descname">GraphArtist</tt><a class="headerlink" href="#artist.__init__.GraphArtist" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#artist.__init__.Plot" title="artist.__init__.Plot"><tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt></a></p>
-</dd></dl>
-
 </div>
 </div>
 <div class="section" id="module-artist.multi_plot">
-<span id="multi-plot-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">multi_plot</span></tt> Module<a class="headerlink" href="#module-artist.multi_plot" title="Permalink to this headline">¶</a></h2>
+<span id="multi-plot-module"></span><h2><a class="reference internal" href="#module-artist.multi_plot" title="artist.multi_plot"><tt class="xref py py-mod docutils literal"><span class="pre">multi_plot</span></tt></a> Module<a class="headerlink" href="#module-artist.multi_plot" title="Permalink to this headline">¶</a></h2>
 <p>Create a plot containing multiple subplots.</p>
 <div class="section" id="id2">
 <h3>Contents<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
@@ -1571,6 +1675,31 @@ greenyellow). If None a coolwarm colormap is used.</td>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="artist.multi_plot.MultiPlot.set_axis_options">
+<tt class="descname">set_axis_options</tt><big>(</big><em>row</em>, <em>column</em>, <em>text</em><big>)</big><a class="headerlink" href="#artist.multi_plot.MultiPlot.set_axis_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set additionnal options as plain text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artist.multi_plot.MultiPlot.set_axis_options_for_all">
+<tt class="descname">set_axis_options_for_all</tt><big>(</big><em>row_column_list=None</em>, <em>text=''</em><big>)</big><a class="headerlink" href="#artist.multi_plot.MultiPlot.set_axis_options_for_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set point size limits of specified subplots.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+specify the subplots, or None to indicate <em>all</em> subplots.</li>
+<li><strong>text</strong> &#8211; axis options for the given subplots or the overall plot.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1639,925 +1768,8 @@ tick labels.</td>
 
 </div>
 </div>
-<div class="section" id="module-artist.plot">
-<span id="plot-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">plot</span></tt> Module<a class="headerlink" href="#module-artist.plot" title="Permalink to this headline">¶</a></h2>
-<p>Create a plot.</p>
-<div class="section" id="id3">
-<h3>Contents<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt><a class="reference internal" href="#artist.plot.BasePlotContainer" title="artist.plot.BasePlotContainer"><tt class="xref py py-class docutils literal"><span class="pre">BasePlotContainer</span></tt></a></dt>
-<dd>Base class for standalone plots.</dd>
-<dt><a class="reference internal" href="#artist.plot.SubPlot" title="artist.plot.SubPlot"><tt class="xref py py-class docutils literal"><span class="pre">SubPlot</span></tt></a></dt>
-<dd>Plot data in a data rectangle.</dd>
-<dt><a class="reference internal" href="#artist.plot.Plot" title="artist.plot.Plot"><tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt></a></dt>
-<dd>Create a plot containing a single subplot.</dd>
-<dt><a class="reference internal" href="#artist.plot.PolarPlot" title="artist.plot.PolarPlot"><tt class="xref py py-class docutils literal"><span class="pre">PolarPlot</span></tt></a></dt>
-<dd>Create a plot containing a single polar subplot.</dd>
-</dl>
-<dl class="class">
-<dt id="artist.plot.BasePlotContainer">
-<em class="property">class </em><tt class="descclassname">artist.plot.</tt><tt class="descname">BasePlotContainer</tt><a class="headerlink" href="#artist.plot.BasePlotContainer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Base class for stand-alone plots.</p>
-<p>This class provides methods for rendering the plot.  To provide
-methods for plotting and annotating, subclass this base class.</p>
-<dl class="attribute">
-<dt id="artist.plot.BasePlotContainer.template">
-<tt class="descname">template</tt><em class="property"> = None</em><a class="headerlink" href="#artist.plot.BasePlotContainer.template" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="artist.plot.BasePlotContainer.document_template">
-<tt class="descname">document_template</tt><em class="property"> = None</em><a class="headerlink" href="#artist.plot.BasePlotContainer.document_template" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.BasePlotContainer.render">
-<tt class="descname">render</tt><big>(</big><em>template=None</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.render" title="Permalink to this definition">¶</a></dt>
-<dd><p>Render the plot using a template.</p>
-<p>Once the plot is complete, it needs to be rendered.  Artist uses
-the Jinja2 templating engine.  The default template results in a
-LaTeX file which can be included in your document.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string or None.</em>) &#8211; a user-supplied template or None.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
-</tr>
-</tbody>
-</table>
-<p>This is a very minimal implementation.  Override this method to
-include variables in the template.render call.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.BasePlotContainer.save_assets">
-<tt class="descname">save_assets</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.save_assets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save plot assets alongside dest_path.</p>
-<p>Some plots may have assets, like bitmap files, which need to be
-saved alongside the rendered plot file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the main output file.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.BasePlotContainer.render_as_document">
-<tt class="descname">render_as_document</tt><big>(</big><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.render_as_document" title="Permalink to this definition">¶</a></dt>
-<dd><p>Render the plot as a stand-alone document.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.BasePlotContainer.save">
-<tt class="descname">save</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save the plot as a includable LaTeX file.</p>
-<p>The output file can be included (using input) in your LaTeX
-document.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.BasePlotContainer.save_as_document">
-<tt class="descname">save_as_document</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.save_as_document" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save the plot as a stand-alone LaTeX file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.BasePlotContainer.save_as_pdf">
-<tt class="descname">save_as_pdf</tt><big>(</big><em>dest_path</em><big>)</big><a class="headerlink" href="#artist.plot.BasePlotContainer.save_as_pdf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save the plot as a PDF file.</p>
-<p>Save and render the plot using LaTeX to create a PDF file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="artist.plot.SubPlot">
-<em class="property">class </em><tt class="descclassname">artist.plot.</tt><tt class="descname">SubPlot</tt><a class="headerlink" href="#artist.plot.SubPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
-<p>Plot data in a data rectangle.</p>
-<p>Provides methods to plot or histogram data, shade regions, add labels,
-pins and titles.  This class is not meant to be used directly.
-Instead, use the Plot class for single plots, or the MultiPlot class
-for plots containing multiple subplots.</p>
-<dl class="method">
-<dt id="artist.plot.SubPlot.save_assets">
-<tt class="descname">save_assets</tt><big>(</big><em>dest_path</em>, <em>suffix=''</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.save_assets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save plot assets alongside dest_path.</p>
-<p>Some plots may have assets, like bitmap files, which need to be
-saved alongside the rendered plot file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dest_path</strong> &#8211; path of the main output file.</li>
-<li><strong>suffix</strong> &#8211; optional suffix to add to asset names.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.plot">
-<tt class="descname">plot</tt><big>(</big><em>x</em>, <em>y</em>, <em>xerr=[]</em>, <em>yerr=[]</em>, <em>mark='o'</em>, <em>linestyle='solid'</em>, <em>use_steps=False</em>, <em>markstyle=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a data series to the plot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array containing x-values.</li>
-<li><strong>y</strong> &#8211; array containing y-values.</li>
-<li><strong>xerr</strong> &#8211; (optional) array containing errors on the x-values.</li>
-<li><strong>yerr</strong> &#8211; (optional) array containing errors on the y-values.</li>
-<li><strong>mark</strong> &#8211; the symbol used to mark the data point.  May be None,
-or any plot mark accepted by TikZ (e.g. <a href="#id4"><span class="problematic" id="id5">*</span></a>, x, +, o, square,
-triangle).</li>
-<li><strong>linestyle</strong> &#8211; the line style used to connect the data points.
-May be None, or any line style accepted by TikZ (e.g. solid,
-dashed, dotted, thick, or even combinations like
-&#8220;red,thick,dashed&#8221;).</li>
-<li><strong>use_steps</strong> &#8211; if True, draw a stepped plot.</li>
-<li><strong>markstyle</strong> &#8211; the style of the plot marks (e.g. &#8216;mark
-size=.75pt&#8217;)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>The dimensions of x, y, xerr and yerr should be equal.  However,
-xerr and yerr may be empty lists.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.histogram">
-<tt class="descname">histogram</tt><big>(</big><em>counts</em>, <em>bin_edges</em>, <em>linestyle='solid'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot a histogram.</p>
-<p>The user needs to supply the histogram.  This method only plots
-the results.  You can use NumPy&#8217;s histogram function.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>counts</strong> &#8211; array containing the count values.</li>
-<li><strong>bin_edges</strong> &#8211; array containing the bin edges.</li>
-<li><strong>linestyle</strong> &#8211; the line style used to connect the data points.
-May be None, or any line style accepted by TikZ (e.g. solid,
-dashed, dotted, thick, or even combinations like
-&#8220;red,thick,dashed&#8221;).</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.histogram2d">
-<tt class="descname">histogram2d</tt><big>(</big><em>counts</em>, <em>x_edges</em>, <em>y_edges</em>, <em>type='bw'</em>, <em>style=None</em>, <em>bitmap=False</em>, <em>colormap=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.histogram2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot a two-dimensional histogram.</p>
-<p>The user needs to supply the histogram.  This method only plots
-the results.  You can use NumPy&#8217;s histogram2d function.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>counts</strong> &#8211; array containing the count values.</li>
-<li><strong>x_edges</strong> &#8211; array containing the x-axis bin edges.</li>
-<li><strong>y_edges</strong> &#8211; array containing the y-axis bin edges.</li>
-<li><strong>type</strong> &#8211; the type of histogram.  Allowed values are &#8216;bw&#8217; for
-filled squares with shades from black (minimum value) to white
-(maximum value), &#8216;reverse_bw&#8217; for filled squares with the
-shades reversed and, &#8216;color&#8217; for color mapped histogram
-which uses the &#8216;coolwarm&#8217; colormap by default, but can be
-overwritten with the colormap keyword, and &#8216;area&#8217; for
-squares where the area of the square is a measure of the
-count in the bin.</li>
-<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).  Note
-that many color styles are overridden by the &#8216;bw&#8217; and
-&#8216;reverse_bw&#8217; types.</li>
-<li><strong>bitmap</strong> &#8211; Export the histogram as an image for better
-performance. This does expect all bins along an axis to have
-equal width. Can only be combined with type &#8216;bw&#8217; and
-&#8216;reverse_bw&#8217;.</li>
-<li><strong>colormap</strong> &#8211; A colormap for the &#8216;color&#8217; type, as expected by
-the <cite>Image.putpalette</cite> method.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.scatter">
-<tt class="descname">scatter</tt><big>(</big><em>x</em>, <em>y</em>, <em>mark='o'</em>, <em>markstyle=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.scatter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot a series of points.</p>
-<p>Plot a series of points (marks) that are not connected by a
-line. Shortcut for plot with linestyle=None.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array containing x-values.</li>
-<li><strong>y</strong> &#8211; array containing y-values.</li>
-<li><strong>mark</strong> &#8211; the symbol used to mark the data points. May be
-any plot mark accepted by TikZ (e.g. <a href="#id6"><span class="problematic" id="id7">*</span></a>, x, +, o, square,
-triangle).</li>
-<li><strong>markstyle</strong> &#8211; the style of the plot marks (e.g. &#8216;mark
-size=.75pt&#8217;)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mark</span><span class="o">=</span><span class="s">&#39;*&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.scatter_table">
-<tt class="descname">scatter_table</tt><big>(</big><em>x</em>, <em>y</em>, <em>c</em>, <em>s</em>, <em>mark='*'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.scatter_table" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a data series to the plot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array containing x-values.</li>
-<li><strong>y</strong> &#8211; array containing y-values.</li>
-<li><strong>c</strong> &#8211; array containing values for the color of the mark.</li>
-<li><strong>s</strong> &#8211; array containing values for the size of the mark.</li>
-<li><strong>mark</strong> &#8211; the symbol used to mark the data point.  May be None,
-or any plot mark accepted by TikZ (e.g. <a href="#id8"><span class="problematic" id="id9">*</span></a>, x, +, o, square,
-triangle).</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>The dimensions of x, y, c and s should be equal. The c values will
-be mapped to a colormap.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_title">
-<tt class="descname">set_title</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_title" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a title text.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_label">
-<tt class="descname">set_label</tt><big>(</big><em>text</em>, <em>location='upper right'</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_label" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a label for the plot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>text</strong> &#8211; the label text.</li>
-<li><strong>location</strong> &#8211; the location of the label inside the plot.  May
-be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
-left&#8217;, &#8216;lower left&#8217;.</li>
-<li><strong>style</strong> &#8211; any TikZ style to style the text.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.add_pin">
-<tt class="descname">add_pin</tt><big>(</big><em>text</em>, <em>location='left'</em>, <em>x=None</em>, <em>use_arrow=False</em>, <em>relative_position=None</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.add_pin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add pin to most recent data series.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>text</strong> &#8211; the text of the pin label.</li>
-<li><strong>location</strong> (<em>string</em>) &#8211; the location of the pin relative to the data
-point.  Any location accepted by TikZ is allowed.</li>
-<li><strong>x</strong> &#8211; the x location of the data point (in the most recent
-data series) at which to place the label.  This is
-interpolated between the actual data points.  If None, only
-the relative_position parameter is used.</li>
-<li><strong>use_arrow</strong> (<em>boolean</em>) &#8211; specifies whether to draw an arrow between the
-data point and the pin label text.</li>
-<li><strong>relative_position</strong> &#8211; location of the data point as a relative
-number between 0 and 1.</li>
-<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.add_pin_at_xy">
-<tt class="descname">add_pin_at_xy</tt><big>(</big><em>x</em>, <em>y</em>, <em>text</em>, <em>location='above right'</em>, <em>relative_position=0.9</em>, <em>use_arrow=True</em>, <em>style=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.add_pin_at_xy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add pin at x, y location.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array, list or float, specifying the location of the
-pin.</li>
-<li><strong>y</strong> &#8211; array, list or float, specifying the location of the
-pin.</li>
-<li><strong>text</strong> &#8211; the text of the pin label.</li>
-<li><strong>location</strong> &#8211; the location of the pin relative to the data
-point.  Any location accepted by TikZ is allowed.</li>
-<li><strong>relative_position</strong> &#8211; location of the data point as a relative
-number between 0 and 1.</li>
-<li><strong>use_arrow</strong> (<em>boolean</em>) &#8211; specifies whether to draw an arrow between the
-data point and the pin label text.</li>
-<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>If x, y are arrays or lists, relative position is used to pick a
-point from the arrays.  A relative position of 0.0 will be the
-first point from the series, while 1.0 will be the last point.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.shade_region">
-<tt class="descname">shade_region</tt><big>(</big><em>x</em>, <em>lower</em>, <em>upper</em>, <em>color='lightgray'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.shade_region" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shade a region between upper and lower bounds.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array containing x-values</li>
-<li><strong>lower</strong> &#8211; array containing y-values of lower bounds</li>
-<li><strong>upper</strong> &#8211; array containing y-values of upper bounds</li>
-<li><strong>color</strong> &#8211; TikZ style to color the region</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.draw_image">
-<tt class="descname">draw_image</tt><big>(</big><em>image</em>, <em>xmin=0</em>, <em>ymin=0</em>, <em>xmax=None</em>, <em>ymax=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.draw_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draw an image.</p>
-<p>Do not forget to use <a class="reference internal" href="#artist.plot.SubPlot.set_axis_equal" title="artist.plot.SubPlot.set_axis_equal"><tt class="xref py py-meth docutils literal"><span class="pre">set_axis_equal()</span></tt></a> to preserve the
-aspect ratio of the image, or change the aspect ratio of the
-plot to the aspect ratio of the image.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>image</strong> &#8211; Pillow Image object.</li>
-<li><strong>xmin,ymin,xmax,ymax</strong> &#8211; the x, y image bounds.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;background.png&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">height_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="o">.</span><span class="mi">67</span> <span class="o">*</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="s">r&#39;</span><span class="si">%.2f</span><span class="s">\linewidth&#39;</span> <span class="o">%</span> <span class="n">height_ratio</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">draw_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.draw_horizontal_line">
-<tt class="descname">draw_horizontal_line</tt><big>(</big><em>yvalue</em>, <em>linestyle=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.draw_horizontal_line" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draw a horizontal line.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>yvalue</strong> &#8211; y-value of the line</li>
-<li><strong>linestyle</strong> &#8211; TikZ linestyle (e.g. dashed, solid, red)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.draw_vertical_line">
-<tt class="descname">draw_vertical_line</tt><big>(</big><em>xvalue</em>, <em>linestyle=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.draw_vertical_line" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draw a vertical line.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>xvalue</strong> &#8211; x-value of the line</li>
-<li><strong>linestyle</strong> &#8211; TikZ linestyle (e.g. dashed, solid, red)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_axis_background">
-<tt class="descname">set_axis_background</tt><big>(</big><em>color='white'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_axis_background" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a fill color for the axis background.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> &#8211; TikZ style to color the axis background.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_xlabel">
-<tt class="descname">set_xlabel</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xlabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a label for the x-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_ylabel">
-<tt class="descname">set_ylabel</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_ylabel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a label for the y-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_xlimits">
-<tt class="descname">set_xlimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xlimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set limits for the x-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; minimum value to be displayed.  If None, it will be
-calculated.</li>
-<li><strong>max</strong> &#8211; maximum value to be displayed.  If None, it will be
-calculated.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_ylimits">
-<tt class="descname">set_ylimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_ylimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set limits for the y-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; minimum value to be displayed.  If None, it will be
-calculated.</li>
-<li><strong>max</strong> &#8211; maximum value to be displayed.  If None, it will be
-calculated.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_mlimits">
-<tt class="descname">set_mlimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_mlimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set limits for the point meta (colormap).</p>
-<p>Point meta values outside this range will be clipped.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; value corresponding to the start of the colormap.
-If None, it will be calculated.</li>
-<li><strong>max</strong> &#8211; value corresponding to the end of the colormap.
-If None, it will be calculated.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_slimits">
-<tt class="descname">set_slimits</tt><big>(</big><em>min</em>, <em>max</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_slimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set limits for the size of points in <a class="reference internal" href="#artist.plot.SubPlot.scatter_table" title="artist.plot.SubPlot.scatter_table"><tt class="xref py py-meth docutils literal"><span class="pre">scatter_table()</span></tt></a>.</p>
-<p>If both are None, the size will be the given values.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; point size for the lowest value.</li>
-<li><strong>max</strong> &#8211; point size for the highest value.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_xticks">
-<tt class="descname">set_xticks</tt><big>(</big><em>ticks</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xticks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set ticks for the x-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ticks</strong> &#8211; locations for the ticks along the axis.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_yticks">
-<tt class="descname">set_yticks</tt><big>(</big><em>ticks</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_yticks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set ticks for the y-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ticks</strong> &#8211; locations for the ticks along the axis.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_logxticks">
-<tt class="descname">set_logxticks</tt><big>(</big><em>logticks</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_logxticks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set ticks for the logarithmic x-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along
-the axis.</td>
-</tr>
-</tbody>
-</table>
-<p>For example, if you specify [1, 2, 3], ticks will be placed at 10,
-100 and 1000.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_logyticks">
-<tt class="descname">set_logyticks</tt><big>(</big><em>logticks</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_logyticks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set ticks for the logarithmic y-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along
-the axis.</td>
-</tr>
-</tbody>
-</table>
-<p>For example, if you specify [1, 2, 3], ticks will be placed at 10,
-100 and 1000.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_xtick_labels">
-<tt class="descname">set_xtick_labels</tt><big>(</big><em>labels</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xtick_labels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set tick labels for the x-axis.</p>
-<p>Also set the x-ticks positions to ensure the labels end up on
-the correct place.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels</strong> &#8211; list of labels for the ticks along the axis.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_ytick_labels">
-<tt class="descname">set_ytick_labels</tt><big>(</big><em>labels</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_ytick_labels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set tick labels for the y-axis.</p>
-<p>Also set the y-ticks positions to ensure the labels end up on
-the correct place.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels</strong> &#8211; list of labels for the ticks along the axis.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_xtick_suffix">
-<tt class="descname">set_xtick_suffix</tt><big>(</big><em>suffix</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_xtick_suffix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the suffix for the ticks of the x-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suffix</strong> &#8211; string added after each tick. If the value is
-<cite>degree</cite> or <cite>precent</cite> the corresponding symbols
-will be added.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_ytick_suffix">
-<tt class="descname">set_ytick_suffix</tt><big>(</big><em>suffix</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_ytick_suffix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set ticks for the y-axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suffix</strong> &#8211; string added after each tick. If the value is
-<cite>degree</cite> or <cite>precent</cite> the corresponding symbols
-will be added.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_axis_equal">
-<tt class="descname">set_axis_equal</tt><big>(</big><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_axis_equal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scale the axes so the unit vectors have equal length.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_scalebar">
-<tt class="descname">set_scalebar</tt><big>(</big><em>location='lower right'</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_scalebar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show marker area scale</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>location</strong> &#8211; the location of the label inside the plot.  May
-be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
-left&#8217;, &#8216;lower left&#8217;.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_colorbar">
-<tt class="descname">set_colorbar</tt><big>(</big><em>label=''</em>, <em>horizontal=False</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_colorbar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show the colorbar.</p>
-<p>Not for the histogram2d, only for the scatter_table.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>label</strong> &#8211; axis label for the colorbar.</li>
-<li><strong>horizontal</strong> &#8211; boolean, if True the colobar will be horizontal.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.SubPlot.set_colormap">
-<tt class="descname">set_colormap</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#artist.plot.SubPlot.set_colormap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose a colormap for <a class="reference internal" href="#artist.plot.SubPlot.scatter_table" title="artist.plot.SubPlot.scatter_table"><tt class="xref py py-meth docutils literal"><span class="pre">scatter_table()</span></tt></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; name of the colormap to use. (e.g. hot, cool, blackwhite,
-greenyellow). If None a coolwarm colormap is used.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="artist.plot.Plot">
-<em class="property">class </em><tt class="descclassname">artist.plot.</tt><tt class="descname">Plot</tt><big>(</big><em>axis=''</em>, <em>width='.67\linewidth'</em>, <em>height=None</em><big>)</big><a class="headerlink" href="#artist.plot.Plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#artist.plot.SubPlot" title="artist.plot.SubPlot"><tt class="xref py py-class docutils literal"><span class="pre">artist.plot.SubPlot</span></tt></a>, <a class="reference internal" href="#artist.plot.BasePlotContainer" title="artist.plot.BasePlotContainer"><tt class="xref py py-class docutils literal"><span class="pre">artist.plot.BasePlotContainer</span></tt></a></p>
-<p>Create a plot containing a single subplot.</p>
-<p>This class creates a 2D plot.  Its various methods add data,
-annotations and options which is stored in class variables.  Finally,
-the plot can be rendered using the Jinja2 templating engine resulting
-in a LaTeX or PDF file.</p>
-<dl class="method">
-<dt id="artist.plot.Plot.render">
-<tt class="descname">render</tt><big>(</big><em>template=None</em><big>)</big><a class="headerlink" href="#artist.plot.Plot.render" title="Permalink to this definition">¶</a></dt>
-<dd><p>Render the plot using a template.</p>
-<p>Once the plot is complete, it needs to be rendered.  Artist uses
-the Jinja2 templating engine.  The default template results in a
-LaTeX file which can be included in your document.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string or None.</em>) &#8211; a user-supplied template or None.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="artist.plot.PolarPlot">
-<em class="property">class </em><tt class="descclassname">artist.plot.</tt><tt class="descname">PolarPlot</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#artist.plot.PolarPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#artist.plot.Plot" title="artist.plot.Plot"><tt class="xref py py-class docutils literal"><span class="pre">artist.plot.Plot</span></tt></a></p>
-<p>Create a plot containing a single polar subplot.</p>
-<p>Same as the Plot but uses polar axes. The x values are the phi
-coordinates in degrees (or radians). The y values are the r
-coordinates in arbitrary units.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>use_radians</strong> &#8211; If this keyword is set to True the units for x
-values and x axis labels are radians.</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="artist.plot.PolarPlot.plot">
-<tt class="descname">plot</tt><big>(</big><em>x</em>, <em>y</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#artist.plot.PolarPlot.plot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.PolarPlot.histogram">
-<tt class="descname">histogram</tt><big>(</big><em>counts</em>, <em>bin_edges</em>, <em>linestyle='solid'</em><big>)</big><a class="headerlink" href="#artist.plot.PolarPlot.histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot a polar histogram.</p>
-<p>The user needs to supply the histogram.  This method only plots
-the results.  You can use NumPy&#8217;s histogram function.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>counts</strong> &#8211; array containing the count values.</li>
-<li><strong>bin_edges</strong> &#8211; array containing the bin edges.</li>
-<li><strong>linestyle</strong> &#8211; the line style used to connect the data points.
-May be None, or any line style accepted by TikZ (e.g. solid,
-dashed, dotted, thick, or even combinations like
-&#8220;red,thick,dashed&#8221;).</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">PolarPlot</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">37</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="artist.plot.PolarPlot.set_xlimits">
-<tt class="descname">set_xlimits</tt><big>(</big><em>min=None</em>, <em>max=None</em><big>)</big><a class="headerlink" href="#artist.plot.PolarPlot.set_xlimits" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do not allow setting x limits, it messes with the axes.</p>
-</dd></dl>
-
-</dd></dl>
-
-</div>
-</div>
-<div class="section" id="module-artist.recursive_smooth">
-<span id="recursive-smooth-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">recursive_smooth</span></tt> Module<a class="headerlink" href="#module-artist.recursive_smooth" title="Permalink to this headline">¶</a></h2>
-<p>Recursive linear interpolation smoother.</p>
-<dl class="function">
-<dt id="artist.recursive_smooth.smooth">
-<tt class="descclassname">artist.recursive_smooth.</tt><tt class="descname">smooth</tt><big>(</big><em>x</em>, <em>y</em>, <em>degree=1</em>, <em>logx=False</em>, <em>logy=False</em><big>)</big><a class="headerlink" href="#artist.recursive_smooth.smooth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Smooth y-values and return new x, y pair.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>y</strong> (<em>x,</em>) &#8211; data values</li>
-<li><strong>degree</strong> &#8211; degree of smoothing</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Smooth data by using a recursive linear interpolation technique.  For
-degree = 0, return the original values.  For degree = 1, generate a
-evenly spaced sequence of x-values, with the length equal to the
-original length.  The y-values are linearly interpolated for these
-x-values.  For degree &gt;= 2, calls itself with degree - 1, then
-calculates new x-values by taking the averages of the returned
-x-values, and calculates new y-values by linear interpolation.  The
-return values are thus reduced in length by one sample.</p>
-</dd></dl>
-
-</div>
 <div class="section" id="module-artist.simple_smooth">
-<span id="simple-smooth-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">simple_smooth</span></tt> Module<a class="headerlink" href="#module-artist.simple_smooth" title="Permalink to this headline">¶</a></h2>
+<span id="simple-smooth-module"></span><h2><a class="reference internal" href="#module-artist.simple_smooth" title="artist.simple_smooth"><tt class="xref py py-mod docutils literal"><span class="pre">simple_smooth</span></tt></a> Module<a class="headerlink" href="#module-artist.simple_smooth" title="Permalink to this headline">¶</a></h2>
 <p>Simple averaging smoother.</p>
 <dl class="function">
 <dt id="artist.simple_smooth.smooth">
@@ -2580,8 +1792,38 @@ return values are thus reduced in length by one sample.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-artist.recursive_smooth">
+<span id="recursive-smooth-module"></span><h2><a class="reference internal" href="#module-artist.recursive_smooth" title="artist.recursive_smooth"><tt class="xref py py-mod docutils literal"><span class="pre">recursive_smooth</span></tt></a> Module<a class="headerlink" href="#module-artist.recursive_smooth" title="Permalink to this headline">¶</a></h2>
+<p>Recursive linear interpolation smoother.</p>
+<dl class="function">
+<dt id="artist.recursive_smooth.smooth">
+<tt class="descclassname">artist.recursive_smooth.</tt><tt class="descname">smooth</tt><big>(</big><em>x</em>, <em>y</em>, <em>degree=1</em>, <em>logx=False</em>, <em>logy=False</em><big>)</big><a class="headerlink" href="#artist.recursive_smooth.smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smooth y-values and return new x, y pair.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x,y</strong> &#8211; data values</li>
+<li><strong>degree</strong> &#8211; degree of smoothing</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Smooth data by using a recursive linear interpolation technique.  For
+degree = 0, return the original values.  For degree = 1, generate a
+evenly spaced sequence of x-values, with the length equal to the
+original length.  The y-values are linearly interpolated for these
+x-values.  For degree &gt;= 2, calls itself with degree - 1, then
+calculates new x-values by taking the averages of the returned
+x-values, and calculates new y-values by linear interpolation.  The
+return values are thus reduced in length by one sample.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="module-artist.utils">
-<span id="utils-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">utils</span></tt> Module<a class="headerlink" href="#module-artist.utils" title="Permalink to this headline">¶</a></h2>
+<span id="utils-module"></span><h2><a class="reference internal" href="#module-artist.utils" title="artist.utils"><tt class="xref py py-mod docutils literal"><span class="pre">utils</span></tt></a> Module<a class="headerlink" href="#module-artist.utils" title="Permalink to this headline">¶</a></h2>
 <p>Utility functions.</p>
 <dl class="function">
 <dt id="artist.utils.set_prefix">
@@ -2691,6 +1933,12 @@ saved as a pdf, alongside the LaTeX file.</li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-artist.colormap">
+<span id="colormap-module"></span><h2><a class="reference internal" href="#module-artist.colormap" title="artist.colormap"><tt class="xref py py-mod docutils literal"><span class="pre">colormap</span></tt></a> Module<a class="headerlink" href="#module-artist.colormap" title="Permalink to this headline">¶</a></h2>
+<p>Colormap for use in bitmap 2D histograms</p>
+<p>The values are grouped by 3, RGB, and should be a total of 768 values.
+Greyscale values will be mapped to these color values.</p>
+</div>
 </div>
 
 
@@ -2702,22 +1950,20 @@ saved as a pdf, alongside the LaTeX file.</li>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">artist Package</a><ul>
-<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">artist</span></tt> Package</a><ul>
 <li><a class="reference internal" href="#rationale">Rationale</a></li>
 <li><a class="reference internal" href="#contents">Contents</a></li>
+<li><a class="reference internal" href="#module-artist.plot"><tt class="docutils literal"><span class="pre">plot</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#id1">Contents</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-artist.multi_plot"><tt class="docutils literal"><span class="pre">multi_plot</span></tt> Module</a><ul>
 <li><a class="reference internal" href="#id2">Contents</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-artist.plot"><tt class="docutils literal"><span class="pre">plot</span></tt> Module</a><ul>
-<li><a class="reference internal" href="#id3">Contents</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-artist.recursive_smooth"><tt class="docutils literal"><span class="pre">recursive_smooth</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-artist.simple_smooth"><tt class="docutils literal"><span class="pre">simple_smooth</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-artist.recursive_smooth"><tt class="docutils literal"><span class="pre">recursive_smooth</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-artist.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-artist.colormap"><tt class="docutils literal"><span class="pre">colormap</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -2765,7 +2011,7 @@ saved as a pdf, alongside the LaTeX file.</li>
     </div>
     <div class="footer">
         &copy; Copyright 2011, David Fokkema.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

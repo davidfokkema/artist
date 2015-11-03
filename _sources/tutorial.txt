@@ -17,7 +17,7 @@ The bare minimum to create a simple plot are::
     graph.plot([0, 1], [0, 1])
     graph.save('simple_plot')
 
-This imports the :class:`artist.Plot` class from artist, then initiates
+This imports the :class:`artist.plot.Plot` class from artist, then initiates
 a single plot. In this plot multiple lines and marks can be drawn. In
 this case one line is draw from (0, 0) to (1, 1). Finally the
 ``simple_plot.tex`` file is created. To directly get viewable output use
@@ -55,7 +55,7 @@ Polar plot
 ----------
 
 Besides cartesian axes there is also support for polar axes. These are
-initiated by the :class:`artist.PolarPlot`::
+initiated by the :class:`artist.plot.PolarPlot`::
 
     import numpy as np
     from artist import PolarPlot
@@ -65,7 +65,7 @@ initiated by the :class:`artist.PolarPlot`::
     graph.histogram(n, bins)
     graph.save('polar_plot')
 
-This imports the :class:`artist.PolarPlot` class from artist. Then a
+This imports the :class:`artist.plot.PolarPlot` class from artist. Then a
 histogram is created with bins ranging from 0 to 360. The result:
 
 .. image:: images/tutorial/polar_plot.png
