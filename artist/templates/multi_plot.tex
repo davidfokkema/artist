@@ -148,10 +148,18 @@
                             ytick={ {{ subplot.ticks.y | join(', ') }} },
                         {%- endif %}
                         {%- if subplot.show_xticklabel %}
-                            xticklabel={},
+                            {%- if subplot.ticks.xlabels %}
+                                xticklabels={ {{ subplot.ticks.xlabels | join(', ') }} },
+                            {%- else %}
+                                xticklabel={},
+                            {%- endif %}
                         {%- endif %}
                         {%- if subplot.show_yticklabel %}
-                            yticklabel={},
+                            {%- if subplot.ticks.ylabels %}
+                                yticklabels={ {{ subplot.ticks.ylabels | join(', ') }} },
+                            {%- else %}
+                                yticklabel={},
+                            {%- endif %}
                         {%- endif %}
                         {%- if subplot.xticklabel_pos %}
                             xticklabel pos={{ subplot.xticklabel_pos }},

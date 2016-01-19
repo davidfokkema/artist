@@ -428,6 +428,58 @@ class MultiPlot(BasePlotContainer):
             for row, column in row_column_list:
                 self.set_logyticks(row, column, logticks)
 
+    def set_xtick_labels(self, row, column, labels):
+        """Manually specify the x-axis tick labels.
+
+        :param row,column: specify the subplot.
+        :param labels: list of tick labels.
+
+        """
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_xtick_labels(labels)
+
+    def set_xtick_labels_for_all(self, row_column_list=None, labels=None):
+        """Manually specify the x-axis tick labels.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param labels: list of tick labels.
+
+        """
+        if row_column_list is None:
+            for subplot in self.subplots:
+                self.set_xtick_labels(subplot.row, subplot.column, labels)
+        else:
+            for row, column in row_column_list:
+                self.set_xtick_labels(row, column, labels)
+
+    def set_ytick_labels(self, row, column, labels):
+        """Manually specify the y-axis tick labels.
+
+        :param row,column: specify the subplot.
+        :param labels: list of tick labels.
+
+        """
+        subplot = self.get_subplot_at(row, column)
+        subplot.set_ytick_labels(labels)
+
+    def set_ytick_labels_for_all(self, row_column_list=None, labels=None):
+        """Manually specify the x-axis tick labels.
+
+        :param row_column_list: a list containing (row, column) tuples to
+            specify the subplots, or None to indicate *all* subplots.
+        :type row_column_list: list or None
+        :param labels: list of tick labels.
+
+        """
+        if row_column_list is None:
+            for subplot in self.subplots:
+                self.set_ytick_labels(subplot.row, subplot.column, labels)
+        else:
+            for row, column in row_column_list:
+                self.set_ytick_labels(row, column, labels)
+
     def get_subplot_at(self, row, column):
         """Return the subplot at row, column position.
 
