@@ -278,6 +278,9 @@ class SubPlot(object):
         xerr and yerr may be empty lists.
 
         """
+        if len(x) != len(y):
+            raise RuntimeError(
+                "The length of the x and y coordinates should be equal")
         # clear the background of the marks
         self._clear_plot_mark_background(x, y, mark, markstyle)
         # draw the plot series over the background
