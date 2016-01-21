@@ -281,6 +281,11 @@ class SubPlot(object):
         if len(x) != len(y):
             raise RuntimeError(
                 "The length of the x and y coordinates should be equal")
+        if (len(xerr) and len(xerr) != len(x) or
+                len(yerr) and len(yerr) != len(y)):
+            raise RuntimeError(
+                "The length of the errors and coordinates should be equal")
+
         # clear the background of the marks
         self._clear_plot_mark_background(x, y, mark, markstyle)
         # draw the plot series over the background
