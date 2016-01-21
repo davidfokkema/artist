@@ -66,15 +66,17 @@
     {% if series.show_xerr %}
         % Draw x-error bars
         {%- for x, y, xerr, yerr in series.data %}
-            \draw (axis cs:{{ x - xerr }}, {{ y }}) --
-                  (axis cs:{{ x + xerr }}, {{ y }});
+            \draw[{{ series.options }}]
+                 (axis cs:{{ x - xerr }}, {{ y }}) --
+                 (axis cs:{{ x + xerr }}, {{ y }});
         {%- endfor %}
     {%- endif %}
     {%- if series.show_yerr %}
         % Draw y-error bars
         {%- for x, y, xerr, yerr in series.data %}
-            \draw (axis cs:{{ x }}, {{ y - yerr }}) --
-                  (axis cs:{{ x }}, {{ y + yerr }});
+            \draw[{{ series.options }}]
+                 (axis cs:{{ x }}, {{ y - yerr }}) --
+                 (axis cs:{{ x }}, {{ y + yerr }});
         {%- endfor %}
     {% endif %}
     % Draw series plot
