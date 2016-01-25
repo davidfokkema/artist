@@ -119,8 +119,8 @@
             {%- endif %}
         ]
 
-        % hack to calculate the position for the xlabel		
-        \coordinate (ylabel) at (axis cs:-90,\pgfkeysvalueof{/pgfplots/ymax}*1.38);		
+        % hack to calculate the position for the xlabel
+        \coordinate (ylabel) at (axis cs:-90,\pgfkeysvalueof{/pgfplots/ymax}*1.38);
 
         {% include 'subplot.tex' %}
 
