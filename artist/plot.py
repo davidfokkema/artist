@@ -1062,8 +1062,8 @@ class PolarPlot(Plot):
     coordinates in degrees (or radians). The y values are the r
     coordinates in arbitrary units.
 
-    :param use_radians: If this keyword is set to True the units for x
-        values and x axis labels are radians.
+    :param use_radians: If this keyword is set to True the units for x (phi)
+        values and x (phi) axis labels are radians.
 
     """
 
@@ -1086,10 +1086,19 @@ class PolarPlot(Plot):
                                    r'$-\frac{4}{6}\pi$', r'$-\frac{1}{2}\pi$',
                                    r'$-\frac{2}{6}\pi$', r'$-\frac{1}{6}\pi$'])
 
-    def plot(self, x, y, **kwargs):
+    def plot(self, phi, r, **kwargs):
+        """Add a data series to the plot.
+
+        :param phi: array containing phi-values, should be in degrees
+                    (or radians).
+        :param r: array containing r-values.
+
+        For further options see the plot function of the super class.
+
+        """
         if self.use_radians:
-            x = np.degrees(x)
-        super(PolarPlot, self).plot(x, y, **kwargs)
+            phi = np.degrees(phi)
+        super(PolarPlot, self).plot(phi, r, **kwargs)
 
     def histogram(self, counts, bin_edges, linestyle='solid'):
         """Plot a polar histogram.
@@ -1098,7 +1107,8 @@ class PolarPlot(Plot):
         the results.  You can use NumPy's histogram function.
 
         :param counts: array containing the count values.
-        :param bin_edges: array containing the bin edges.
+        :param bin_edges: array containing the bin edges in degrees
+                          (or radians).
         :param linestyle: the line style used to connect the data points.
             May be None, or any line style accepted by TikZ (e.g. solid,
             dashed, dotted, thick, or even combinations like
