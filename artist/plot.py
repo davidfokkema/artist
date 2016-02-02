@@ -21,6 +21,7 @@ import subprocess
 import os
 import tempfile
 import shutil
+import warnings
 from math import sqrt, modf
 try:
     # Python 2
@@ -364,6 +365,26 @@ class SubPlot(object):
             'reverse_bw'.
         :param colormap: A colormap for the 'color' type, as expected by
             the `Image.putpalette` method.
+
+        Example::
+
+            >>> x = np.random.uniform(low=1, high=1000, size=2000)
+            >>> y = np.random.uniform(low=0, high=50, size=2000)
+            >>> plot = artist.Plot()
+            >>> n, xbins, ybins = np.histogram2d(x, y)
+            >>> plot.histogram2d(n, xbins, ybins)
+
+        When you desire logarithmic binning and bitmap is set to True special
+        care has to be taken, because the bins along each axis have to be
+        equal width in the final result. When calculating the histogram take
+        the log10 of the values (and bins) along the logarithmic axis. Then
+        when plotting scale the bins back to their values.
+
+        Example::
+
+            >>> plot = artist.Plot(axis='semilogx')
+            >>> n, xbins, ybins = np.histogram2d(np.log10(x), y)
+            >>> plot.histogram2d(n, 10 ** xbins, ybins, bitmap=True)
 
         """
         if counts.shape != (len(x_edges) - 1, len(y_edges) - 1):
@@ -1151,7 +1172,12 @@ class PolarPlot(Plot):
 
         self.plot(x, y, mark=None, linestyle=linestyle)
 
+    def histogram2d(self, *args):
+        """Do not allow 2D histograms, it produces undesireable results."""
+
+        warnings.warn("Plotting 2D histograms is not supported for PolarPlot")
+
     def set_xlimits(self, min=None, max=None):
         """Do not allow setting x limits, it messes with the axes."""
 
-        pass
+        warnings.warn("Setting x limits is not supported for PolarPlot")
