@@ -276,7 +276,9 @@ class SubPlot(object):
             size=.75pt')
 
         The dimensions of x, y, xerr and yerr should be equal.  However,
-        xerr and yerr may be empty lists.
+        xerr and yerr may be empty lists.  Each element in xerr and yerr
+        may be a single value for symmetric error bars, or a tuple of
+        two values for assymetric errors.
 
         """
         if len(x) != len(y):
