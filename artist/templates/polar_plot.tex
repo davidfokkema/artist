@@ -120,13 +120,17 @@
         ]
 
         % hack to calculate the position for the xlabel
-        \coordinate (ylabel) at (axis cs:-90,\pgfkeysvalueof{/pgfplots/ymax}*1.38);
+        {%- if ylabel %}
+            \coordinate (ylabel) at (axis cs:-90,\pgfkeysvalueof{/pgfplots/ymax}*1.38);
+        {%-endif %}
 
         {% include 'subplot.tex' %}
 
     \end{polaraxis}
 
-    \node[anchor=west] at (ylabel) { {{ ylabel }} };
+    {%- if ylabel %}
+        \node[anchor=west] at (ylabel) { {{ ylabel }} };
+    {%-endif %}
 
 \end{tikzpicture}
 \end{sansmath}
