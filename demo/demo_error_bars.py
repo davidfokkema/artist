@@ -16,7 +16,7 @@ def main():
     err_x = [0.4] * size
 
     plot.plot(x, y, mark=None)
-    plot.scatter(x, y_random, xerr=err_x, yerr=zip(err_l, err_h))
+    plot.scatter(x, y_random, xerr=err_x, yerr=list(zip(err_l, err_h)))
 
     plot.set_xlabel('Value with symmetric error')
     plot.set_ylabel('Other value with asymmetric errors')
