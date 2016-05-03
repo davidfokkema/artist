@@ -85,19 +85,19 @@
             {%- endif %}
             point meta min={ {{ limits.mmin }} },
             point meta max={ {{ limits.mmax }} },
+            colormap={coolwarm}{
+                rgb255=( 59, 76,192)
+                rgb255=( 98,130,234)
+                rgb255=(141,176,254)
+                rgb255=(184,208,249)
+                rgb255=(221,221,221)
+                rgb255=(245,196,173)
+                rgb255=(244,154,123)
+                rgb255=(222, 96, 77)
+                rgb255=(180,  4, 38)},
+            colormap={whiteblack}{gray=(1) gray=(0)},
             {%- if colormap %}
-                colormap/{{ colormap }},
-            {%- else %}
-                colormap={coolwarm}{
-                    rgb255(0cm)=( 59, 76,192);
-                    rgb255(1cm)=( 98,130,234);
-                    rgb255(2cm)=(141,176,254);
-                    rgb255(3cm)=(184,208,249);
-                    rgb255(4cm)=(221,221,221);
-                    rgb255(5cm)=(245,196,173);
-                    rgb255(6cm)=(244,154,123);
-                    rgb255(7cm)=(222, 96, 77);
-                    rgb255(8cm)=(180,  4, 38)},
+                colormap name={{ colormap }},
             {%- endif %}
             {%- if axis_options %}
                 {{ axis_options }}
