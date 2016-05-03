@@ -35,7 +35,7 @@ from PIL import Image
 import jinja2
 import numpy as np
 
-from .colormap import COOLWARM
+from .colormap import COOLWARM, VIRIDIS
 
 RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
                                            'x': 1, 'y': 1},
