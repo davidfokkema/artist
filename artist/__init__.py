@@ -59,7 +59,7 @@ The following modules are included:
     based on the name of the function creating the plot.
 
 :mod:`~artist.colormap`
-    contains the default colormap for colored 2D histograms.
+    contains colormaps for colored 2D histograms.
 
 """
 from .plot import Plot, PolarPlot

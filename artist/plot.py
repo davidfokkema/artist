@@ -30,12 +30,12 @@ except ImportError:
     # Python 3
     from itertools import zip_longest as izip_longest
 
-
 from PIL import Image
 import jinja2
 import numpy as np
 
 from .colormap import COOLWARM, VIRIDIS
+
 
 RELATIVE_NODE_LOCATIONS = {'upper right': {'node_location': 'below left',
                                            'x': 1, 'y': 1},
@@ -363,8 +363,7 @@ class SubPlot(object):
             'reverse_bw' types.
         :param bitmap: Export the histogram as an image for better
             performance. This does expect all bins along an axis to have
-            equal width. Can only be combined with type 'bw' and
-            'reverse_bw'.
+            equal width. Can not be used in combination with type 'area'.
         :param colormap: A colormap for the 'color' type, as expected by
             the `Image.putpalette` method.
 
@@ -406,10 +405,12 @@ class SubPlot(object):
             normed_counts = self._normalize_histogram2d(counts, type)
             img = Image.fromarray(np.flipud(normed_counts.T))
             if type == 'color':
-                if colormap is not None:
-                    img.putpalette(colormap)
-                else:
+                if colormap == 'viridis':
+                    img.putpalette(VIRIDIS)
+                elif colormap in [None, 'coolwarm']:
                     img.putpalette(COOLWARM)
+                else:
+                    img.putpalette(colormap)
             self.bitmap_list.append({'image': img,
                                      'xmin': min(x_edges),
                                      'xmax': max(x_edges),
@@ -438,6 +439,17 @@ class SubPlot(object):
                    if y is not None)
         self.set_xlimits(xmin, xmax)
         self.set_ylimits(ymin, ymax)
+        if type != 'area':
+            self.set_mlimits(counts.min(), counts.max())
+        if type == 'bw':
+            self.set_colormap('blackwhite')
+        elif type == 'reverse_bw':
+            self.set_colormap('whiteblack')
+        elif type == 'color':
+            if colormap == 'viridis':
+                self.set_colormap('viridis')
+            elif colormap in [None, 'coolwarm']:
+                self.set_colormap('coolwarm')
 
     def scatter(self, x, y, xerr=[], yerr=[], mark='o', markstyle=None):
         """Plot a series of points.
@@ -863,7 +875,10 @@ class SubPlot(object):
     def set_colorbar(self, label='', horizontal=False):
         """Show the colorbar.
 
-        Not for the histogram2d, only for the scatter_table.
+        This can be used for both histogram2d and scatter_table. If a custom
+        colomap is used for histogram2d (i.e. not grayscale, coolwarm, or
+        viridis) a matching colormap must be available in PGFPlots or added
+        using set_axis_options.
 
         :param label: axis label for the colorbar.
         :param horizontal: boolean, if True the colobar will be horizontal.
