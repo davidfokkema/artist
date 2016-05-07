@@ -25,7 +25,7 @@
             {%- set y1 = histogram.y_edges[j + 1] %}
             {%- set y = histogram.y_centers[j] %}
             {%- set count = histogram.counts[i][j] %}
-            {%- set weight = (100 * count / histogram.max) | int %}
+            {%- set weight = (100 * (count - histogram.min) / (histogram.max - histogram.min)) | int %}
 
             {%- if weight > 0 %}
                 {%- if histogram.type == 'area' %}

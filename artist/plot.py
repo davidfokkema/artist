@@ -388,6 +388,9 @@ class SubPlot(object):
             >>> n, xbins, ybins = np.histogram2d(x, y, bins=[xbins, ybins])
             >>> plot.histogram2d(n, xbins, ybins, bitmap=True)
 
+        For each bin where the counts are nan the value will be set to the
+        minimum value (i.e. `np.nanmin(counts)`).
+
         """
         if counts.shape != (len(x_edges) - 1, len(y_edges) - 1):
             raise RuntimeError(
@@ -426,7 +429,8 @@ class SubPlot(object):
                                           'x_centers': x_centers,
                                           'y_centers': y_centers,
                                           'counts': counts,
-                                          'max': counts.max(),
+                                          'max': np.nanmax(counts),
+                                          'min': np.nanmin(counts),
                                           'type': type,
                                           'style': style})
         # Set limits unless lower/higher limits are already set.
@@ -441,7 +445,7 @@ class SubPlot(object):
         self.set_xlimits(xmin, xmax)
         self.set_ylimits(ymin, ymax)
         if type != 'area':
-            self.set_mlimits(counts.min(), counts.max())
+            self.set_mlimits(np.nanmin(counts), np.nanmax(counts))
         if type == 'bw':
             self.set_colormap('blackwhite')
         elif type == 'reverse_bw':
@@ -997,7 +1001,8 @@ class SubPlot(object):
         :param type: either 'bw' or 'reverse_bw'.
 
         """
-        counts = 255 * (counts - counts.min()) / (counts.max() - counts.min())
+        counts = (255 * (counts - np.nanmin(counts)) /
+                  (np.nanmax(counts) - np.nanmin(counts)))
 
         if type == 'reverse_bw':
             counts = 255 - counts
