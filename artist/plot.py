@@ -375,17 +375,18 @@ class SubPlot(object):
             >>> n, xbins, ybins = np.histogram2d(x, y)
             >>> plot.histogram2d(n, xbins, ybins)
 
-        When you desire logarithmic binning and bitmap is set to True special
-        care has to be taken, because the bins along each axis have to be
-        equal width in the final result. When calculating the histogram take
-        the log10 of the values (and bins) along the logarithmic axis. Then
-        when plotting scale the bins back to their values.
+        When you desire logarithmic axes and bitmap is set to True special
+        care has to be taken with the binning. This is because the bins along
+        an axis have to be equal size in the final result. So use logarithmic
+        binning for logarithmic axes.
 
         Example::
 
             >>> plot = artist.Plot(axis='semilogx')
-            >>> n, xbins, ybins = np.histogram2d(np.log10(x), y)
-            >>> plot.histogram2d(n, 10 ** xbins, ybins, bitmap=True)
+            >>> xbins = np.logspace(0, 3, 20)
+            >>> ybins = np.linspace(-5, 10, 10)
+            >>> n, xbins, ybins = np.histogram2d(x, y, bins=[xbins, ybins])
+            >>> plot.histogram2d(n, xbins, ybins, bitmap=True)
 
         """
         if counts.shape != (len(x_edges) - 1, len(y_edges) - 1):
