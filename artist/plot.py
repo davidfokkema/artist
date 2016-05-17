@@ -306,7 +306,8 @@ class SubPlot(object):
             # make sure all background clear operations are performed first
             self.plot_series_list.insert(0, plot_series)
 
-    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], options=None, legend=None):
+    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], 
+                                        options=None, legend=None):
         return {'options': options,
                 'data': list(izip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
