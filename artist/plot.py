@@ -164,8 +164,8 @@ class BasePlotContainer(object):
             error_lines = [line for line in output_lines
                            if line and line[0] == '!']
             errors = '\n'.join(error_lines)
-            raise RuntimeError("LaTeX compilation failed:\n" + errors +
-                               "\nTemp build dir: " + dir_path)
+            raise RuntimeError('LaTeX compilation failed:\n' + errors +
+                               '\nTemp build dir: ' + dir_path)
         finally:
             os.chdir(cwd)
 
@@ -179,7 +179,7 @@ class BasePlotContainer(object):
             subprocess.check_output(['pdfcrop', path, output_path],
                                     stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
-            raise RuntimeError("Cropping PDF failed:\n" + exc.output)
+            raise RuntimeError('Cropping PDF failed:\n' + exc.output)
         os.rename(output_path, path)
 
     def _add_extension(self, extension, path):
@@ -210,10 +210,10 @@ class SubPlot(object):
 
     """Plot data in a data rectangle.
 
-    Provides methods to plot or histogram data, shade regions, add labels,
-    pins and titles.  This class is not meant to be used directly.
-    Instead, use the Plot class for single plots, or the MultiPlot class
-    for plots containing multiple subplots.
+    Provides methods to plot or histogram data, shade regions, add
+    labels, pins and titles.  This class is not meant to be used
+    directly. Instead, use the Plot class for single plots, or the
+    MultiPlot class for plots containing multiple subplots.
 
     """
 
@@ -257,7 +257,7 @@ class SubPlot(object):
         self._write_bitmaps(dest_path, suffix)
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
-             linestyle='solid', use_steps=False, markstyle=None,legend=None):
+             linestyle='solid', use_steps=False, markstyle=None, legend=None):
         """Add a data series to the plot.
 
         :param x: array containing x-values.
@@ -283,11 +283,11 @@ class SubPlot(object):
         """
         if len(x) != len(y):
             raise RuntimeError(
-                "The length of the x and y coordinates should be equal")
+                'The length of the x and y coordinates should be equal')
         if (len(xerr) and len(xerr) != len(x) or
                 len(yerr) and len(yerr) != len(y)):
             raise RuntimeError(
-                "The length of the errors and coordinates should be equal")
+                'The length of the errors and coordinates should be equal')
 
         # clear the background of the marks
         self._clear_plot_mark_background(x, y, mark, markstyle)
@@ -295,7 +295,7 @@ class SubPlot(object):
         options = self._parse_plot_options(mark, linestyle, use_steps,
                                            markstyle)
         plot_series = self._create_plot_series_object(x, y, xerr, yerr,
-                                                      options,legend)
+                                                      options, legend)
         self.plot_series_list.append(plot_series)
 
     def _clear_plot_mark_background(self, x, y, mark, markstyle):
@@ -336,7 +336,7 @@ class SubPlot(object):
         """
         if len(bin_edges) - 1 != len(counts):
             raise RuntimeError(
-                "The length of bin_edges should be length of counts + 1")
+                'The length of bin_edges should be length of counts + 1')
         x = bin_edges
         y = list(counts) + [counts[-1]]
         self.plot(x, y, mark=None, linestyle=linestyle, use_steps=True)
@@ -395,16 +395,16 @@ class SubPlot(object):
         """
         if counts.shape != (len(x_edges) - 1, len(y_edges) - 1):
             raise RuntimeError(
-                "The length of x_edges and y_edges should match counts")
+                'The length of x_edges and y_edges should match counts')
 
         if type not in ['bw', 'reverse_bw', 'area', 'color']:
-            raise RuntimeError("Histogram type %s not supported" % type)
+            raise RuntimeError('Histogram type %s not supported' % type)
         if type == 'area' and bitmap:
-            raise RuntimeError("Histogram type %s not supported for bitmap "
-                               "output" % type)
+            raise RuntimeError('Histogram type %s not supported for bitmap '
+                               'output' % type)
         if type == 'color' and not bitmap:
-            raise RuntimeError("Histogram type %s not supported for "
-                               "non-bitmapped output" % type)
+            raise RuntimeError('Histogram type %s not supported for '
+                               'non-bitmapped output' % type)
 
         if bitmap:
             normed_counts = self._normalize_histogram2d(counts, type)
@@ -534,7 +534,7 @@ class SubPlot(object):
             label['style'] = style
             self.label = label
         else:
-            raise RuntimeError("Unknown label location: %s" % location)
+            raise RuntimeError('Unknown label location: %s' % location)
 
     def add_pin(self, text, location='left', x=None, use_arrow=False,
                 relative_position=None, style=None):
@@ -560,7 +560,7 @@ class SubPlot(object):
             series = self.plot_series_list[-1]
         except IndexError:
             raise RuntimeError(
-                "First plot a data series, before using this function")
+                'First plot a data series, before using this function')
 
         data = series['data']
         series_x, series_y = list(zip(*data))[:2]
@@ -865,7 +865,7 @@ class SubPlot(object):
         self.axis_equal = True
 
     def set_scalebar(self, location='lower right'):
-        """Show marker area scale
+        """Show marker area scale.
 
         :param location: the location of the label inside the plot.  May
             be one of 'center', 'upper right', 'lower right', 'upper
@@ -876,7 +876,7 @@ class SubPlot(object):
             scalebar = RELATIVE_NODE_LOCATIONS[location].copy()
             self.scalebar = scalebar
         else:
-            raise RuntimeError("Unknown scalebar location: %s" % location)
+            raise RuntimeError('Unknown scalebar location: %s' % location)
 
     def set_colorbar(self, label='', horizontal=False):
         """Show the colorbar.
@@ -942,7 +942,7 @@ class SubPlot(object):
         return options_string
 
     def _calc_position_for_pin(self, x, y, relative_position):
-        """Determine position at fraction of x, y path
+        """Determine position at fraction of x, y path.
 
         :param x,y: two equal length lists of values describing a path.
         :param relative_position: value between 0 and 1
@@ -985,7 +985,7 @@ class SubPlot(object):
         return xs, ys
 
     def _calc_relative_path_lengths(self, x, y):
-        """Determine the relative path length at each x,y position"""
+        """Determine the relative path length at each x,y position."""
 
         path_lengths = np.sqrt(np.diff(x) ** 2 + np.diff(y) ** 2)
         total_length = np.sum(path_lengths)
@@ -994,7 +994,7 @@ class SubPlot(object):
         return relative_path_lengths
 
     def _normalize_histogram2d(self, counts, type):
-        """Normalize the values of the counts for a 2D histogram
+        """Normalize the values of the counts for a 2D histogram.
 
         This normalizes the values of a numpy array to the range 0-255.
 
@@ -1043,9 +1043,9 @@ class Plot(SubPlot, BasePlotContainer):
     """Create a plot containing a single subplot.
 
     This class creates a 2D plot.  Its various methods add data,
-    annotations and options which is stored in class variables.  Finally,
-    the plot can be rendered using the Jinja2 templating engine resulting
-    in a LaTeX or PDF file.
+    annotations and options which is stored in class variables.
+    Finally, the plot can be rendered using the Jinja2 templating engine
+    resulting in a LaTeX or PDF file.
 
     """
 
@@ -1169,7 +1169,7 @@ class PolarPlot(Plot):
         """
         if len(bin_edges) - 1 != len(counts):
             raise RuntimeError(
-                "The length of bin_edges should be length of counts + 1")
+                'The length of bin_edges should be length of counts + 1')
 
         x = []
         y = []
@@ -1199,9 +1199,9 @@ class PolarPlot(Plot):
     def histogram2d(self, *args):
         """Do not allow 2D histograms, it produces undesireable results."""
 
-        warnings.warn("Plotting 2D histograms is not supported for PolarPlot")
+        warnings.warn('Plotting 2D histograms is not supported for PolarPlot')
 
     def set_xlimits(self, min=None, max=None):
         """Do not allow setting x limits, it messes with the axes."""
 
-        warnings.warn("Setting x limits is not supported for PolarPlot")
+        warnings.warn('Setting x limits is not supported for PolarPlot')
