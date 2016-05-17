@@ -257,7 +257,7 @@ class SubPlot(object):
         self._write_bitmaps(dest_path, suffix)
 
     def plot(self, x, y, xerr=[], yerr=[], mark='o',
-             linestyle='solid', use_steps=False, markstyle=None):
+             linestyle='solid', use_steps=False, markstyle=None,legend=None):
         """Add a data series to the plot.
 
         :param x: array containing x-values.
@@ -295,7 +295,7 @@ class SubPlot(object):
         options = self._parse_plot_options(mark, linestyle, use_steps,
                                            markstyle)
         plot_series = self._create_plot_series_object(x, y, xerr, yerr,
-                                                      options)
+                                                      options,legend)
         self.plot_series_list.append(plot_series)
 
     def _clear_plot_mark_background(self, x, y, mark, markstyle):
@@ -306,11 +306,12 @@ class SubPlot(object):
             # make sure all background clear operations are performed first
             self.plot_series_list.insert(0, plot_series)
 
-    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], options=None):
+    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], options=None, legend=None):
         return {'options': options,
                 'data': list(izip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
-                'show_yerr': True if len(yerr) else False}
+                'show_yerr': True if len(yerr) else False,
+                'legend': legend}
 
     def histogram(self, counts, bin_edges, linestyle='solid'):
         """Plot a histogram.

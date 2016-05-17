@@ -93,6 +93,9 @@
             ({{ x }}, {{ y }})
         {%- endfor %}
     };
+    {% if series.legend is not none %}
+        \addlegendentry{ {{series.legend}} }
+    {% endif %}
 {% endfor -%}
 
 {%- for table in plot.plot_table_list %}
