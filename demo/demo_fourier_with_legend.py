@@ -41,4 +41,4 @@ graph.plot(x=X, y=Y(13), linestyle='blue', mark=None, legend='n=13')
 graph.plot(x=X, y=Y(55), linestyle='cyan', mark=None, legend='n=55')
 graph.plot(x=X, y=Y_sqr, linestyle='black', mark=None, legend='square')
 
-graph.save_as_pdf('plot')
+graph.save('fourier_with_legend')

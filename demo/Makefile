@@ -27,6 +27,7 @@ distclean: clean
 	rm -f any_option.tex
 	rm -f multi_any_option.tex
 	rm -f error_bars.tex
+	rm -f fourier_with_legend.tex
 	rm -f *.pdf
 	rm -f *.png
 
@@ -37,7 +38,7 @@ demo_plots.pdf: demo_plots.tex \
 		polar_histogram.tex discrete_directions.tex histogram2d.tex \
 		multi_histogram2d.tex event_display.tex multi_event_display.tex \
 		relative_pin.tex relative_pin_log.tex any_option.tex \
-		multi_any_option.tex error_bars.tex
+		multi_any_option.tex error_bars.tex fourier_with_legend.tex
 	latexmk -pdf demo_plots.tex
 
 test: shower-front.tex eas-lateral.tex \
@@ -45,7 +46,7 @@ test: shower-front.tex eas-lateral.tex \
 		polar_histogram.tex discrete_directions.tex histogram2d.tex \
 		multi_histogram2d.tex event_display.tex multi_event_display.tex \
 		relative_pin.tex relative_pin_log.tex any_option.tex \
-		multi_any_option.tex error_bars.tex
+		multi_any_option.tex error_bars.tex fourier_with_legend.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
 	python $?
@@ -90,4 +91,7 @@ any_option.tex multi_any_option.tex: demo_any_option.py
 	python $?
 
 error_bars.tex: demo_error_bars.py
+	python $?
+
+fourier_with_legend.tex: demo_fourier_with_legend.py
 	python $?
