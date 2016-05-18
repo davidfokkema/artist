@@ -306,8 +306,8 @@ class SubPlot(object):
             # make sure all background clear operations are performed first
             self.plot_series_list.insert(0, plot_series)
 
-    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], 
-                                        options=None, legend=None):
+    def _create_plot_series_object(self, x, y, xerr=[], yerr=[], options=None,
+                                   legend=None):
         return {'options': options,
                 'data': list(izip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
@@ -1044,8 +1044,8 @@ class Plot(SubPlot, BasePlotContainer):
     """Create a plot containing a single subplot.
 
     This class creates a 2D plot.  Its various methods add data,
-    annotations and options which is stored in class variables.
-    Finally, the plot can be rendered using the Jinja2 templating engine
+    annotations and options which is stored in class variables. Finally,
+    the plot can be rendered using the Jinja2 templating engine
     resulting in a LaTeX or PDF file.
 
     """
