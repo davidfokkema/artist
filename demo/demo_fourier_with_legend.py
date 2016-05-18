@@ -1,44 +1,50 @@
-from artist import Plot
 import math
-import numpy as npy
+
+import numpy as np
+
+from artist import Plot
 
 
 L = 2 * math.pi
 
 
 def square(x):
-    ''' Square wave of period 2*L '''
+    """Square wave of period 2*L"""
+
     def H(x):
-        ''' Heaveside step function '''
-        if x < 0.0:
-            return 0.0
-        if x == 0.0:
+        """Heaveside step function"""
+
+        if x < 0.:
+            return 0.
+        if x == 0.:
             return 0.5
-        if x > 0.0:
-            return 1.0
+        if x > 0.:
+            return 1.
     return 2 * (H(x / L) - H(x / L - 1)) - 1
 
 
 def fourier(x, N):
-    ''' fourier approximation with N terms'''
-    term = 0.0
+    """Fourier approximation with N terms"""
+
+    term = 0.
     for n in range(1, N, 2):
-        term += (1.0 / n) * math.sin(n * math.pi * x / L)
-    return (4.0 / (math.pi)) * term
+        term += (1. / n) * math.sin(n * math.pi * x / L)
+    return (4. / (math.pi)) * term
 
 
 def add_custom_pin(plot, x, y, label, distance='3ex'):
-    ''' Add a pin at the maximum value of a data series (sort of). '''
+    """Add a pin at the maximum value of a data series (sort of)"""
+
     # only use the second quarter, for cosmetic reasons
-    q = int(.25 * len(y))
+    q = int(0.25 * len(y))
     y = y[q:2*q]
-    max_index = q + npy.argmax(y)
+    max_index = q + np.argmax(y)
     max_x = x[max_index]
     plot.add_pin(label, x=max_x, location='above', use_arrow=True,
                  style='pin distance=%s' % distance)
 
 
-X = npy.linspace(0.0, 2 * L, num=1000)
+X = np.linspace(0., 2 * L, num=1000)
 Y_sqr = [square(x) for x in X]
 Y = lambda n: [fourier(x, n) for x in X]
 
