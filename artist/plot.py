@@ -174,13 +174,13 @@ class BasePlotContainer(object):
 
     def _crop_document(self, path):
         dirname = os.path.dirname(path)
-        output_path = os.path.join(dirname, 'crop-output.pdf')
+        uncropped_path = os.path.join(dirname, 'uncropped-output.pdf')
+        os.rename(path, uncropped_path)
         try:
-            subprocess.check_output(['pdfcrop', path, output_path],
+            subprocess.check_output(['pdfcrop', uncropped_path, path],
                                     stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
             raise RuntimeError('Cropping PDF failed:\n' + exc.output)
-        os.rename(output_path, path)
 
     def _add_extension(self, extension, path):
         root, ext = os.path.splitext(path)
