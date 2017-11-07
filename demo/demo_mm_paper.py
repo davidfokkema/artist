@@ -32,7 +32,7 @@ def main():
     graph.use_graph_paper()
 
     # save graph to file
-    graph.save('mm-paper')
+    graph.save('mm_paper')
 
 
 def multiplot():
@@ -75,7 +75,7 @@ def multiplot():
     multiplot.set_ylabel("signal strength")
 
     # save graph to file
-    multiplot.save('mm-paper-multiplot')
+    multiplot.save('mm_paper_multiplot')
 
 
 if __name__ == '__main__':

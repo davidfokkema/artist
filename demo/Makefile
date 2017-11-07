@@ -29,6 +29,8 @@ distclean: clean
 	rm -f error_bars.tex
 	rm -f fourier_with_legend.tex
 	rm -f fourier_with_labels.tex
+	rm -f mm_paper.tex
+	rm -f mm_paper_multiplot.tex
 	rm -f *.pdf
 	rm -f *.png
 
@@ -40,7 +42,7 @@ demo_plots.pdf: demo_plots.tex \
 		multi_histogram2d.tex event_display.tex multi_event_display.tex \
 		relative_pin.tex relative_pin_log.tex any_option.tex \
 		multi_any_option.tex error_bars.tex fourier_with_legend.tex \
-		fourier_with_labels.tex
+		fourier_with_labels.tex mm_paper.tex mm_paper_multiplot.tex
 	latexmk -pdf demo_plots.tex
 
 test: shower-front.tex eas-lateral.tex \
@@ -49,7 +51,7 @@ test: shower-front.tex eas-lateral.tex \
 		multi_histogram2d.tex event_display.tex multi_event_display.tex \
 		relative_pin.tex relative_pin_log.tex any_option.tex \
 		multi_any_option.tex error_bars.tex fourier_with_legend.tex \
-		fourier_with_labels.tex
+		fourier_with_labels.tex mm_paper.tex mm_paper_multiplot.tex
 
 stopping-power-mpl.pdf stopping-power.tex: demo_stopping_power.py
 	python $?
@@ -97,4 +99,7 @@ error_bars.tex: demo_error_bars.py
 	python $?
 
 fourier_with_legend.tex fourier_with_labels.tex: demo_fourier_with_legend.py
+	python $?
+
+mm_paper.tex mm_paper_multiplot.tex: demo_mm_paper.py
 	python $?
