@@ -25,6 +25,9 @@ def main():
     # set scale: 1cm equals 1 unit along the y-axis
     graph.set_yscale(cm=1)
 
+    # set ticks at every unit along the y axis
+    graph.set_yticks(range(6))
+
     # set graph paper
     graph.use_graph_paper()
 
