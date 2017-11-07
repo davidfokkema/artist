@@ -12,13 +12,18 @@ def main():
     graph = Plot()
 
     # make Plot
-    graph.plot(x, y, mark=None, linestyle='smooth,thick')
+    graph.plot(x, y, mark=None, linestyle='smooth,very thick')
 
     # set labels and limits
     graph.set_xlabel(r"$f [\si{\mega\hertz}]$")
     graph.set_ylabel("signal strength")
     graph.set_xlimits(0, 100)
     graph.set_ylimits(0, 5)
+
+    # set scale: 1cm equals 10 units along the x-axis
+    graph.set_xscale(cm=10)
+    # set scale: 1cm equals 1 unit along the y-axis
+    graph.set_yscale(cm=1)
 
     # save graph to file
     graph.save_as_document('mm-paper')

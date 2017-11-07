@@ -49,6 +49,13 @@
             ymin={ {{ limits.ymin }} },
             ymax={ {{ limits.ymax }} },
             %
+            {%- if xscale %}
+            x={ 1cm/{{ xscale }} },
+            {%- endif %}
+            {%- if yscale %}
+            y={ 1cm/{{ yscale }} },
+            {%- endif %}
+            %
             xtick={ {{ ticks.x | join(', ') }} },
             ytick={ {{ ticks.y | join(', ') }} },
             {%- if ticks.xlabels %}
