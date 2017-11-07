@@ -938,18 +938,7 @@ class SubPlot(object):
         self.axis_options = text
 
     def use_graph_paper(self):
-        """Draw millimeter graph paper.
-
-        In order to calculate the size of the graph paper, it is imperative
-        that you have specified the limits and absolute scale for both axis,
-        using the :meth:`set_xlimits`, :meth:`set_ylimits`, :meth:`set_xscale`
-        and :meth:`set_yscale` methods.
-
-        """
-        if None in self.limits:
-            raise RuntimeError("You need to specify all axis limits")
-        if None in (self.xscale, self.yscale):
-            raise RuntimeError("You need to specify all axis scales")
+        """Draw millimeter graph paper."""
 
         self.has_graph_paper = True
 
