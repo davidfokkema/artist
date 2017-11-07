@@ -25,6 +25,9 @@ def main():
     # set scale: 1cm equals 1 unit along the y-axis
     graph.set_yscale(cm=1)
 
+    # set graph paper
+    graph.use_graph_paper()
+
     # save graph to file
     graph.save_as_document('mm-paper')
     graph.save_as_pdf('output')

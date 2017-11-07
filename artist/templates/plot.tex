@@ -112,6 +112,14 @@
             {%- endif %}
         ]
 
+        {%- if has_graph_paper %}
+        \def\width{ {{ limits.xmax - limits.xmin }} }
+        \def\height{ {{ limits.ymax - limits.ymin }} }
+        \draw[step=1mm, line width=0.2mm, black!20!white] (rel axis cs: 0,0) grid (\width,\height);
+        \draw[step=5mm, line width=0.2mm, black!40!white] (rel axis cs: 0,0) grid (\width,\height);
+        \draw[step=1cm, line width=0.2mm, black!60!white] (rel axis cs: 0,0) grid (\width,\height);
+        {%- endif %}
+
         {% include 'subplot.tex' %}
 
     \end{axis}

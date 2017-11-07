@@ -245,6 +245,7 @@ class SubPlot(object):
         self.colorbar = False
         self.colormap = None
         self.axis_options = None
+        self.has_graph_paper = False
 
     def save_assets(self, dest_path, suffix=''):
         """Save plot assets alongside dest_path.
@@ -936,6 +937,22 @@ class SubPlot(object):
 
         self.axis_options = text
 
+    def use_graph_paper(self):
+        """Draw millimeter graph paper.
+
+        In order to calculate the size of the graph paper, it is imperative
+        that you have specified the limits and absolute scale for both axis,
+        using the :meth:`set_xlimits`, :meth:`set_ylimits`, :meth:`set_xscale`
+        and :meth:`set_yscale` methods.
+
+        """
+        if None in self.limits:
+            raise RuntimeError("You need to specify all axis limits")
+        if None in (self.xscale, self.yscale):
+            raise RuntimeError("You need to specify all axis scales")
+
+        self.has_graph_paper = True
+
     def _parse_plot_options(self, mark=None, linestyle=None,
                             use_steps=False, markstyle=None):
         options = []
@@ -1125,6 +1142,7 @@ class Plot(SubPlot, BasePlotContainer):
             colormap=self.colormap,
             external_filename=self.external_filename,
             axis_options=self.axis_options,
+            has_graph_paper=self.has_graph_paper,
             plot=self,
             plot_template=self.template)
         return response
