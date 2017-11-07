@@ -1,9 +1,13 @@
 """Make artist logo
 
-Run this, then use ImageMagick to make the favicon version:
+Run this script, then use ImageMagick to make the favicon version:
 
     python logo.py
     convert -density 768 -resize 32x32 logo.pdf favicon.png
+
+To make a Finder icon use:
+
+    convert -density 12380 -resize 1024x1024 logo.pdf logo.png
 
 """
 
