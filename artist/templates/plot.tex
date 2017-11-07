@@ -49,6 +49,13 @@
             ymin={ {{ limits.ymin }} },
             ymax={ {{ limits.ymax }} },
             %
+            {%- if xscale %}
+            x={ 1cm/{{ xscale }} },
+            {%- endif %}
+            {%- if yscale %}
+            y={ 1cm/{{ yscale }} },
+            {%- endif %}
+            %
             xtick={ {{ ticks.x | join(', ') }} },
             ytick={ {{ ticks.y | join(', ') }} },
             {%- if ticks.xlabels %}
@@ -104,6 +111,15 @@
                 {{ axis_options }}
             {%- endif %}
         ]
+
+        {%- if has_graph_paper %}
+        \draw[step=1mm, line width=0.2mm, black!20!white] (rel axis cs: 0,0)
+          grid (rel axis cs: 1,1);
+        \draw[step=5mm, line width=0.2mm, black!40!white] (rel axis cs: 0,0)
+          grid (rel axis cs: 1,1);
+        \draw[step=1cm, line width=0.2mm, black!60!white] (rel axis cs: 0,0)
+          grid (rel axis cs: 1,1);
+        {%- endif %}
 
         {% include 'subplot.tex' %}
 

@@ -235,6 +235,8 @@ class SubPlot(object):
                        'ymin': None, 'ymax': None,
                        'mmin': None, 'mmax': None,
                        'smin': None, 'smax': None}
+        self.xscale = None
+        self.yscale = None
         self.ticks = {'x': [], 'y': [],
                       'xlabels': '', 'ylabels': '',
                       'xsuffix': '', 'ysuffix': ''}
@@ -243,6 +245,7 @@ class SubPlot(object):
         self.colorbar = False
         self.colormap = None
         self.axis_options = None
+        self.has_graph_paper = False
 
     def save_assets(self, dest_path, suffix=''):
         """Save plot assets alongside dest_path.
@@ -740,6 +743,32 @@ class SubPlot(object):
         self.limits['ymin'] = min
         self.limits['ymax'] = max
 
+    def set_xscale(self, cm):
+        """Set scale of the x-axis.
+
+        :param cm: number of units which equals to 1 cm.
+
+        You can set the absolute scale of units along the x-axis using this
+        method. If you specify cm=10, then 1 cm along the axis will equal to 10
+        units.  You can use this, for example, to match up graph paper to the
+        axis, and make sure that a ruler can easily be used to read your graph.
+
+        """
+        self.xscale = cm
+
+    def set_yscale(self, cm):
+        """Set scale of the y-axis.
+
+        :param cm: number of units which equals to 1 cm.
+
+        You can set the absolute scale of units along the y-axis using this
+        method. If you specify cm=10, then 1 cm along the axis will equal to 10
+        units.  You can use this, for example, to match up graph paper to the
+        axis, and make sure that a ruler can easily be used to read your graph.
+
+        """
+        self.yscale = cm
+
     def set_mlimits(self, min=None, max=None):
         """Set limits for the point meta (colormap).
 
@@ -907,6 +936,11 @@ class SubPlot(object):
         """Set additionnal options as plain text."""
 
         self.axis_options = text
+
+    def use_graph_paper(self):
+        """Draw millimeter graph paper."""
+
+        self.has_graph_paper = True
 
     def _parse_plot_options(self, mark=None, linestyle=None,
                             use_steps=False, markstyle=None):
@@ -1088,6 +1122,8 @@ class Plot(SubPlot, BasePlotContainer):
             xlabel=self.xlabel,
             ylabel=self.ylabel,
             limits=self.limits,
+            xscale=self.xscale,
+            yscale=self.yscale,
             ticks=self.ticks,
             axis_equal=self.axis_equal,
             scalebar=self.scalebar,
@@ -1095,6 +1131,7 @@ class Plot(SubPlot, BasePlotContainer):
             colormap=self.colormap,
             external_filename=self.external_filename,
             axis_options=self.axis_options,
+            has_graph_paper=self.has_graph_paper,
             plot=self,
             plot_template=self.template)
         return response
