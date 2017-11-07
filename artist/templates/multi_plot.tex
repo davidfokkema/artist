@@ -184,6 +184,12 @@
                         {%- if subplot.limits.ymax is not none %}
                             ymax={ {{ subplot.limits.ymax }} },
                         {%- endif %}
+                        {%- if subplot.xscale %}
+                        x={ 1cm/{{ subplot.xscale }} },
+                        {%- endif %}
+                        {%- if subplot.yscale %}
+                        y={ 1cm/{{ subplot.yscale }} },
+                        {%- endif %}
                         {%- if subplot.limits.mmin is not none %}
                             point meta min={ {{ subplot.limits.mmin }} },
                         {%- endif %}
@@ -202,6 +208,15 @@
                         % labels.  PGFPLOTS does not allow empty plots.
                         \addplot[] coordinates {(1, 1)};
                     {% endif %}
+
+                    {%- if subplot.has_graph_paper %}
+                    \draw[step=1mm, line width=0.2mm, black!20!white] (rel axis cs: 0,0)
+                      grid (rel axis cs: 1,1);
+                    \draw[step=5mm, line width=0.2mm, black!40!white] (rel axis cs: 0,0)
+                      grid (rel axis cs: 1,1);
+                    \draw[step=1cm, line width=0.2mm, black!60!white] (rel axis cs: 0,0)
+                      grid (rel axis cs: 1,1);
+                    {%- endif %}
 
                     {% include 'subplot.tex' %}
 
