@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
 setup(name = "artist",
-      version = "0.18.1",
+      version = "0.18.2",
       packages = find_packages(),
       url = "http://github.com/davidfokkema/artist/",
       bugtrack_url='http://github.com/davidfokkema/artist/issues',
       license='GPLv3',
-      author = "David Fokkema",
-      author_email = "davidfokkema@icloud.com",
+      author = "David Fokkema, Arne de Laat",
+      author_email = "davidfokkema@icloud.com, arne@delaat.net",
       description = "A plotting library for Python with LaTeX output",
       long_description=open('README.rst').read(),
       keywords=['plots', 'plotting', 'data visualization'],
