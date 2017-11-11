@@ -1,34 +1,32 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>artist Package &mdash; Artist 0.18.1 documentation</title>
-    
+    <title>artist Package &#8212; Artist 0.18.2 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.18.1',
+        VERSION:     '0.18.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/favicon.png"/>
-    <link rel="top" title="Artist 0.18.1 documentation" href="index.html" />
-    <link rel="up" title="artist" href="modules.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="artist" href="modules.html" /> 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -41,8 +39,8 @@
         <li class="right" >
           <a href="modules.html" title="artist"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Artist 0.18.1 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">artist</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Artist 0.18.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">artist</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -54,7 +52,7 @@
   <div class="section" id="module-artist.__init__">
 <span id="artist-package"></span><h1>artist Package<a class="headerlink" href="#module-artist.__init__" title="Permalink to this headline">¶</a></h1>
 <p>Artist makes beautiful plots.</p>
-<p>Artist is a 2D plotting library for Python.  It&#8217;s main focus is the
+<p>Artist is a 2D plotting library for Python.  It’s main focus is the
 output.  Artist creates a LaTeX file which can be included in your paper
 or thesis.  The code needs TikZ and PGFPlots to compile and your plots
 will tightly integrate with your main text.  Artist provides an
@@ -64,7 +62,7 @@ on-the-fly as a stand-alone PDF file.</p>
 <h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h2>
 <p>Artist enables you to visualize the results of your data analysis.  The
 quality of your plots should reflect the quality of your analysis.  With
-most software, this is hardly possible and the term &#8216;publication quality&#8217;
+most software, this is hardly possible and the term ‘publication quality’
 takes on an entirely new meaning.  As a result, many papers and theses
 suffer from inconsistent and generally poor-quality plots.</p>
 <p>Fortunately, some solutions are available.  For LaTeX users, one can use
@@ -145,7 +143,7 @@ LaTeX file which can be included in your document.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string or None.</em>) &#8211; a user-supplied template or None.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string</em><em> or </em><em>None.</em>) – a user-supplied template or None.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
 </tr>
@@ -165,7 +163,7 @@ saved alongside the rendered plot file.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the main output file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> – path of the main output file.</td>
 </tr>
 </tbody>
 </table>
@@ -195,7 +193,7 @@ document.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> – path of the file.</td>
 </tr>
 </tbody>
 </table>
@@ -209,7 +207,7 @@ document.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> – path of the file.</td>
 </tr>
 </tbody>
 </table>
@@ -224,7 +222,7 @@ document.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> – path of the file.</td>
 </tr>
 </tbody>
 </table>
@@ -252,8 +250,8 @@ saved alongside the rendered plot file.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dest_path</strong> &#8211; path of the main output file.</li>
-<li><strong>suffix</strong> &#8211; optional suffix to add to asset names.</li>
+<li><strong>dest_path</strong> – path of the main output file.</li>
+<li><strong>suffix</strong> – optional suffix to add to asset names.</li>
 </ul>
 </td>
 </tr>
@@ -270,20 +268,20 @@ saved alongside the rendered plot file.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array containing x-values.</li>
-<li><strong>y</strong> &#8211; array containing y-values.</li>
-<li><strong>xerr</strong> &#8211; (optional) array containing errors on the x-values.</li>
-<li><strong>yerr</strong> &#8211; (optional) array containing errors on the y-values.</li>
-<li><strong>mark</strong> &#8211; the symbol used to mark the data point.  May be None,
+<li><strong>x</strong> – array containing x-values.</li>
+<li><strong>y</strong> – array containing y-values.</li>
+<li><strong>xerr</strong> – (optional) array containing errors on the x-values.</li>
+<li><strong>yerr</strong> – (optional) array containing errors on the y-values.</li>
+<li><strong>mark</strong> – the symbol used to mark the data point.  May be None,
 or any plot mark accepted by TikZ (e.g. <code class="docutils literal"><span class="pre">*,</span> <span class="pre">x,</span> <span class="pre">+,</span> <span class="pre">o,</span> <span class="pre">square,</span>
 <span class="pre">triangle</span></code>).</li>
-<li><strong>linestyle</strong> &#8211; the line style used to connect the data points.
+<li><strong>linestyle</strong> – the line style used to connect the data points.
 May be None, or any line style accepted by TikZ (e.g. solid,
 dashed, dotted, thick, or even combinations like
-&#8220;red,thick,dashed&#8221;).</li>
-<li><strong>use_steps</strong> &#8211; if True, draw a stepped plot.</li>
-<li><strong>markstyle</strong> &#8211; the style of the plot marks (e.g. &#8216;mark
-size=.75pt&#8217;)</li>
+“red,thick,dashed”).</li>
+<li><strong>use_steps</strong> – if True, draw a stepped plot.</li>
+<li><strong>markstyle</strong> – the style of the plot marks (e.g. ‘mark
+size=.75pt’)</li>
 </ul>
 </td>
 </tr>
@@ -300,25 +298,25 @@ two values for assymetric errors.</p>
 <code class="descname">histogram</code><span class="sig-paren">(</span><em>counts</em>, <em>bin_edges</em>, <em>linestyle='solid'</em><span class="sig-paren">)</span><a class="headerlink" href="#artist.plot.SubPlot.histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a histogram.</p>
 <p>The user needs to supply the histogram.  This method only plots
-the results.  You can use NumPy&#8217;s histogram function.</p>
+the results.  You can use NumPy’s histogram function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>counts</strong> &#8211; array containing the count values.</li>
-<li><strong>bin_edges</strong> &#8211; array containing the bin edges.</li>
-<li><strong>linestyle</strong> &#8211; the line style used to connect the data points.
+<li><strong>counts</strong> – array containing the count values.</li>
+<li><strong>bin_edges</strong> – array containing the bin edges.</li>
+<li><strong>linestyle</strong> – the line style used to connect the data points.
 May be None, or any line style accepted by TikZ (e.g. solid,
 dashed, dotted, thick, or even combinations like
-&#8220;red,thick,dashed&#8221;).</li>
+“red,thick,dashed”).</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
@@ -331,30 +329,30 @@ dashed, dotted, thick, or even combinations like
 <code class="descname">histogram2d</code><span class="sig-paren">(</span><em>counts</em>, <em>x_edges</em>, <em>y_edges</em>, <em>type='bw'</em>, <em>style=None</em>, <em>bitmap=False</em>, <em>colormap=None</em><span class="sig-paren">)</span><a class="headerlink" href="#artist.plot.SubPlot.histogram2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a two-dimensional histogram.</p>
 <p>The user needs to supply the histogram.  This method only plots
-the results.  You can use NumPy&#8217;s histogram2d function.</p>
+the results.  You can use NumPy’s histogram2d function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>counts</strong> &#8211; array containing the count values.</li>
-<li><strong>x_edges</strong> &#8211; array containing the x-axis bin edges.</li>
-<li><strong>y_edges</strong> &#8211; array containing the y-axis bin edges.</li>
-<li><strong>type</strong> &#8211; the type of histogram.  Allowed values are &#8216;bw&#8217; for
+<li><strong>counts</strong> – array containing the count values.</li>
+<li><strong>x_edges</strong> – array containing the x-axis bin edges.</li>
+<li><strong>y_edges</strong> – array containing the y-axis bin edges.</li>
+<li><strong>type</strong> – the type of histogram.  Allowed values are ‘bw’ for
 filled squares with shades from black (minimum value) to white
-(maximum value), &#8216;reverse_bw&#8217; for filled squares with the
-shades reversed and, &#8216;color&#8217; for color mapped histogram
-which uses the &#8216;coolwarm&#8217; colormap by default, but can be
-overwritten with the colormap keyword, and &#8216;area&#8217; for
+(maximum value), ‘reverse_bw’ for filled squares with the
+shades reversed and, ‘color’ for color mapped histogram
+which uses the ‘coolwarm’ colormap by default, but can be
+overwritten with the colormap keyword, and ‘area’ for
 squares where the area of the square is a measure of the
 count in the bin.</li>
-<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).  Note
-that many color styles are overridden by the &#8216;bw&#8217; and
-&#8216;reverse_bw&#8217; types.</li>
-<li><strong>bitmap</strong> &#8211; Export the histogram as an image for better
+<li><strong>style</strong> – optional TikZ styles to apply (e.g. ‘red’).  Note
+that many color styles are overridden by the ‘bw’ and
+‘reverse_bw’ types.</li>
+<li><strong>bitmap</strong> – Export the histogram as an image for better
 performance. This does expect all bins along an axis to have
-equal width. Can not be used in combination with type &#8216;area&#8217;.</li>
-<li><strong>colormap</strong> &#8211; A colormap for the &#8216;color&#8217; type, as expected by
+equal width. Can not be used in combination with type ‘area’.</li>
+<li><strong>colormap</strong> – A colormap for the ‘color’ type, as expected by
 the <cite>Image.putpalette</cite> method.</li>
 </ul>
 </td>
@@ -362,7 +360,7 @@ the <cite>Image.putpalette</cite> method.</li>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">xbins</span><span class="p">,</span> <span class="n">ybins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -374,11 +372,11 @@ care has to be taken with the binning. This is because the bins along
 an axis have to be equal size in the final result. So use logarithmic
 binning for logarithmic axes.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;semilogx&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;semilogx&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xbins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ybins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">xbins</span><span class="p">,</span> <span class="n">ybins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="n">xbins</span><span class="p">,</span> <span class="n">ybins</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">xbins</span><span class="p">,</span> <span class="n">ybins</span><span class="p">,</span> <span class="n">bitmap</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">xbins</span><span class="p">,</span> <span class="n">ybins</span><span class="p">,</span> <span class="n">bitmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For each bin where the counts are nan the value will be set to the
@@ -396,22 +394,22 @@ line. Shortcut for plot with linestyle=None.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array containing x-values.</li>
-<li><strong>y</strong> &#8211; array containing y-values.</li>
-<li><strong>xerr</strong> &#8211; array containing errors on the x-values.</li>
-<li><strong>yerr</strong> &#8211; array containing errors on the y-values.</li>
-<li><strong>mark</strong> &#8211; the symbol used to mark the data points. May be
+<li><strong>x</strong> – array containing x-values.</li>
+<li><strong>y</strong> – array containing y-values.</li>
+<li><strong>xerr</strong> – array containing errors on the x-values.</li>
+<li><strong>yerr</strong> – array containing errors on the y-values.</li>
+<li><strong>mark</strong> – the symbol used to mark the data points. May be
 any plot mark accepted by TikZ (e.g. <code class="docutils literal"><span class="pre">*,</span> <span class="pre">x,</span> <span class="pre">+,</span> <span class="pre">o,</span> <span class="pre">square,</span>
 <span class="pre">triangle</span></code>).</li>
-<li><strong>markstyle</strong> &#8211; the style of the plot marks (e.g. &#8216;mark
-size=.75pt&#8217;)</li>
+<li><strong>markstyle</strong> – the style of the plot marks (e.g. ‘mark
+size=.75pt’)</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mark</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
@@ -428,11 +426,11 @@ size=.75pt&#8217;)</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array containing x-values.</li>
-<li><strong>y</strong> &#8211; array containing y-values.</li>
-<li><strong>c</strong> &#8211; array containing values for the color of the mark.</li>
-<li><strong>s</strong> &#8211; array containing values for the size of the mark.</li>
-<li><strong>mark</strong> &#8211; the symbol used to mark the data point.  May be None,
+<li><strong>x</strong> – array containing x-values.</li>
+<li><strong>y</strong> – array containing y-values.</li>
+<li><strong>c</strong> – array containing values for the color of the mark.</li>
+<li><strong>s</strong> – array containing values for the size of the mark.</li>
+<li><strong>mark</strong> – the symbol used to mark the data point.  May be None,
 or any plot mark accepted by TikZ (e.g. <code class="docutils literal"><span class="pre">*,</span> <span class="pre">x,</span> <span class="pre">+,</span> <span class="pre">o,</span> <span class="pre">square,</span>
 <span class="pre">triangle</span></code>).</li>
 </ul>
@@ -459,11 +457,11 @@ be mapped to a colormap.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>text</strong> &#8211; the label text.</li>
-<li><strong>location</strong> &#8211; the location of the label inside the plot.  May
-be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
-left&#8217;, &#8216;lower left&#8217;.</li>
-<li><strong>style</strong> &#8211; any TikZ style to style the text.</li>
+<li><strong>text</strong> – the label text.</li>
+<li><strong>location</strong> – the location of the label inside the plot.  May
+be one of ‘center’, ‘upper right’, ‘lower right’, ‘upper
+left’, ‘lower left’.</li>
+<li><strong>style</strong> – any TikZ style to style the text.</li>
 </ul>
 </td>
 </tr>
@@ -480,18 +478,18 @@ left&#8217;, &#8216;lower left&#8217;.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>text</strong> &#8211; the text of the pin label.</li>
-<li><strong>location</strong> (<em>string</em>) &#8211; the location of the pin relative to the data
+<li><strong>text</strong> – the text of the pin label.</li>
+<li><strong>location</strong> (<em>string</em>) – the location of the pin relative to the data
 point.  Any location accepted by TikZ is allowed.</li>
-<li><strong>x</strong> &#8211; the x location of the data point (in the most recent
+<li><strong>x</strong> – the x location of the data point (in the most recent
 data series) at which to place the label.  This is
 interpolated between the actual data points.  If None, only
 the relative_position parameter is used.</li>
-<li><strong>use_arrow</strong> (<em>boolean</em>) &#8211; specifies whether to draw an arrow between the
+<li><strong>use_arrow</strong> (<em>boolean</em>) – specifies whether to draw an arrow between the
 data point and the pin label text.</li>
-<li><strong>relative_position</strong> &#8211; location of the data point as a relative
+<li><strong>relative_position</strong> – location of the data point as a relative
 number between 0 and 1.</li>
-<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).</li>
+<li><strong>style</strong> – optional TikZ styles to apply (e.g. ‘red’).</li>
 </ul>
 </td>
 </tr>
@@ -508,18 +506,18 @@ number between 0 and 1.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array, list or float, specifying the location of the
+<li><strong>x</strong> – array, list or float, specifying the location of the
 pin.</li>
-<li><strong>y</strong> &#8211; array, list or float, specifying the location of the
+<li><strong>y</strong> – array, list or float, specifying the location of the
 pin.</li>
-<li><strong>text</strong> &#8211; the text of the pin label.</li>
-<li><strong>location</strong> &#8211; the location of the pin relative to the data
+<li><strong>text</strong> – the text of the pin label.</li>
+<li><strong>location</strong> – the location of the pin relative to the data
 point.  Any location accepted by TikZ is allowed.</li>
-<li><strong>relative_position</strong> &#8211; location of the data point as a relative
+<li><strong>relative_position</strong> – location of the data point as a relative
 number between 0 and 1.</li>
-<li><strong>use_arrow</strong> (<em>boolean</em>) &#8211; specifies whether to draw an arrow between the
+<li><strong>use_arrow</strong> (<em>boolean</em>) – specifies whether to draw an arrow between the
 data point and the pin label text.</li>
-<li><strong>style</strong> &#8211; optional TikZ styles to apply (e.g. &#8216;red&#8217;).</li>
+<li><strong>style</strong> – optional TikZ styles to apply (e.g. ‘red’).</li>
 </ul>
 </td>
 </tr>
@@ -539,10 +537,10 @@ first point from the series, while 1.0 will be the last point.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> &#8211; array containing x-values</li>
-<li><strong>lower</strong> &#8211; array containing y-values of lower bounds</li>
-<li><strong>upper</strong> &#8211; array containing y-values of upper bounds</li>
-<li><strong>color</strong> &#8211; TikZ style to color the region</li>
+<li><strong>x</strong> – array containing x-values</li>
+<li><strong>lower</strong> – array containing y-values of lower bounds</li>
+<li><strong>upper</strong> – array containing y-values of upper bounds</li>
+<li><strong>color</strong> – TikZ style to color the region</li>
 </ul>
 </td>
 </tr>
@@ -562,18 +560,18 @@ plot to the aspect ratio of the image.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>image</strong> &#8211; Pillow Image object.</li>
-<li><strong>xmin,ymin,xmax,ymax</strong> &#8211; the x, y image bounds.</li>
+<li><strong>image</strong> – Pillow Image object.</li>
+<li><strong>xmin</strong><strong>,</strong><strong>ymin</strong><strong>,</strong><strong>xmax</strong><strong>,</strong><strong>ymax</strong> – the x, y image bounds.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PIL</span> <span class="k">import</span> <span class="n">Image</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;background.png&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">height_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="o">.</span><span class="mi">67</span> <span class="o">*</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="s1">r&#39;</span><span class="si">%.2f</span><span class="s1">\linewidth&#39;</span> <span class="o">%</span> <span class="n">height_ratio</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">\linewidth&#39;</span> <span class="o">%</span> <span class="n">height_ratio</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">draw_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -588,8 +586,8 @@ plot to the aspect ratio of the image.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>yvalue</strong> &#8211; y-value of the line</li>
-<li><strong>linestyle</strong> &#8211; TikZ linestyle (e.g. dashed, solid, red)</li>
+<li><strong>yvalue</strong> – y-value of the line</li>
+<li><strong>linestyle</strong> – TikZ linestyle (e.g. dashed, solid, red)</li>
 </ul>
 </td>
 </tr>
@@ -606,8 +604,8 @@ plot to the aspect ratio of the image.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>xvalue</strong> &#8211; x-value of the line</li>
-<li><strong>linestyle</strong> &#8211; TikZ linestyle (e.g. dashed, solid, red)</li>
+<li><strong>xvalue</strong> – x-value of the line</li>
+<li><strong>linestyle</strong> – TikZ linestyle (e.g. dashed, solid, red)</li>
 </ul>
 </td>
 </tr>
@@ -623,7 +621,7 @@ plot to the aspect ratio of the image.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> &#8211; TikZ style to color the axis background.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> – TikZ style to color the axis background.</td>
 </tr>
 </tbody>
 </table>
@@ -637,7 +635,7 @@ plot to the aspect ratio of the image.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> – text of the label.</td>
 </tr>
 </tbody>
 </table>
@@ -651,7 +649,7 @@ plot to the aspect ratio of the image.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> – text of the label.</td>
 </tr>
 </tbody>
 </table>
@@ -666,9 +664,9 @@ plot to the aspect ratio of the image.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; minimum value to be displayed.  If None, it will be
+<li><strong>min</strong> – minimum value to be displayed.  If None, it will be
 calculated.</li>
-<li><strong>max</strong> &#8211; maximum value to be displayed.  If None, it will be
+<li><strong>max</strong> – maximum value to be displayed.  If None, it will be
 calculated.</li>
 </ul>
 </td>
@@ -686,9 +684,9 @@ calculated.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; minimum value to be displayed.  If None, it will be
+<li><strong>min</strong> – minimum value to be displayed.  If None, it will be
 calculated.</li>
-<li><strong>max</strong> &#8211; maximum value to be displayed.  If None, it will be
+<li><strong>max</strong> – maximum value to be displayed.  If None, it will be
 calculated.</li>
 </ul>
 </td>
@@ -705,7 +703,7 @@ calculated.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cm</strong> &#8211; number of units which equals to 1 cm.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cm</strong> – number of units which equals to 1 cm.</td>
 </tr>
 </tbody>
 </table>
@@ -723,7 +721,7 @@ axis, and make sure that a ruler can easily be used to read your graph.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cm</strong> &#8211; number of units which equals to 1 cm.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cm</strong> – number of units which equals to 1 cm.</td>
 </tr>
 </tbody>
 </table>
@@ -743,9 +741,9 @@ axis, and make sure that a ruler can easily be used to read your graph.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; value corresponding to the start of the colormap.
+<li><strong>min</strong> – value corresponding to the start of the colormap.
 If None, it will be calculated.</li>
-<li><strong>max</strong> &#8211; value corresponding to the end of the colormap.
+<li><strong>max</strong> – value corresponding to the end of the colormap.
 If None, it will be calculated.</li>
 </ul>
 </td>
@@ -764,8 +762,8 @@ If None, it will be calculated.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; point size for the lowest value.</li>
-<li><strong>max</strong> &#8211; point size for the highest value.</li>
+<li><strong>min</strong> – point size for the lowest value.</li>
+<li><strong>max</strong> – point size for the highest value.</li>
 </ul>
 </td>
 </tr>
@@ -781,7 +779,7 @@ If None, it will be calculated.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ticks</strong> &#8211; locations for the ticks along the axis.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ticks</strong> – locations for the ticks along the axis.</td>
 </tr>
 </tbody>
 </table>
@@ -795,7 +793,7 @@ If None, it will be calculated.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ticks</strong> &#8211; locations for the ticks along the axis.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ticks</strong> – locations for the ticks along the axis.</td>
 </tr>
 </tbody>
 </table>
@@ -809,7 +807,7 @@ If None, it will be calculated.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logticks</strong> – logarithm of the locations for the ticks along
 the axis.</td>
 </tr>
 </tbody>
@@ -826,7 +824,7 @@ the axis.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>logticks</strong> – logarithm of the locations for the ticks along
 the axis.</td>
 </tr>
 </tbody>
@@ -845,7 +843,7 @@ the correct place.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels</strong> &#8211; list of labels for the ticks along the axis.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels</strong> – list of labels for the ticks along the axis.</td>
 </tr>
 </tbody>
 </table>
@@ -861,7 +859,7 @@ the correct place.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels</strong> &#8211; list of labels for the ticks along the axis.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels</strong> – list of labels for the ticks along the axis.</td>
 </tr>
 </tbody>
 </table>
@@ -875,7 +873,7 @@ the correct place.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suffix</strong> &#8211; string added after each tick. If the value is
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suffix</strong> – string added after each tick. If the value is
 <cite>degree</cite> or <cite>precent</cite> the corresponding symbols
 will be added.</td>
 </tr>
@@ -891,7 +889,7 @@ will be added.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suffix</strong> &#8211; string added after each tick. If the value is
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suffix</strong> – string added after each tick. If the value is
 <cite>degree</cite> or <cite>precent</cite> the corresponding symbols
 will be added.</td>
 </tr>
@@ -913,9 +911,9 @@ will be added.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>location</strong> &#8211; the location of the label inside the plot.  May
-be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
-left&#8217;, &#8216;lower left&#8217;.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>location</strong> – the location of the label inside the plot.  May
+be one of ‘center’, ‘upper right’, ‘lower right’, ‘upper
+left’, ‘lower left’.</td>
 </tr>
 </tbody>
 </table>
@@ -934,8 +932,8 @@ using set_axis_options.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>label</strong> &#8211; axis label for the colorbar.</li>
-<li><strong>horizontal</strong> &#8211; boolean, if True the colobar will be horizontal.</li>
+<li><strong>label</strong> – axis label for the colorbar.</li>
+<li><strong>horizontal</strong> – boolean, if True the colobar will be horizontal.</li>
 </ul>
 </td>
 </tr>
@@ -951,7 +949,7 @@ using set_axis_options.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; name of the colormap to use. (e.g. hot, cool, blackwhite,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – name of the colormap to use. (e.g. hot, cool, blackwhite,
 greenyellow). If None a coolwarm colormap is used.</td>
 </tr>
 </tbody>
@@ -992,7 +990,7 @@ LaTeX file which can be included in your document.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string or None.</em>) &#8211; a user-supplied template or None.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string</em><em> or </em><em>None.</em>) – a user-supplied template or None.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
 </tr>
@@ -1014,7 +1012,7 @@ coordinates in arbitrary units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>use_radians</strong> &#8211; If this keyword is set to True the units for x (phi)
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>use_radians</strong> – If this keyword is set to True the units for x (phi)
 values and x (phi) axis labels are radians.</td>
 </tr>
 </tbody>
@@ -1028,9 +1026,9 @@ values and x (phi) axis labels are radians.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>phi</strong> &#8211; array containing phi-values, should be in degrees
+<li><strong>phi</strong> – array containing phi-values, should be in degrees
 (or radians).</li>
-<li><strong>r</strong> &#8211; array containing r-values.</li>
+<li><strong>r</strong> – array containing r-values.</li>
 </ul>
 </td>
 </tr>
@@ -1044,26 +1042,26 @@ values and x (phi) axis labels are radians.</td>
 <code class="descname">histogram</code><span class="sig-paren">(</span><em>counts</em>, <em>bin_edges</em>, <em>linestyle='solid'</em><span class="sig-paren">)</span><a class="headerlink" href="#artist.plot.PolarPlot.histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a polar histogram.</p>
 <p>The user needs to supply the histogram.  This method only plots
-the results.  You can use NumPy&#8217;s histogram function.</p>
+the results.  You can use NumPy’s histogram function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>counts</strong> &#8211; array containing the count values.</li>
-<li><strong>bin_edges</strong> &#8211; array containing the bin edges in degrees
+<li><strong>counts</strong> – array containing the count values.</li>
+<li><strong>bin_edges</strong> – array containing the bin edges in degrees
 (or radians).</li>
-<li><strong>linestyle</strong> &#8211; the line style used to connect the data points.
+<li><strong>linestyle</strong> – the line style used to connect the data points.
 May be None, or any line style accepted by TikZ (e.g. solid,
 dashed, dotted, thick, or even combinations like
-&#8220;red,thick,dashed&#8221;).</li>
+“red,thick,dashed”).</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">PolarPlot</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">PolarPlot</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">37</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
@@ -1119,7 +1117,7 @@ saved alongside the rendered plot file.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> &#8211; path of the main output file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dest_path</strong> – path of the main output file.</td>
 </tr>
 </tbody>
 </table>
@@ -1133,7 +1131,7 @@ saved alongside the rendered plot file.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row,column</strong> &#8211; specify the subplot.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</td>
 </tr>
 </tbody>
 </table>
@@ -1147,7 +1145,7 @@ saved alongside the rendered plot file.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</td>
 </tr>
 </tbody>
@@ -1163,8 +1161,8 @@ specify the subplots, or None to indicate <em>all</em> subplots.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>text</strong> &#8211; title text.</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>text</strong> – title text.</li>
 </ul>
 </td>
 </tr>
@@ -1181,12 +1179,12 @@ specify the subplots, or None to indicate <em>all</em> subplots.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>text</strong> &#8211; the label text.</li>
-<li><strong>location</strong> &#8211; the location of the label inside the plot.  May
-be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
-left&#8217;, &#8216;lower left&#8217;.</li>
-<li><strong>style</strong> &#8211; any TikZ style to style the text.</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>text</strong> – the label text.</li>
+<li><strong>location</strong> – the location of the label inside the plot.  May
+be one of ‘center’, ‘upper right’, ‘lower right’, ‘upper
+left’, ‘lower left’.</li>
+<li><strong>style</strong> – any TikZ style to style the text.</li>
 </ul>
 </td>
 </tr>
@@ -1202,7 +1200,7 @@ left&#8217;, &#8216;lower left&#8217;.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row,column</strong> &#8211; specify the subplot.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</td>
 </tr>
 </tbody>
 </table>
@@ -1216,7 +1214,7 @@ left&#8217;, &#8216;lower left&#8217;.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</td>
 </tr>
 </tbody>
@@ -1231,7 +1229,7 @@ specify the subplots, or None to indicate <em>all</em> subplots.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row,column</strong> &#8211; specify the subplot.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</td>
 </tr>
 </tbody>
 </table>
@@ -1245,7 +1243,7 @@ specify the subplots, or None to indicate <em>all</em> subplots.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</td>
 </tr>
 </tbody>
@@ -1264,8 +1262,8 @@ on the bottom or the top of the subplot.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>position</strong> &#8211; &#8216;top&#8217; or &#8216;bottom&#8217; to specify the position of the
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>position</strong> – ‘top’ or ‘bottom’ to specify the position of the
 tick labels.</li>
 </ul>
 </td>
@@ -1286,8 +1284,8 @@ labels on the left or the right of the subplot.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>position</strong> &#8211; &#8216;left&#8217; or &#8216;right&#8217; to specify the position of the
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>position</strong> – ‘left’ or ‘right’ to specify the position of the
 tick labels.</li>
 </ul>
 </td>
@@ -1305,9 +1303,9 @@ tick labels.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>min</strong> &#8211; minimal axis value</li>
-<li><strong>max</strong> &#8211; maximum axis value</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>min</strong> – minimal axis value</li>
+<li><strong>max</strong> – maximum axis value</li>
 </ul>
 </td>
 </tr>
@@ -1324,10 +1322,10 @@ tick labels.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>min</strong> &#8211; minimal axis value</li>
-<li><strong>max</strong> &#8211; maximum axis value</li>
+<li><strong>min</strong> – minimal axis value</li>
+<li><strong>max</strong> – maximum axis value</li>
 </ul>
 </td>
 </tr>
@@ -1344,9 +1342,9 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>min</strong> &#8211; minimal axis value</li>
-<li><strong>max</strong> &#8211; maximum axis value</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>min</strong> – minimal axis value</li>
+<li><strong>max</strong> – maximum axis value</li>
 </ul>
 </td>
 </tr>
@@ -1363,10 +1361,10 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>min</strong> &#8211; minimal axis value</li>
-<li><strong>max</strong> &#8211; maximum axis value</li>
+<li><strong>min</strong> – minimal axis value</li>
+<li><strong>max</strong> – maximum axis value</li>
 </ul>
 </td>
 </tr>
@@ -1384,8 +1382,8 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; value for start of the colormap.</li>
-<li><strong>max</strong> &#8211; value for end of the colormap.</li>
+<li><strong>min</strong> – value for start of the colormap.</li>
+<li><strong>max</strong> – value for end of the colormap.</li>
 </ul>
 </td>
 </tr>
@@ -1402,10 +1400,10 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>min</strong> &#8211; value for start of the colormap.</li>
-<li><strong>max</strong> &#8211; value for end of the colormap.</li>
+<li><strong>min</strong> – value for start of the colormap.</li>
+<li><strong>max</strong> – value for end of the colormap.</li>
 </ul>
 </td>
 </tr>
@@ -1422,8 +1420,8 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>min</strong> &#8211; point size for the lowest value.</li>
-<li><strong>max</strong> &#8211; point size for the highest value.</li>
+<li><strong>min</strong> – point size for the lowest value.</li>
+<li><strong>max</strong> – point size for the highest value.</li>
 </ul>
 </td>
 </tr>
@@ -1440,10 +1438,10 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>min</strong> &#8211; point size for the lowest value.</li>
-<li><strong>max</strong> &#8211; point size for the highest value.</li>
+<li><strong>min</strong> – point size for the lowest value.</li>
+<li><strong>max</strong> – point size for the highest value.</li>
 </ul>
 </td>
 </tr>
@@ -1460,8 +1458,8 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>ticks</strong> &#8211; list of tick values.</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>ticks</strong> – list of tick values.</li>
 </ul>
 </td>
 </tr>
@@ -1478,9 +1476,9 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>ticks</strong> &#8211; list of tick values.</li>
+<li><strong>ticks</strong> – list of tick values.</li>
 </ul>
 </td>
 </tr>
@@ -1497,8 +1495,8 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along the
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>logticks</strong> – logarithm of the locations for the ticks along the
 axis.</li>
 </ul>
 </td>
@@ -1518,9 +1516,9 @@ axis.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along the
+<li><strong>logticks</strong> – logarithm of the locations for the ticks along the
 axis.</li>
 </ul>
 </td>
@@ -1540,8 +1538,8 @@ axis.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>ticks</strong> &#8211; list of tick values.</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>ticks</strong> – list of tick values.</li>
 </ul>
 </td>
 </tr>
@@ -1558,9 +1556,9 @@ axis.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>ticks</strong> &#8211; list of tick values.</li>
+<li><strong>ticks</strong> – list of tick values.</li>
 </ul>
 </td>
 </tr>
@@ -1577,8 +1575,8 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along the
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>logticks</strong> – logarithm of the locations for the ticks along the
 axis.</li>
 </ul>
 </td>
@@ -1598,9 +1596,9 @@ axis.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>logticks</strong> &#8211; logarithm of the locations for the ticks along the
+<li><strong>logticks</strong> – logarithm of the locations for the ticks along the
 axis.</li>
 </ul>
 </td>
@@ -1620,8 +1618,8 @@ axis.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>labels</strong> &#8211; list of tick labels.</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>labels</strong> – list of tick labels.</li>
 </ul>
 </td>
 </tr>
@@ -1638,9 +1636,9 @@ axis.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>labels</strong> &#8211; list of tick labels.</li>
+<li><strong>labels</strong> – list of tick labels.</li>
 </ul>
 </td>
 </tr>
@@ -1657,8 +1655,8 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>labels</strong> &#8211; list of tick labels.</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>labels</strong> – list of tick labels.</li>
 </ul>
 </td>
 </tr>
@@ -1675,9 +1673,9 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>labels</strong> &#8211; list of tick labels.</li>
+<li><strong>labels</strong> – list of tick labels.</li>
 </ul>
 </td>
 </tr>
@@ -1693,7 +1691,7 @@ specify the subplots, or None to indicate <em>all</em> subplots.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row,column</strong> &#8211; specify the subplot.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</td>
 </tr>
 </tbody>
 </table>
@@ -1710,7 +1708,7 @@ LaTeX file which can be included in your document.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string or None.</em>) &#8211; a user-supplied template or None.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<em>string</em><em> or </em><em>None.</em>) – a user-supplied template or None.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string.</td>
 </tr>
@@ -1726,7 +1724,7 @@ LaTeX file which can be included in your document.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> – text of the label.</td>
 </tr>
 </tbody>
 </table>
@@ -1740,7 +1738,7 @@ LaTeX file which can be included in your document.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; text of the label.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> – text of the label.</td>
 </tr>
 </tbody>
 </table>
@@ -1755,8 +1753,8 @@ LaTeX file which can be included in your document.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>text</strong> &#8211; text of the label.</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>text</strong> – text of the label.</li>
 </ul>
 </td>
 </tr>
@@ -1773,8 +1771,8 @@ LaTeX file which can be included in your document.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row,column</strong> &#8211; specify the subplot.</li>
-<li><strong>text</strong> &#8211; text of the label.</li>
+<li><strong>row</strong><strong>,</strong><strong>column</strong> – specify the subplot.</li>
+<li><strong>text</strong> – text of the label.</li>
 </ul>
 </td>
 </tr>
@@ -1791,11 +1789,11 @@ LaTeX file which can be included in your document.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>location</strong> &#8211; the location of the label inside the plot.  May
-be one of &#8216;center&#8217;, &#8216;upper right&#8217;, &#8216;lower right&#8217;, &#8216;upper
-left&#8217;, &#8216;lower left&#8217;.</li>
+<li><strong>location</strong> – the location of the label inside the plot.  May
+be one of ‘center’, ‘upper right’, ‘lower right’, ‘upper
+left’, ‘lower left’.</li>
 </ul>
 </td>
 </tr>
@@ -1815,8 +1813,8 @@ colormap of each subplot.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>label</strong> &#8211; axis label for the colorbar.</li>
-<li><strong>horizontal</strong> &#8211; boolean, if True the colobar will be horizontal.</li>
+<li><strong>label</strong> – axis label for the colorbar.</li>
+<li><strong>horizontal</strong> – boolean, if True the colobar will be horizontal.</li>
 </ul>
 </td>
 </tr>
@@ -1832,7 +1830,7 @@ colormap of each subplot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; name of the colormap to use. (e.g. hot, cool, blackwhite,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – name of the colormap to use. (e.g. hot, cool, blackwhite,
 greenyellow). If None a coolwarm colormap is used.</td>
 </tr>
 </tbody>
@@ -1854,9 +1852,9 @@ greenyellow). If None a coolwarm colormap is used.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>row_column_list</strong> (<em>list or None</em>) &#8211; a list containing (row, column) tuples to
+<li><strong>row_column_list</strong> (<em>list</em><em> or </em><em>None</em>) – a list containing (row, column) tuples to
 specify the subplots, or None to indicate <em>all</em> subplots.</li>
-<li><strong>text</strong> &#8211; axis options for the given subplots or the overall plot.</li>
+<li><strong>text</strong> – axis options for the given subplots or the overall plot.</li>
 </ul>
 </td>
 </tr>
@@ -1903,7 +1901,7 @@ on the bottom or the top of the subplot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> &#8211; &#8216;top&#8217; or &#8216;bottom&#8217; to specify the position of the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> – ‘top’ or ‘bottom’ to specify the position of the
 tick labels.</td>
 </tr>
 </tbody>
@@ -1921,7 +1919,7 @@ labels on the left or the right of the subplot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> &#8211; &#8216;left&#8217; or &#8216;right&#8217; to specify the position of the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> – ‘left’ or ‘right’ to specify the position of the
 tick labels.</td>
 </tr>
 </tbody>
@@ -1968,8 +1966,8 @@ tick labels.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x,y</strong> &#8211; data values</li>
-<li><strong>degree</strong> &#8211; degree of smoothing</li>
+<li><strong>x</strong><strong>,</strong><strong>y</strong> – data values</li>
+<li><strong>degree</strong> – degree of smoothing</li>
 </ul>
 </td>
 </tr>
@@ -1997,7 +1995,7 @@ return values are thus reduced in length by one sample.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prefix</strong> (<em>string</em>) &#8211; prefix for all plot names</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prefix</strong> (<em>string</em>) – prefix for all plot names</td>
 </tr>
 </tbody>
 </table>
@@ -2011,7 +2009,7 @@ return values are thus reduced in length by one sample.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prefix</strong> (<em>string</em>) &#8211; suffix for all plot names</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prefix</strong> (<em>string</em>) – suffix for all plot names</td>
 </tr>
 </tbody>
 </table>
@@ -2026,8 +2024,8 @@ return values are thus reduced in length by one sample.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>level</strong> &#8211; level of recursion.  level=0 is this method, level=1 is
-the caller, and level=2 is the caller&#8217;s parent.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>level</strong> – level of recursion.  level=0 is this method, level=1 is
+the caller, and level=2 is the caller’s parent.</td>
 </tr>
 </tbody>
 </table>
@@ -2042,8 +2040,8 @@ the caller, and level=2 is the caller&#8217;s parent.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>suffix</strong> &#8211; optional suffix to add to name</li>
-<li><strong>dirname</strong> &#8211; optional directory name</li>
+<li><strong>suffix</strong> – optional suffix to add to name</li>
+<li><strong>dirname</strong> – optional directory name</li>
 </ul>
 </td>
 </tr>
@@ -2060,15 +2058,15 @@ the caller, and level=2 is the caller&#8217;s parent.</td>
 <dl class="function">
 <dt id="artist.utils.save_graph">
 <code class="descclassname">artist.utils.</code><code class="descname">save_graph</code><span class="sig-paren">(</span><em>graph</em>, <em>suffix=''</em>, <em>dirname=None</em>, <em>pdf=False</em><span class="sig-paren">)</span><a class="headerlink" href="#artist.utils.save_graph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a graph using caller&#8217;s name.</p>
+<dd><p>Save a graph using caller’s name.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>suffix</strong> &#8211; optional suffix to add to name</li>
-<li><strong>dirname</strong> &#8211; optional directory name</li>
-<li><strong>pdf</strong> &#8211; if True, the saved graph is additionally rendered and
+<li><strong>suffix</strong> – optional suffix to add to name</li>
+<li><strong>dirname</strong> – optional directory name</li>
+<li><strong>pdf</strong> – if True, the saved graph is additionally rendered and
 saved as a pdf, alongside the LaTeX file.</li>
 </ul>
 </td>
@@ -2080,15 +2078,15 @@ saved as a pdf, alongside the LaTeX file.</li>
 <dl class="function">
 <dt id="artist.utils.save_data">
 <code class="descclassname">artist.utils.</code><code class="descname">save_data</code><span class="sig-paren">(</span><em>data</em>, <em>suffix=''</em>, <em>dirname=None</em><span class="sig-paren">)</span><a class="headerlink" href="#artist.utils.save_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a dataset using caller&#8217;s name.</p>
+<dd><p>Save a dataset using caller’s name.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> &#8211; a list or numpy array containing the data</li>
-<li><strong>suffix</strong> &#8211; optional suffix to add to name</li>
-<li><strong>dirname</strong> &#8211; optional directory name</li>
+<li><strong>data</strong> – a list or numpy array containing the data</li>
+<li><strong>suffix</strong> – optional suffix to add to name</li>
+<li><strong>dirname</strong> – optional directory name</li>
 </ul>
 </td>
 </tr>
@@ -2138,21 +2136,18 @@ Greyscale values will be mapped to these color values.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/artist.txt"
+      <li><a href="_sources/artist.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -2171,13 +2166,13 @@ Greyscale values will be mapped to these color values.</p>
         <li class="right" >
           <a href="modules.html" title="artist"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Artist 0.18.1 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="modules.html" >artist</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Artist 0.18.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >artist</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2011, David Fokkema.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright 2011-2017, David Fokkema, Arne de Laat.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>
