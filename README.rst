@@ -51,3 +51,24 @@ a LaTeX file requiring PGF/TikZ and PGFPLOTS.  Previewing the output is
 possible by means of a simple method which renders the plot as a PDF.
 
 The style of the plots is based on the work of William S. Cleveland.
+
+
+Developer notes: releasing a new version
+----------------------------------------
+
+If you're ready to release a new version, make sure to follow these steps:
+
+1. Update the version numbers in both the ``setup.py`` and the ``doc/conf.py`` files
+2. Tag a release version using git, or directly on GitHub
+3. Update the documentation by compiling, committing it to the ``gh-pages`` branch and pushing it to GitHub::
+
+    $ make gh-pages
+    $ git push origin gh-pages
+
+4. Push a new version to the Python Package Index (PyPI)::
+
+    $ python setup.py sdist upload
+
+   (make sure to have a valid .pypirc file)
+
+Thanks.
