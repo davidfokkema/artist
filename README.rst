@@ -67,7 +67,9 @@ If you're ready to release a new version, make sure to follow these steps:
 
 4. Push a new version to the Python Package Index (PyPI)::
 
-    $ python setup.py sdist upload
+    $ rm -rf dist/
+    $ python setup.py sdist
+    $ twine upload dist/*
 
    (make sure to have a valid .pypirc file)
 
