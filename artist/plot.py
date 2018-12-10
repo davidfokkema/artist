@@ -160,7 +160,8 @@ class BasePlotContainer(object):
             subprocess.check_output(['pdflatex', '-halt-on-error', path],
                                     stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
-            output_lines = exc.output.split('\n')
+            output = exc.output.decode()
+            output_lines = output.split('\n')
             error_lines = [line for line in output_lines
                            if line and line[0] == '!']
             errors = '\n'.join(error_lines)
