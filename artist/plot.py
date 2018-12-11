@@ -650,8 +650,8 @@ class SubPlot(object):
 
             >>> from PIL import Image
             >>> image = Image.open('background.png')
-            >>> height_ratio = (.67 * image.size[1]) / image.size[0]
-            >>> plot = artist.Plot(height=r'%.2f\linewidth' % height_ratio)
+            >>> plot = artist.Plot()
+            >>> plot.set_axis_equal()
             >>> plot.draw_image(image)
 
         """
@@ -869,9 +869,9 @@ class SubPlot(object):
 
         """
         if suffix == 'degree':
-            suffix = '^\circ'
+            suffix = r'^\circ'
         elif suffix == 'percent':
-            suffix = '\%'
+            suffix = r'\%'
 
         self.ticks['xsuffix'] = suffix
 
@@ -884,9 +884,9 @@ class SubPlot(object):
 
         """
         if suffix == 'degree':
-            suffix = '^\circ'
+            suffix = r'^\circ'
         elif suffix == 'percent':
-            suffix = '\%'
+            suffix = r'\%'
 
         self.ticks['ysuffix'] = suffix
 
