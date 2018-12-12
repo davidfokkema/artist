@@ -545,6 +545,9 @@ class SubPlot(object):
                 relative_position=None, style=None):
         """Add pin to most recent data series.
 
+        The location of the pin is interpolated if necessary, while correcting
+        for logarithmic x and/or y axes.
+
         :param text: the text of the pin label.
         :param location: the location of the pin relative to the data
             point.  Any location accepted by TikZ is allowed.
@@ -571,7 +574,17 @@ class SubPlot(object):
         series_x, series_y = list(zip(*data))[:2]
 
         if x is not None:
-            y = np.interp(x, series_x, series_y)
+            if self.xmode == 'log':
+                series_x = np.log10(np.array(series_x))
+                xp = np.log10(x)
+            else:
+                xp = x
+
+            if self.ymode == 'log':
+                series_y = np.log10(np.array(series_y))
+                y = 10 ** np.interp(xp, series_x, series_y)
+            else:
+                y = np.interp(xp, series_x, series_y)
         else:
             x, y = series_x, series_y
 
