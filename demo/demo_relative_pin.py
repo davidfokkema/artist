@@ -64,6 +64,7 @@ def main():
         plot.add_pin_at_xy(xi, yi, '(%d,%d)' % (xi, yi), location='above left')
     plot.add_pin('half', relative_position=.5, use_arrow=True,
                  location='right')
+    plot.add_pin('$x=3.5$', location='above left', x=3.5, use_arrow=True)
 
     plot.save('relative_pin_log')
 
