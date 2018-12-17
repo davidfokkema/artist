@@ -26,7 +26,7 @@ def main():
     graph.set_yscale(cm=1)
 
     # set ticks at every unit along the y axis
-    graph.set_yticks(range(6))
+    graph.set_yticks(list(range(6)))
 
     # set graph paper
     graph.use_graph_paper()
@@ -53,7 +53,7 @@ def multiplot():
     multiplot.show_xticklabels_for_all()
     multiplot.show_yticklabels(0, 0)
     multiplot.set_xticklabels_position(0, 1, 'top')
-    multiplot.set_yticks_for_all(ticks=range(6))
+    multiplot.set_yticks_for_all(ticks=list(range(6)))
 
     graph1.set_xlimits(0, 100)
     graph2.set_xlimits(60, 80)

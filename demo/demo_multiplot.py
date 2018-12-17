@@ -28,7 +28,7 @@ def main():
     subplot.histogram(n, bins)
     subplot.add_pin('histogram', location='left', relative_position=.5)
 
-    x = range(5)
+    x = list(range(5))
     lower = np.random.uniform(-2, -1, size=5)
     median = np.random.uniform(-.5, .5, size=5)
     upper = np.random.uniform(1, 2, size=5)
@@ -37,7 +37,7 @@ def main():
     subplot.shade_region(x, lower, upper)
 
     subplot = graph.get_subplot_at(1, 1)
-    subplot.plot(range(5), np.random.normal(size=5))
+    subplot.plot(list(range(5)), np.random.normal(size=5))
 
     graph.show_xticklabels_for_all([(0, 0), (1, 1), (0, 2)])
     graph.show_yticklabels(0, 0)

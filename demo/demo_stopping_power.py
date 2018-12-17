@@ -53,7 +53,7 @@ def main():
 
     plot.set_xlimits(1e-2, 1e8)
     plot.set_ylimits(min=1)
-    plot.set_logxticks(range(-2, 9, 2))
+    plot.set_logxticks(list(range(-2, 9, 2)))
     plot.save('stopping-power')
 
 

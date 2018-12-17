@@ -21,7 +21,7 @@ def main():
 
     graph.set_xlabel(r"Core distance [\si{\meter}]")
     graph.set_ylabel(r"Particle density [\si{\per\square\meter}]")
-    graph.set_logyticks(range(-6, 3, 2))
+    graph.set_logyticks(list(range(-6, 3, 2)))
     graph.save('eas-lateral')
 
 

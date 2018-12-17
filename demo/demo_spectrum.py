@@ -44,7 +44,7 @@ def main():
     x = np.logspace(11, 17)
     graph.plot(x, 1.5e29 * x ** -2.75, mark=None, linestyle='dashed')
 
-    graph.set_logxticks(range(6, 22, 3))
+    graph.set_logxticks(list(range(6, 22, 3)))
     graph.save('spectrum')
 
 

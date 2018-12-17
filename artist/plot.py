@@ -23,12 +23,7 @@ import tempfile
 import shutil
 import warnings
 from math import sqrt, modf
-try:
-    # Python 2
-    from itertools import izip_longest
-except ImportError:
-    # Python 3
-    from itertools import zip_longest as izip_longest
+from itertools import zip_longest
 
 from PIL import Image
 import jinja2
@@ -313,7 +308,7 @@ class SubPlot(object):
     def _create_plot_series_object(self, x, y, xerr=[], yerr=[], options=None,
                                    legend=None):
         return {'options': options,
-                'data': list(izip_longest(x, y, xerr, yerr)),
+                'data': list(zip_longest(x, y, xerr, yerr)),
                 'show_xerr': True if len(xerr) else False,
                 'show_yerr': True if len(yerr) else False,
                 'legend': legend}
@@ -514,7 +509,7 @@ class SubPlot(object):
 
     def _create_plot_tables_object(self, x, y, c, s, options=None):
         return {'options': options,
-                'data': list(izip_longest(x, y, c, s)),
+                'data': list(zip_longest(x, y, c, s)),
                 'smin': min(s),
                 'smax': max(s)}
 
@@ -647,7 +642,7 @@ class SubPlot(object):
 
         x = x + reversed_x
         y = lower + upper
-        self.shaded_regions_list.append({'data': zip(x, y), 'color': color})
+        self.shaded_regions_list.append({'data': list(zip(x, y)), 'color': color})
 
     def draw_image(self, image, xmin=0, ymin=0, xmax=None, ymax=None):
         """Draw an image.
@@ -1020,7 +1015,7 @@ class SubPlot(object):
             rel_length = [0]
             rel_length.extend(self._calc_relative_path_lengths(x, y))
             idx = np.interp(relative_position, rel_length,
-                            range(len(rel_length)))
+                            list(range(len(rel_length))))
             frac, idx = modf(idx)
             idx = int(idx)
             if self.xmode == 'log':
