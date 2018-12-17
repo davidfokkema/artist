@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: all demo clean distclean test
 
 all: demo
 
