@@ -43,7 +43,7 @@ demo_plots.pdf: demo_plots.tex \
 		relative_pin.tex relative_pin_log.tex any_option.tex \
 		multi_any_option.tex error_bars.tex fourier_with_legend.tex \
 		fourier_with_labels.tex mm_paper.tex mm_paper_multiplot.tex
-	latexmk -pdf demo_plots.tex
+	tectonic demo_plots.tex
 
 test: shower-front.tex eas-lateral.tex \
 		spectrum.tex sciencepark.tex utrecht.tex multiplot.tex \
