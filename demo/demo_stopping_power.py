@@ -13,7 +13,7 @@ plt.rcParams['figure.subplot.left'] = 0.175
 plt.rcParams['figure.subplot.bottom'] = 0.175
 plt.rcParams['font.size'] = 10
 plt.rcParams['legend.fontsize'] = 'small'
-plt.rcParams['text.usetex'] = True
+plt.rcParams['text.usetex'] = False
 
 
 def main():
