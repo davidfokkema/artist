@@ -23,7 +23,7 @@ before_install:
       rm -rf $HOME/miniconda;
       bash miniconda.sh -b -p $HOME/miniconda;
     fi
-  - export PATH=$HOME/miniconda/bin:$PATH
+  - . $HOME/miniconda/etc/profile.d/conda.sh
   - conda update --yes conda
 
 install:
