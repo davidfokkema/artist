@@ -3,9 +3,12 @@ language: minimal
 sudo: false
 
 env:
-  - CONDA_PYTHON="3.5"
-  - CONDA_PYTHON="3.6"
-  - CONDA_PYTHON="3.7"
+  global:
+    - MPLBACKEND=Agg
+  matrix:
+    - CONDA_PYTHON="3.5"
+    - CONDA_PYTHON="3.6"
+    - CONDA_PYTHON="3.7"
 
 cache:
   directories:
