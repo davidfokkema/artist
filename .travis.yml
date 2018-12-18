@@ -28,7 +28,7 @@ before_install:
       bash miniconda.sh -b -p $HOME/miniconda;
     fi
   - . $HOME/miniconda/etc/profile.d/conda.sh
-  - conda config --add channels conda-forge
+  - conda config --append channels conda-forge
   - conda update --yes conda
 
 install:
