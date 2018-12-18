@@ -642,7 +642,8 @@ class SubPlot(object):
 
         x = x + reversed_x
         y = lower + upper
-        self.shaded_regions_list.append({'data': list(zip(x, y)), 'color': color})
+        data = list(zip(x, y))
+        self.shaded_regions_list.append({'data': data, 'color': color})
 
     def draw_image(self, image, xmin=0, ymin=0, xmax=None, ymax=None):
         """Draw an image.
