@@ -1,21 +1,54 @@
-language: python
+language: minimal
 
 sudo: false
 
-python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
+env:
+  - CONDA_PYTHON="3.5"
+  - CONDA_PYTHON="3.6"
+  - CONDA_PYTHON="3.7"
+
+cache:
+  directories:
+    - $HOME/miniconda
+
+before_cache:
+  - rm -rf $HOME/miniconda/envs/build_env
+  - conda clean --yes --quiet --packages
 
 before_install:
-  - mkdir $HOME/.python-eggs
-  - chmod og-w $HOME/.python-eggs
+  - if [ -f $HOME/miniconda/bin/conda ] ; then
+      echo "Using cached miniconda";
+    else
+      wget --no-verbose https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      rm -rf $HOME/miniconda;
+      bash miniconda.sh -b -p $HOME/miniconda;
+    fi
+  - export PATH=$HOME/miniconda/bin:$PATH
+  - conda update --yes conda
 
 install:
-  - pip install flake8 sphinx
-  - python setup.py develop
+  - conda create --yes -n build_env python=$CONDA_PYTHON numpy jinja2 Pillow
+  - conda activate build_env
+  - conda install --yes tectonic scipy matplotlib flake8 sphinx
+  - pip install -e .
 
 script:
   - flake8 artist
-  - make -C demo test
+  - make -C demo demo
   - sphinx-build -n doc doc/_build/html
+  - ls $HOME/.cache/Tectonic
+
+before_deploy:
+  - cp demo/demo_plots.pdf doc/_build/html/
+  - touch doc/_build/.nojekyll
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: doc/_build/html
+  email: artist
+  name: Artist-Bot
+  on:
+    branch: master
+    condition: "$CONDA_PYTHON = 3.7"
