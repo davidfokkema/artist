@@ -181,7 +181,8 @@ class BasePlotContainer(object):
             subprocess.check_output(['pdfcrop', uncropped_path, path],
                                     stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc:
-            raise RuntimeError('Cropping PDF failed:\n' + exc.output)
+            output = exc.output.decode()
+            raise RuntimeError('Cropping PDF failed:\n' + output)
 
     def _add_extension(self, extension, path):
         root, ext = os.path.splitext(path)
