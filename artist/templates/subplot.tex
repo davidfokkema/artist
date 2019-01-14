@@ -62,7 +62,7 @@
             } -- cycle;
 {% endfor -%}
 
-{%- for series in plot.plot_series_list %}
+{%- for series in plot.prepared_plot_series_list %}
     {% if series.show_xerr %}
         % Draw x-error bars
         {%- for x, y, xerr, yerr in series.data %}

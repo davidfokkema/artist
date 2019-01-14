@@ -504,6 +504,9 @@ class MultiPlot(BasePlotContainer):
         if not template:
             template = self.template
 
+        for subplot in self.subplots:
+            subplot._prepare_data()
+
         response = template.render(rows=self.rows, columns=self.columns,
                                    xmode=self.xmode, ymode=self.ymode,
                                    width=self.width, height=self.height,

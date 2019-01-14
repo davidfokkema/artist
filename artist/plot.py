@@ -1087,6 +1087,29 @@ class SubPlot(object):
             large_img = img.resize((size0, size1))
             large_img.save(os.path.join(dir, name))
 
+    def _prepare_data(self):
+        self.prepared_plot_series_list = []
+        xmin, xmax = self.limits['xmin'], self.limits['xmax']
+        for series in self.plot_series_list:
+            prepared_series = series.copy()
+            data = series['data']
+
+            x, _, _, _ = zip(*data)
+            x = np.array(x)
+            if xmin is not None:
+                min_idx = x.searchsorted(xmin)
+                if min_idx > 0:
+                    min_idx -= 1
+            else:
+                min_idx = None
+            if xmax is not None:
+                max_idx = x.searchsorted(xmax) + 1
+            else:
+                max_idx = None
+
+            prepared_series['data'] = data[min_idx:max_idx]
+            self.prepared_plot_series_list.append(prepared_series)
+
 
 class Plot(SubPlot, BasePlotContainer):
 
@@ -1126,6 +1149,8 @@ class Plot(SubPlot, BasePlotContainer):
         """
         if not template:
             template = self.template
+
+        self._prepare_data()
 
         response = template.render(
             axis_background=self.axis_background,
