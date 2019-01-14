@@ -1088,6 +1088,14 @@ class SubPlot(object):
             large_img.save(os.path.join(dir, name))
 
     def _prepare_data(self):
+        """Prepare data before rendering
+
+        When plotting very large datasets, we don't want to include data points
+        which are outside the x-axis limits. LaTeX is very slow and consumes a
+        lot of memory otherwise. Limiting the data points is only (easily)
+        possible when the data are sorted.
+
+        """
         self.prepared_plot_series_list = []
         xmin, xmax = self.limits['xmin'], self.limits['xmax']
         for series in self.plot_series_list:
@@ -1095,19 +1103,21 @@ class SubPlot(object):
             data = series['data']
 
             x, _, _, _ = zip(*data)
-            x = np.array(x)
-            if xmin is not None:
-                min_idx = x.searchsorted(xmin)
-                if min_idx > 0:
-                    min_idx -= 1
-            else:
-                min_idx = None
-            if xmax is not None:
-                max_idx = x.searchsorted(xmax) + 1
-            else:
-                max_idx = None
+            # only limit data when the data is sorted
+            if sorted(x) == list(x):
+                x = np.array(x)
+                if xmin is not None:
+                    min_idx = x.searchsorted(xmin)
+                    if min_idx > 0:
+                        min_idx -= 1
+                else:
+                    min_idx = None
+                if xmax is not None:
+                    max_idx = x.searchsorted(xmax) + 1
+                else:
+                    max_idx = None
 
-            prepared_series['data'] = data[min_idx:max_idx]
+                prepared_series['data'] = data[min_idx:max_idx]
             self.prepared_plot_series_list.append(prepared_series)
 
 
