@@ -97,8 +97,8 @@ class BasePlotContainer(object):
         r"""Save the plot as a LaTeX file.
 
         The output file can be included (using \input) in your LaTeX document.
-        It can also be compiled as a standalone document to generate a (cropped)
-        pdf version of the plot.
+        It can also be compiled as a standalone document to generate a
+        (cropped) pdf version of the plot.
 
         :param dest_path: path of the file.
 
