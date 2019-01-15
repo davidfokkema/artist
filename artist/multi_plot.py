@@ -37,8 +37,6 @@ class MultiPlot(BasePlotContainer):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('multi_plot.tex')
-        self.document_template = environment.get_template(
-            'document.tex')
 
         self.rows = rows
         self.columns = columns
