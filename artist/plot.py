@@ -1103,7 +1103,6 @@ class Plot(SubPlot, BasePlotContainer):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('plot.tex')
-        self.document_template = environment.get_template('document.tex')
 
         self.width = width
         self.height = height
