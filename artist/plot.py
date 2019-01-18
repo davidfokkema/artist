@@ -615,7 +615,7 @@ class SubPlot(object):
 
         x = x + reversed_x
         y = lower + upper
-        self.shaded_regions_list.append({'data': zip(x, y), 'color': color})
+        self.shaded_regions_list.append({'data': list(zip(x, y)), 'color': color})
 
     def draw_image(self, image, xmin=0, ymin=0, xmax=None, ymax=None):
         """Draw an image.
@@ -1067,7 +1067,7 @@ class SubPlot(object):
         xmin, xmax = self.limits['xmin'], self.limits['xmax']
         for series in self.plot_series_list:
             prepared_series = series.copy()
-            data = series['data']
+            data = prepared_series['data']
 
             x, _, _, _ = zip(*data)
             # only limit data when the data is sorted
