@@ -1,12 +1,17 @@
-% \usepackage{tikz}
-% \usetikzlibrary{arrows,pgfplots.groupplots,external}
-% \usepackage{pgfplots}
-% \pgfplotsset{compat=1.10}
-% \usepackage[detect-family]{siunitx}
-% \usepackage[eulergreek]{sansmath}
-% \sisetup{text-sf=\sansmath}
-% \usepackage{relsize}
-%
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,pgfplots.groupplots,external}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{polar}
+\usepackage[detect-family]{siunitx}
+\usepackage[eulergreek]{sansmath}
+\sisetup{text-sf=\sansmath}
+\usepackage{relsize}
+
+\begin{document}
+
 {%- if external_filename %}
     \tikzsetnextfilename{ {{- external_filename -}} }
 {%- endif %}
@@ -228,3 +233,5 @@
     \node[above, rotate=90] at (plot.west) { {{ ylabel }} };
 \end{tikzpicture}
 \end{sansmath}
+
+\end{document}

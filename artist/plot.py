@@ -60,7 +60,6 @@ class BasePlotContainer(object):
 
     # The templates must be initialized on instantiation.
     template = None
-    document_template = None
 
     def render(self, template=None):
         """Render the plot using a template.
@@ -94,19 +93,12 @@ class BasePlotContainer(object):
         """
         pass
 
-    def render_as_document(self):
-        """Render the plot as a stand-alone document.
-
-        :returns: the rendered template as string.
-
-        """
-        return self.render(self.document_template)
-
     def save(self, dest_path):
-        r"""Save the plot as a includable LaTeX file.
+        r"""Save the plot as a LaTeX file.
 
-        The output file can be included (using \input) in your LaTeX
-        document.
+        The output file can be included (using \input) in your LaTeX document.
+        It can also be compiled as a standalone document to generate a
+        (cropped) pdf version of the plot.
 
         :param dest_path: path of the file.
 
@@ -117,19 +109,6 @@ class BasePlotContainer(object):
         dest_path = self._add_extension('tex', dest_path)
         with open(dest_path, 'w') as f:
             f.write(self.render())
-
-    def save_as_document(self, dest_path):
-        """Save the plot as a stand-alone LaTeX file.
-
-        :param dest_path: path of the file.
-
-        """
-        self.save_assets(dest_path)
-        self.external_filename = 'externalized-%s' % \
-                                 os.path.basename(dest_path).replace(' ', '_')
-        dest_path = self._add_extension('tex', dest_path)
-        with open(dest_path, 'w') as f:
-            f.write(self.render_as_document())
 
     def save_as_pdf(self, dest_path):
         """Save the plot as a PDF file.
@@ -144,9 +123,8 @@ class BasePlotContainer(object):
         build_path = os.path.join(build_dir, 'document.tex')
         self.save_assets(build_path)
         with open(build_path, 'w') as f:
-            f.write(self.render_as_document())
+            f.write(self.render())
         pdf_path = self._build_document(build_path)
-        self._crop_document(pdf_path)
         shutil.copyfile(pdf_path, dest_path)
         shutil.rmtree(build_dir)
 
@@ -172,17 +150,6 @@ class BasePlotContainer(object):
 
         pdf_path = path.replace('.tex', '.pdf')
         return pdf_path
-
-    def _crop_document(self, path):
-        dirname = os.path.dirname(path)
-        uncropped_path = os.path.join(dirname, 'uncropped-output.pdf')
-        os.rename(path, uncropped_path)
-        try:
-            subprocess.check_output(['pdfcrop', uncropped_path, path],
-                                    stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as exc:
-            output = exc.output.decode()
-            raise RuntimeError('Cropping PDF failed:\n' + output)
 
     def _add_extension(self, extension, path):
         root, ext = os.path.splitext(path)
@@ -1136,7 +1103,6 @@ class Plot(SubPlot, BasePlotContainer):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('plot.tex')
-        self.document_template = environment.get_template('document.tex')
 
         self.width = width
         self.height = height
