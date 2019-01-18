@@ -53,6 +53,46 @@ possible by means of a simple method which renders the plot as a PDF.
 The style of the plots is based on the work of William S. Cleveland.
 
 
+Usage
+-----
+
+Example script::
+
+    import artist
+    import numpy as np
+
+    plot = artist.Plot()
+    x = np.linspace(0, 10)
+    y = x ** 2
+    plot.plot(x, y)
+    plot.set_xlabel("Number")
+    plot.set_ylabel("Square")
+    plot.save('somefile')           # will save a LaTeX file
+    plot.save_as_pdf('otherfile')   # will directly compile to PDF
+
+The LaTeX file can be compiled directly (e.g. using ``pdflatex``) or can be included in your main document like so::
+
+    \begin{figure}
+    \centering
+    \input{somefile}
+    \caption{A sample figure.}
+    \end{figure}
+
+This has the advantage that the image will change size if you change the margins of your document and will use the same fonts as your main document. You do need to include all packages used by Artist, as well as the ``standalone`` package. You can see which packages to use by inspecting the preamble of the generated LaTeX file. Including the ``standalone`` package, your preamble should be something like this::
+
+    \usepackage{standalone}
+
+    \usepackage{tikz}
+    \usetikzlibrary{arrows,external}
+    \usepackage{pgfplots}
+    \pgfplotsset{compat=1.10}
+    \usepgfplotslibrary{polar}
+    \usepackage[detect-family]{siunitx}
+    \usepackage[eulergreek]{sansmath}
+    \sisetup{text-sf=\sansmath}
+    \usepackage{relsize}
+
+
 Developer notes: releasing a new version
 ----------------------------------------
 
