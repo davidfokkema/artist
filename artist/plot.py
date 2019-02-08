@@ -1100,7 +1100,8 @@ class Plot(SubPlot, BasePlotContainer):
 
     """
 
-    def __init__(self, axis='', width=r'.67\linewidth', height=None):
+    def __init__(self, axis='', width=r'.67\linewidth', height=None,
+                 font_options=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('plot.tex')
@@ -1108,6 +1109,7 @@ class Plot(SubPlot, BasePlotContainer):
         self.width = width
         self.height = height
         self.xmode, self.ymode = self._get_axis_modes(axis)
+        self.font_options = font_options
         self.external_filename = None
 
         super(Plot, self).__init__()
@@ -1147,6 +1149,7 @@ class Plot(SubPlot, BasePlotContainer):
             colorbar=self.colorbar,
             colormap=self.colormap,
             external_filename=self.external_filename,
+            font_options=self.font_options,
             axis_options=self.axis_options,
             has_graph_paper=self.has_graph_paper,
             plot=self,

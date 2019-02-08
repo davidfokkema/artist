@@ -33,7 +33,7 @@ class MultiPlot(BasePlotContainer):
     """
 
     def __init__(self, rows, columns, axis='',
-                 width=r'.67\linewidth', height=None):
+                 width=r'.67\linewidth', height=None, font_options=None):
         environment = jinja2.Environment(loader=jinja2.PackageLoader(
             'artist', 'templates'), finalize=self._convert_none)
         self.template = environment.get_template('multi_plot.tex')
@@ -53,6 +53,7 @@ class MultiPlot(BasePlotContainer):
         self.colorbar = None
         self.colormap = None
         self.external_filename = None
+        self.font_options = font_options
         self.axis_options = None
 
         self.subplots = []
@@ -513,6 +514,7 @@ class MultiPlot(BasePlotContainer):
                                    colorbar=self.colorbar,
                                    colormap=self.colormap,
                                    external_filename=self.external_filename,
+                                   font_options=self.font_options,
                                    axis_options=self.axis_options,
                                    subplots=self.subplots,
                                    plot_template=self.template)
