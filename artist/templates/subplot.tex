@@ -54,10 +54,13 @@
                      { {{ bitmap.name }}};
 {% endfor %}
 
-{%- for region in plot.shaded_regions_list %}
+{%- for region in plot.prepared_shaded_regions_list %}
     \addplot[draw=none, fill={{ region.color }}] coordinates {
-        {%- for x, y in region.data %}
-            ({{ x }}, {{ y }})
+        {%- for x, lower, upper in region.data %}
+            ({{ x }}, {{ lower }})
+        {%- endfor %}
+        {%- for x, lower, upper in region.data|reverse %}
+            ({{ x }}, {{ upper }})
         {%- endfor %}
             } -- cycle;
 {% endfor -%}

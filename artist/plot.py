@@ -605,17 +605,7 @@ class SubPlot(object):
         :param color: TikZ style to color the region
 
         """
-        x = list(x)
-        reversed_x = list(x)
-        reversed_x.reverse()
-
-        lower = list(lower)
-        upper = list(upper)
-        upper.reverse()
-
-        x = x + reversed_x
-        y = lower + upper
-        self.shaded_regions_list.append({'data': list(zip(x, y)),
+        self.shaded_regions_list.append({'data': list(zip(x, lower, upper)),
                                          'color': color})
 
     def draw_image(self, image, xmin=0, ymin=0, xmax=None, ymax=None):
@@ -1064,8 +1054,9 @@ class SubPlot(object):
         possible when the data are sorted.
 
         """
-        self.prepared_plot_series_list = []
         xmin, xmax = self.limits['xmin'], self.limits['xmax']
+
+        self.prepared_plot_series_list = []
         for series in self.plot_series_list:
             prepared_series = series.copy()
             data = prepared_series['data']
@@ -1087,6 +1078,29 @@ class SubPlot(object):
 
                 prepared_series['data'] = data[min_idx:max_idx]
             self.prepared_plot_series_list.append(prepared_series)
+
+        self.prepared_shaded_regions_list = []
+        for series in self.shaded_regions_list:
+            prepared_series = series.copy()
+            data = prepared_series['data']
+
+            x, _, _ = zip(*data)
+            # only limit data when the data is sorted
+            if sorted(x) == list(x):
+                x = np.array(x)
+                if xmin is not None:
+                    min_idx = x.searchsorted(xmin)
+                    if min_idx > 0:
+                        min_idx -= 1
+                else:
+                    min_idx = None
+                if xmax is not None:
+                    max_idx = x.searchsorted(xmax) + 1
+                else:
+                    max_idx = None
+
+                prepared_series['data'] = data[min_idx:max_idx]
+            self.prepared_shaded_regions_list.append(prepared_series)
 
 
 class Plot(SubPlot, BasePlotContainer):
