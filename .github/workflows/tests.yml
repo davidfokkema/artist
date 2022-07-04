@@ -1,0 +1,26 @@
+name: Run tests
+
+on:
+  push:
+
+jobs:
+  tests:
+    strategy:
+      matrix:
+        python-version: [
+            '3.7',
+            '3.8',
+            '3.9',
+            '3.10',
+        ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install flake8 sphinx
+      - run: pip install .
+      - run: flake8 artist
+      - run: make -C demo test
+      - run: sphinx-build -n doc doc/_build/html
