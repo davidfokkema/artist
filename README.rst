@@ -1,12 +1,12 @@
 Artist makes beautiful plots
 ============================
 
-.. image:: http://img.shields.io/pypi/v/artist.svg
+.. image:: https://img.shields.io/pypi/v/artist
    :target: https://pypi.python.org/pypi/artist/
-.. image:: http://img.shields.io/badge/license-GPLv3-blue.svg
+.. image:: https://img.shields.io/badge/license-GPLv3-blue
    :target: https://github.com/davidfokkema/artist/blob/master/LICENSE
-.. image:: http://img.shields.io/travis/davidfokkema/artist/master.svg
-   :target: https://travis-ci.org/davidfokkema/artist
+.. image:: https://img.shields.io/github/checks-status/davidfokkema/artist/master
+   :target: https://github.com/davidfokkema/artist/actions
 
 
 In short
